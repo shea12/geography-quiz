@@ -16,7 +16,8 @@ class App extends React.Component {
     this.state = {
       lonlat: [11.6, 31],
       zoom: 1.4,
-      selectedContinent: ''
+      selectedContinent: '',
+      showLabels: true,
     }
 
     this.handleLocation = this.handleLocation.bind(this);
@@ -25,10 +26,12 @@ class App extends React.Component {
   handleLocation(location) {
     // loc will be an object with [lon, lat] and zoom (float)
     console.log('changing location: ', location);
+
     this.setState({
       selectedContinent: location.name,
       lonlat: location.lonlat,
-      zoom: location.zoom
+      zoom: location.zoom,
+      showLabels: false,
     })
   }
 
@@ -36,7 +39,7 @@ class App extends React.Component {
     return (
       <div style={style.container}>
         <Title move={this.handleLocation}/>
-        <Maps loc={this.state} />
+        <Maps location={this.state} />
         <Continents move={this.handleLocation}/>
       </div>
     )
