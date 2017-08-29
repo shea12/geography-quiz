@@ -1,21 +1,4 @@
-import React from 'react';
-
-export default class App extends React.Component {
-  
-  // componentDidMount() {
-
-  // }
-
-  render() {
-    return (
-      <div style={style.title_div}>
-        <h1 style={style.title}>geoQuiz</h1>
-      </div>
-    )
-  }
-
-}
-
+import React from 'react'
 
 const style = {
   title_div: {
@@ -24,6 +7,15 @@ const style = {
   title: {
     position: 'absolute',
     zIndex: 1,
-  }
-
+  },
 }
+
+function Title() {
+  return (
+    <div style={style.title_div}>
+      <h1 style={style.title}>geoQuiz</h1>
+    </div>
+  )
+}
+
+module.exports = Title
