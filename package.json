@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server",
-    "lint": "eslint client webpack.config.js --ext .js,.jsx"
+    "lint": "eslint client webpack.config.js --ext .js,.jsx",
+    "precommit": "yarn lint"
   },
   "dependencies": {
     "babel-eslint": "^7.2.3",

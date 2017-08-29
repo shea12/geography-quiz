@@ -10,12 +10,19 @@ const style = {
   },
 }
 
-function Title() {
-  return (
-    <div style={style.title_div}>
-      <h1 style={style.title}>geoQuiz</h1>
-    </div>
-  )
+export default class Title extends React.Component {
+  componentDidMount() {
+    console.log('Title mounted');
+  }
+
+  render() {
+    return (
+      <div style={style.title_div}>
+        <button style={style.title} onClick={() => this.props.move({lonlat: [0,0], zoom: 8})}>
+          geoQuiz
+        </button>
+      </div>
+    )
+  }
 }
 
-module.exports = Title

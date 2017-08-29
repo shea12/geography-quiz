@@ -12,24 +12,47 @@ const style = {
   },
 }
 
-export default class Map extends React.Component {
+export default class Maps extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      sup: false
+    }
+
+    this.flyToLocation = this.flyToLocation.bind(this)
+  }
+
   componentDidMount() {
     MapboxGl.accessToken = Keys.access_token
     // remember: mapbox uses [long, lat] not [lat, long]
-    new MapboxGl.Map({
+    let Maps = new MapboxGl.Map({
       container: this.container,
       style: Keys.style_key,
-      center: [11.6, 31],
-      zoom: 1.4,
+      center: this.props.loc.lonlat,
+      zoom: this.props.loc.zoom,
       pitchWithRotate: false,
       dragRotate: false,
       hash: true,
     })
   }
 
+  flyToLocation() {
+    this.Maps.flyTo({center: this.props.loc.lonlat})
+  }
+
   render() {
     return (
-      <div className="Map" style={style.map} ref={(x) => { this.container = x }} />
+      <div className="Maps" style={style.map} ref={(x) => { this.container = x }} />
     )
   }
 }
+
+// document.getElementById('fly').addEventListener('click', function () {
+//     // Fly to a random location by offsetting the point -74.50, 40
+//     // by up to 5 degrees.
+//     map.flyTo({
+//         center: [
+//             -74.50 + (Math.random() - 0.5) * 10,
+//             40 + (Math.random() - 0.5) * 10]
+//     });
+// });
