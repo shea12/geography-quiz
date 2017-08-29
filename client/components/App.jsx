@@ -1,6 +1,7 @@
 import React from 'react'
 import Maps from './map.jsx'
 import Title from './title.jsx'
+import Continents from './continent.jsx'
 
 const style = {
   container: {
@@ -15,15 +16,20 @@ class App extends React.Component {
     this.state = {
       lonlat: [11.6, 31],
       zoom: 1.4,
+      selectedContinent: ''
     }
 
     this.handleLocation = this.handleLocation.bind(this);
   }
 
-  handleLocation(loc) {
+  handleLocation(location) {
     // loc will be an object with [lon, lat] and zoom (float)
-    console.log('changing location: ', loc);
-    this.setState({lonlat: loc.lonlat, zoom: loc.zoom})
+    console.log('changing location: ', location);
+    this.setState({
+      selectedContinent: location.name,
+      lonlat: location.lonlat,
+      zoom: location.zoom
+    })
   }
 
   render() {
@@ -31,6 +37,7 @@ class App extends React.Component {
       <div style={style.container}>
         <Title move={this.handleLocation}/>
         <Maps loc={this.state} />
+        <Continents move={this.handleLocation}/>
       </div>
     )
   }

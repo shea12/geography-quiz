@@ -2,18 +2,12 @@ import React from 'react'
 
 const style = {
   title_div: {
-    paddingLeft: 100,
+    paddingLeft: 600,
   },
   title: {
     position: 'absolute',
     zIndex: 1,
   },
-}
-let lonlat = [-70, 45];
-let zoom = 10;
-let locationObject = {
-  lonlat: lonlat,
-  zoom: zoom
 }
 
 export default class Title extends React.Component {
@@ -23,10 +17,10 @@ export default class Title extends React.Component {
 
   render() {
     return (
-      <div style={style.title_div}>
-        <button style={style.title} onClick={() => this.props.move(locationObject)}>
+      <div style={style.title_div} >
+        <h1 style={style.title} >
           geoQuiz
-        </button>
+        </h1>
       </div>
     )
   }
