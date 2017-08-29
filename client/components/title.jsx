@@ -9,6 +9,12 @@ const style = {
     zIndex: 1,
   },
 }
+let lonlat = [-70, 45];
+let zoom = 10;
+let locationObject = {
+  lonlat: lonlat,
+  zoom: zoom
+}
 
 export default class Title extends React.Component {
   componentDidMount() {
@@ -18,7 +24,7 @@ export default class Title extends React.Component {
   render() {
     return (
       <div style={style.title_div}>
-        <button style={style.title} onClick={() => this.props.move({lonlat: [0,0], zoom: 8})}>
+        <button style={style.title} onClick={() => this.props.move(locationObject)}>
           geoQuiz
         </button>
       </div>
