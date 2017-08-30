@@ -59,6 +59,17 @@ export default class Maps extends React.Component {
       map.flyTo({center: nextProps.location.lonlat, zoom: nextProps.location.zoom})
     }
 
+    if (this.props.location.countryToShade !== nextProps.location.countryToShade) {
+      // translate this.props.location.countryToShade to its 2letter abbreviation
+      let continent = this.props.location.selectedContinent
+      // console.log('continent: ', Continents[continent]);
+      let countryAbbrev = Continents[continent].abbrevs[nextProps.location.countryToShade]
+      console.log('countryAbbrev: ', countryAbbrev);
+
+      map.setPaintProperty(countryAbbrev, 'fill-opacity', 0.5)
+    }
+
+
   }
 
   render() {

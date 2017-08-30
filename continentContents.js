@@ -3,48 +3,87 @@ const CONTINENTS = {
     lonlat: [-86.49, 35.27],
     zoom: 3.16,
     countries: [
-        'AG': 'Antigua and Barbuda', // Antigua and Barbuda
-        'BS': 'Bahamas', // Bahamas
-        'BB': 'Barbados', // Barbados
-        'BZ': 'Belize', // Belize
-        'CA': 'Canada', // Canada
-        'CR': 'Costa Rica', // Costa Rica
-        'CU': 'Cuba', // Cuba
-        'DM': 'Dominica', // Dominica
-        'DO': 'Dominican Republic', // Dominican Republic
-        'SV': 'El Salvador', // El Salvador
-        'GD': 'Grenada', // Grenada
-        'GT': 'Guatemala', // Guatemala
-        'HT': 'Haiti', // Haiti
-        'HN': 'Honduras', // Honduras
-        'JM': 'Jamaica', // Jamaica
-        'MX': 'Mexico', // Mexico
-        'NI': 'Nicaragua', // Nicaragua
-        'PA': 'Panama', // Panama
-        'KN': 'Saint Kitts and Nevis', // Saint Kitts and Nevis
-        'LC': 'Saint Lucia', // Saint Lucia
-        'VC': 'Saint Vincent and the Grenadines', // Saint Vincent and the Grenadines
-        'TT': 'Trinidad and Tobago', // Trinidad and Tobago
-        'US': 'United States of America', // United States of America
+        'Antigua and Barbuda', // Antigua and Barbuda
+        'Bahamas', // Bahamas
+        'Barbados', // Barbados
+        'Belize', // Belize
+        'Canada', // Canada
+        'Costa Rica', // Costa Rica
+        'Cuba', // Cuba
+        'Dominica', // Dominica
+        'Dominican Republic', // Dominican Republic
+        'El Salvador', // El Salvador
+        'Grenada', // Grenada
+        'Guatemala', // Guatemala
+        'Haiti', // Haiti
+        'Honduras', // Honduras
+        'Jamaica', // Jamaica
+        'Mexico', // Mexico
+        'Nicaragua', // Nicaragua
+        'Panama', // Panama
+        'Saint Kitts and Nevis', // Saint Kitts and Nevis
+        'Saint Lucia', // Saint Lucia
+        'Saint Vincent and the Grenadines', // Saint Vincent and the Grenadines
+        'Trinidad and Tobago', // Trinidad and Tobago
+        'United States of America', // United States of America
     ],
+    abbrevs: {
+        'Antigua and Barbuda': 'AG', // Antigua and Barbuda
+        'Bahamas': 'BS', // Bahamas
+        'Barbados': 'BB', // Barbados
+        'Belize': 'BZ', // Belize
+        'Canada': 'CA', // Canada
+        'Costa Rica': 'CR', // Costa Rica
+        'Cuba': 'CU', // Cuba
+        'Dominica': 'DM', // Dominica
+        'Dominican Republic': 'DO', // Dominican Republic
+        'El Salvador': 'SV', // El Salvador
+        'Grenada': 'GD', // Grenada
+        'Guatemala': 'GT', // Guatemala
+        'Haiti': 'HT', // Haiti
+        'Honduras': 'HN', // Honduras
+        'Jamaica': 'JM', // Jamaica
+        'Mexico': 'MX', // Mexico
+        'Nicaragua': 'NI', // Nicaragua
+        'Panama': 'PA', // Panama
+        'Saint Kitts and Nevis': 'KN', // Saint Kitts and Nevis
+        'Saint Lucia': 'LC', // Saint Lucia
+        'Saint Vincent and the Grenadines': 'VC', // Saint Vincent and the Grenadines
+        'Trinidad and Tobago': 'TT', // Trinidad and Tobago
+        'United States of America': 'US', // United States of America
+    },
   },
   SA: {
     lonlat: [-60.81, -26.15],
     zoom: 2.8,
     countries: [
-        'AR', // Argentina
-        'BO', // Bolivia
-        'BR', // Brazil
-        'CL', // Chile
-        'CO', // Colombia
-        'EC', // Ecuador
-        'GY', // Guyana
-        'PY', // Paraguay
-        'PE', // Peru
-        'SR', // Suriname
-        'UY', // Uruguay
-        'VE', // Venezuela
+        'Argentina',
+        'Bolivia',
+        'Brazil',
+        'Chile',
+        'Colombia',
+        'Ecuador',
+        'Guyana',
+        'Paraguay',
+        'Peru',
+        'Suriname',
+        'Uruguay',
+        'Venezuela',
     ],
+    abbrevs: {
+        'Argentina': 'AR',
+        'Bolivia': 'BO', 
+        'Brazil': 'BR',
+        'Chile': 'CL',
+        'Colombia': 'CO',
+        'Ecuador': 'EC',
+        'Guyana': 'GY',
+        'Paraguay': 'PY',
+        'Peru': 'PE',
+        'Suriname': 'SR',
+        'Uruguay': 'UY',
+        'Venezuela': 'VE',
+    },
   },
   AF: {
     lonlat: [22.48, 1.62],
@@ -239,3 +278,29 @@ const CONTINENTS = {
 }
 
 module.exports = CONTINENTS;
+
+
+
+
+/*
+countries: [
+    'AR', // Argentina
+    'BO', // Bolivia
+    'BR', // Brazil
+    'CL', // Chile
+    'CO', // Colombia
+    'EC', // Ecuador
+    'GY', // Guyana
+    'PY', // Paraguay
+    'PE', // Peru
+    'SR', // Suriname
+    'UY', // Uruguay
+    'VE', // Venezuela
+],
+
+*/
+
+
+
+
+

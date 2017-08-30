@@ -19,32 +19,42 @@ class App extends React.Component {
       zoom: 1.4,
       showLabels: true,
       selectedContinent: '',
-      countryList: []
+      countryList: [],
+      abbrevs: [],
+      countryToShade: '',
     }
 
     this.handleLocation = this.handleLocation.bind(this)
+    this.handleCountry = this.handleCountry.bind(this)
   }
 
-  handleLocation(lonlat, zoom, continent, countryList) {
+  handleLocation(lonlat, zoom, continent, countryList, abbrevs) {
     // location will be an object with [lon, lat] [(float), (float)] and zoom (float)
     // console.log('changing location to: ', name)
     // console.log('lonlat: ', lonlat + ' zoom: ', zoom + '  continent: ', continent + '  countryList: ', countryList )
-    
+    // console.log('countryList in App: ', countryList);
+
     this.setState({
       lonlat: lonlat,
       zoom: zoom,
       showLabels: false,
       selectedContinent: continent,
-      countryList: countryList
+      countryList: countryList,
+      abbrevs: abbrevs,
     })
 
+  }
+
+  handleCountry(country) {
+    this.setState({countryToShade: country})
   }
 
   render() {
     let continentSelected = this.state.selectedContinent
     let inputform = null
+    console.log('in render: ', this.state.countryList);
     if (continentSelected !== '') {
-      inputform = <InputForm countries={this.state.countryList}/>
+      inputform = <InputForm countries={this.state.countryList} colorCountry={this.handleCountry}/>
     } else {
       inputform = <div></div>
     }
