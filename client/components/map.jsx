@@ -38,7 +38,8 @@ export default class Maps extends React.Component {
     
     map.on('click', function(e) {
       var features = map.queryRenderedFeatures(e.point);
-      console.log('features: ', features[0]['properties']);
+      console.log('features: ', features[0]['properties']['code']);
+      console.log('features: ', features[0]['properties']['name']);
     })
 
   }
@@ -89,7 +90,7 @@ export default class Maps extends React.Component {
       // choose a country from selected continent
       let country = Continents[nextProps.location.selectedContinent][0];
       console.log('Country: ', country);
-      map.setPaintProperty('CA', 'fill-opacity', 0.1)
+      map.setPaintProperty('CA', 'fill-opacity', 0.3)
     }
 
   }
