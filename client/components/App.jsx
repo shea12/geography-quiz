@@ -27,8 +27,9 @@ class App extends React.Component {
 
   handleLocation(lonlat, zoom, continent, countryList) {
     // location will be an object with [lon, lat] [(float), (float)] and zoom (float)
-    console.log('changing location to: ', name)
-
+    // console.log('changing location to: ', name)
+    // console.log('lonlat: ', lonlat + ' zoom: ', zoom + '  continent: ', continent + '  countryList: ', countryList )
+    
     this.setState({
       lonlat: lonlat,
       zoom: zoom,

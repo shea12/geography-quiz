@@ -108,7 +108,7 @@ const CONTINENTS = {
     ],
   },
   EU: {
-    latlong: [15.0, 54.18],
+    lonlat: [15.0, 54.18],
     zoom: 3.34,
     countries: [
         'PT', // Portugal
@@ -160,7 +160,7 @@ const CONTINENTS = {
     ],
   },
   AS: {
-    latlon: [90.93, 28.19],
+    lonlat: [90.93, 28.19],
     zoom: 2.87,
     countries: [
         'LB', // Lebanon 
@@ -215,7 +215,7 @@ const CONTINENTS = {
     ],
   },
   OC: {
-    latlon: [161.85, -21.84],
+    lonlat: [161.85, -21.84],
     zoom: 3.07,
     countries: [
         'AU', // Australia

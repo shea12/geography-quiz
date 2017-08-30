@@ -32,7 +32,7 @@ class ContinentMenu extends React.Component {
         <Button onClick={() => this.props.move(CTS.AS.lonlat, CTS.AS.zoom, 'AS', CTS.AS.countries)}>
           Asia
         </Button>
-        <Button onClick={() => this.props.move(CTS.OC.lonlat, CTS.OC.zoom, 'OC', CTS.CO.countries)}>
+        <Button onClick={() => this.props.move(CTS.OC.lonlat, CTS.OC.zoom, 'OC', CTS.OC.countries)}>
           Oceania
         </Button>
       </ButtonGroup>
