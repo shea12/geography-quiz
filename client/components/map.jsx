@@ -38,8 +38,9 @@ export default class Maps extends React.Component {
     
     map.on('click', function(e) {
       var features = map.queryRenderedFeatures(e.point);
-      console.log('features: ', features[0]['properties']['code']);
-      console.log('features: ', features[0]['properties']['name']);
+      // console.log('features: ', features[0]['properties']['code']);
+      // console.log('features: ', features[0]['properties']['name']);
+      console.log('features: ', features[0]);
     })
 
   }
@@ -47,50 +48,15 @@ export default class Maps extends React.Component {
   componentWillReceiveProps(nextProps) {
     // will be checking previous props against nextProps in order
     // to determine what action needs to be performed on the map
-    // console.log('map: ', map);
+
     // here I check if the map needs to pan to a new location
     if (this.props.location.lonlat !== nextProps.location.lonlat) {
       map.flyTo({center: nextProps.location.lonlat, zoom: nextProps.location.zoom})
     }
 
-    // here I check if the map needs to hide/display labels
-    // TODO: this is messy, will need to clean it up
-    if (this.props.location.showLabels === true && nextProps.location.showLabels === false) {
-      map.style.stylesheet.layers.forEach(function(layer) {
-        if (layer.id === 'country label small' ||
-            layer.id === 'country label medium' ||
-            layer.id === 'country label big' ) {
-          map.setLayoutProperty('country label small', 'visibility', 'none')
-          map.setLayoutProperty('country label medium', 'visibility', 'none')
-          map.setLayoutProperty('country label big', 'visibility', 'none')
-
-          map.setLayoutProperty('city label major', 'visibility', 'none')
-          map.setLayoutProperty('city label minor', 'visibility', 'none')
-          map.setLayoutProperty('state label', 'visibility', 'none')
-          map.setLayoutProperty('admin state', 'visibility', 'none')
-          map.setLayoutProperty('admin state case', 'visibility', 'none')
-          map.setLayoutProperty('urban', 'visibility', 'none')
-        }
-      })
-    } else if (this.props.location.showLabels === false && nextProps.location.showLabels === true) {
-      map.style.stylesheet.layers.forEach(function(layer) {
-        if (layer.id === 'country label small' ||
-            layer.id === 'country label medium' ||
-            layer.id === 'country label big' ) {
-          map.setLayoutProperty('country label small', 'visibility', 'visible')
-          map.setLayoutProperty('country label medium', 'visibility', 'visible')
-          map.setLayoutProperty('country label big', 'visibility', 'visible')
-        }
-      })
-    }
-
     // here I check for the selected continent
     if (this.props.location.selectedContinent !== nextProps.location.selectedContinent) {
       map.flyTo({center: nextProps.location.lonlat, zoom: nextProps.location.zoom})
-      // choose a country from selected continent
-      let country = Continents[nextProps.location.selectedContinent][0];
-      console.log('Country: ', country);
-      map.setPaintProperty('CA', 'fill-opacity', 0.3)
     }
 
   }
@@ -101,3 +67,38 @@ export default class Maps extends React.Component {
     )
   }
 }
+
+
+
+
+
+// here I check if the map needs to hide/display labels
+// TODO: this is messy, will need to clean it up
+// if (this.props.location.showLabels === true && nextProps.location.showLabels === false) {
+//   map.style.stylesheet.layers.forEach(function(layer) {
+//     if (layer.id === 'country label small' ||
+//         layer.id === 'country label medium' ||
+//         layer.id === 'country label big' ) {
+//       map.setLayoutProperty('country label small', 'visibility', 'none')
+//       map.setLayoutProperty('country label medium', 'visibility', 'none')
+//       map.setLayoutProperty('country label big', 'visibility', 'none')
+
+//       map.setLayoutProperty('city label major', 'visibility', 'none')
+//       map.setLayoutProperty('city label minor', 'visibility', 'none')
+//       map.setLayoutProperty('state label', 'visibility', 'none')
+//       map.setLayoutProperty('admin state', 'visibility', 'none')
+//       map.setLayoutProperty('admin state case', 'visibility', 'none')
+//       map.setLayoutProperty('urban', 'visibility', 'none')
+//     }
+//   })
+// } else if (this.props.location.showLabels === false && nextProps.location.showLabels === true) {
+//   map.style.stylesheet.layers.forEach(function(layer) {
+//     if (layer.id === 'country label small' ||
+//         layer.id === 'country label medium' ||
+//         layer.id === 'country label big' ) {
+//       map.setLayoutProperty('country label small', 'visibility', 'visible')
+//       map.setLayoutProperty('country label medium', 'visibility', 'visible')
+//       map.setLayoutProperty('country label big', 'visibility', 'visible')
+//     }
+//   })
+// }

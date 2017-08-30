@@ -1,19 +1,11 @@
 import React from 'react'
 import { Button, ButtonGroup } from 'react-bootstrap'
-
-const CONTINENTS = {
-  NORTH_AM: {name: 'NA', lonlat: [-86.49, 35.27], zoom: 3.16},
-  SOUTH_AM: {name: 'SA', lonlat: [-60.81, -26.15], zoom: 2.8},
-  AFRICA: {name: 'AF', lonlat: [22.48, 1.62], zoom: 2.79},
-  EUROPE: {name: 'EU',lonlat: [15.0, 54.18], zoom: 3.34},
-  ASIA: {name: 'AS', lonlat: [90.93, 28.19], zoom: 2.87},
-  OCEANIA: {name: 'OC', lonlat: [161.85, -21.84], zoom: 3.07},
-}
+import CTS from '../../continentContents'
 
 const style = {
   buttons: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 2,
   },
 }
 
@@ -25,22 +17,22 @@ class ContinentMenu extends React.Component {
   render() {
     return (
       <ButtonGroup style={style.buttons}>
-        <Button onClick={() => this.props.move(CONTINENTS.NORTH_AM)}>
+        <Button onClick={() => this.props.move(CTS.NA.lonlat, CTS.NA.zoom, 'NA', CTS.NA.countries)}>
           North America
         </Button>
-        <Button onClick={() => this.props.move(CONTINENTS.SOUTH_AM)}>
+        <Button onClick={() => this.props.move(CTS.SA.lonlat, CTS.SA.zoom, 'SA', CTS.SA.countries)}>
           South America
         </Button>
-        <Button onClick={() => this.props.move(CONTINENTS.AFRICA)}>
+        <Button onClick={() => this.props.move(CTS.AF.lonlat, CTS.AF.zoom, 'AF', CTS.AF.countries)}>
           Africa
         </Button>
-        <Button onClick={() => this.props.move(CONTINENTS.EUROPE)}>
+        <Button onClick={() => this.props.move(CTS.EU.lonlat, CTS.EU.zoom, 'EU', CTS.EU.countries)}>
           Europe
         </Button>
-        <Button onClick={() => this.props.move(CONTINENTS.ASIA)}>
+        <Button onClick={() => this.props.move(CTS.AS.lonlat, CTS.AS.zoom, 'AS', CTS.AS.countries)}>
           Asia
         </Button>
-        <Button onClick={() => this.props.move(CONTINENTS.OCEANIA)}>
+        <Button onClick={() => this.props.move(CTS.OC.lonlat, CTS.OC.zoom, 'OC', CTS.CO.countries)}>
           Oceania
         </Button>
       </ButtonGroup>

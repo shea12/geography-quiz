@@ -2,6 +2,7 @@ import React from 'react'
 import Maps from './map.jsx'
 import Title from './title.jsx'
 import Continents from './continent.jsx'
+import InputForm from './input.jsx'
 
 const style = {
   container: {
@@ -16,31 +17,43 @@ class App extends React.Component {
     this.state = {
       lonlat: [11.6, 31],
       zoom: 1.4,
-      selectedContinent: 'XX',
       showLabels: true,
+      selectedContinent: '',
+      countryList: []
     }
 
-    this.handleLocation = this.handleLocation.bind(this);
+    this.handleLocation = this.handleLocation.bind(this)
   }
 
-  handleLocation(location) {
-    // loc will be an object with [lon, lat] and zoom (float)
-    console.log('changing location: ', location);
+  handleLocation(lonlat, zoom, continent, countryList) {
+    // location will be an object with [lon, lat] [(float), (float)] and zoom (float)
+    console.log('changing location to: ', name)
 
     this.setState({
-      selectedContinent: location.name,
-      lonlat: location.lonlat,
-      zoom: location.zoom,
+      lonlat: lonlat,
+      zoom: zoom,
       showLabels: false,
+      selectedContinent: continent,
+      countryList: countryList
     })
+
   }
 
   render() {
+    let continentSelected = this.state.selectedContinent
+    let inputform = null
+    if (continentSelected !== '') {
+      inputform = <InputForm countries={this.state.countryList}/>
+    } else {
+      inputform = <div></div>
+    }
+
     return (
       <div style={style.container}>
-        <Title move={this.handleLocation}/>
+        <Title />
         <Maps location={this.state} />
-        <Continents move={this.handleLocation}/>
+        <Continents move={this.handleLocation} />
+        {inputform}
       </div>
     )
   }
