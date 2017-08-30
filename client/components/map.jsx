@@ -69,7 +69,36 @@ export default class Maps extends React.Component {
       map.setPaintProperty(countryAbbrev, 'fill-opacity', 0.5)
     }
 
+    // here I check if the map needs to hide/display labels
+    // TODO: this is messy, will need to clean it up
+    if (this.props.location.showLabels === true && nextProps.location.showLabels === false) {
+      map.style.stylesheet.layers.forEach(function(layer) {
+        if (layer.id === 'country label small' ||
+            layer.id === 'country label medium' ||
+            layer.id === 'country label big' ) {
+          map.setLayoutProperty('country label small', 'visibility', 'none')
+          map.setLayoutProperty('country label medium', 'visibility', 'none')
+          map.setLayoutProperty('country label big', 'visibility', 'none')
 
+          map.setLayoutProperty('city label major', 'visibility', 'none')
+          map.setLayoutProperty('city label minor', 'visibility', 'none')
+          map.setLayoutProperty('state label', 'visibility', 'none')
+          map.setLayoutProperty('admin state', 'visibility', 'none')
+          map.setLayoutProperty('admin state case', 'visibility', 'none')
+          map.setLayoutProperty('urban', 'visibility', 'none')
+        }
+      })
+    } else if (this.props.location.showLabels === false && nextProps.location.showLabels === true) {
+      map.style.stylesheet.layers.forEach(function(layer) {
+        if (layer.id === 'country label small' ||
+            layer.id === 'country label medium' ||
+            layer.id === 'country label big' ) {
+          map.setLayoutProperty('country label small', 'visibility', 'visible')
+          map.setLayoutProperty('country label medium', 'visibility', 'visible')
+          map.setLayoutProperty('country label big', 'visibility', 'visible')
+        }
+      })
+    }
   }
 
   render() {
