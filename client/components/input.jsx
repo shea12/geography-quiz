@@ -83,10 +83,7 @@ class InputForm extends React.Component {
   render() {
     return(
       <form style={style.inputField}>
-        <FormGroup 
-          controlId="formBasicText"
-          
-        >
+        <FormGroup controlId="formBasicText" >
           <ControlLabel>Enter country name</ControlLabel>
           <FormControl
             type="text"

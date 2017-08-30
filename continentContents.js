@@ -89,62 +89,119 @@ const CONTINENTS = {
     lonlat: [22.48, 1.62],
     zoom: 2.79,
     countries: [
-        'ZA', // South Africa
-        'BW', // Botswana 
-        'NA', // Namibia
-        'MG', // Madagascar
-        'ZW', // Zimbabwe
-        'MZ', // Mozambique
-        'AO', // Angola
-        'MW', // Malawi
-        'ZM', // Zambia
-        'TZ', // Tanzania
-        'BI', // Burundi
-        'RW', // Rwanda
-        'CD', // Democratic Republic of the Congo 
-        'CG', // Republic of the Congo
-        'GA', // Gabon
-        'GQ', // Equatorial Guinea
-        'UG', // Uganda
-        'KE', // Kenya
-        'CM', // Cameroon
-        'CF', // Central African Repulic
-        'SS', // South Sudan
-        'DJ', // Djibouti
-        'ET', // Ethiopia
-        'SO', // Somalia
-        'SD', // Sudan
-        'EG', // Egypt
-        'LY', // Libya
-        'TD', // Chad
-        'NG', // Nigeria
-        'NE', // Niger
-        'DZ', // Algeria
-        'TN', // Tunisia
-        'MA', // Morocco
-        'EH', // Western Sahara
-        'ML', // Mali
-        'MR', // Mauritania
-        'SN', // Senegal
-        'BF', // Burkina Faso
-        'BJ', // Benin
-        'TG', // Togo
-        'GH', // Ghana
-        'CI', // Ivory Coast
-        'LR', // Liberia
-        'GN', // Guinea
-        'SL', // Sierra Leone
-        'GW', // Guinea-Bissau
-        'GM', // The Gambia
-        'CV', // Cape Verde
-        'ER', // Eritrea
-        'LS', // Lesotho
-        'SZ', // Swaziland
-        'ST', // Sao Tome and Principe
-        'KM', // Comoros
-        'MU', // Mauritius
-        'SC', // Seychelles
+        'South Africa',
+        'Botswana', 
+        'Namibia',
+        'Madagascar',
+        'Zimbabwe',
+        'Mozambique',
+        'Angola',
+        'Malawi',
+        'Zambia',
+        'Tanzania',
+        'Burundi',
+        'Rwanda',
+        'Democratic Republic of the Congo', 
+        'Republic of the Congo',
+        'Gabon',
+        'Equatorial Guinea',
+        'Uganda',
+        'Kenya',
+        'Cameroon',
+        'Central African Repulic',
+        'South Sudan',
+        'Djibouti',
+        'Ethiopia',
+        'Somalia',
+        'Sudan',
+        'Egypt',
+        'Libya',
+        'Chad',
+        'Nigeria',
+        'Niger',
+        'Algeria',
+        'Tunisia',
+        'Morocco',
+        'Western Sahara',
+        'Mali',
+        'Mauritania',
+        'Senegal',
+        'Burkina Faso',
+        'Benin',
+        'Togo',
+        'Ghana',
+        'Ivory Coast',
+        'Liberia',
+        'Guinea',
+        'Sierra Leone',
+        'Guinea-Bissau',
+        'The Gambia',
+        'Cape Verde',
+        'Eritrea',
+        'Lesotho',
+        'Swaziland',
+        'Sao Tome and Principe',
+        'Comoros',
+        'Mauritius',
+        'Seychelles',
     ],
+    countries: {
+        'South Africa': 'ZA',
+        'Botswana': 'BW', 
+        'Namibia': 'NA',
+        'Madagascar': 'MG',
+        'Zimbabwe': 'ZW',
+        'Mozambique': 'MZ',
+        'Angola': 'AO',
+        'Malawi': 'MW',
+        'Zambia': 'ZM',
+        'Tanzania': 'TZ',
+        'Burundi': 'BI',
+        'Rwanda': 'RW',
+        'Democratic Republic of the Congo': 'CD', 
+        'Republic of the Congo': 'CG',
+        'Gabon': 'GA',
+        'Equatorial Guinea': 'GQ',
+        'Uganda': 'UG',
+        'Kenya': 'KE',
+        'Cameroon': 'CM',
+        'Central African Repulic': 'CF',
+        'South Sudan': 'SS',
+        'Djibouti': 'DJ',
+        'Ethiopia': 'ET',
+        'Somalia': 'SO',
+        'Sudan': 'SD',
+        'Egypt': 'EG',
+        'Libya':'LY',
+        'Chad': 'TD',
+        'Nigeria': 'NG',
+        'Niger': 'NE',
+        'Algeria': 'DZ',
+        'Tunisia': 'TN',
+        'Morocco': 'MA',
+        'Western Sahara': 'EH',
+        'Mali': 'ML',
+        'Mauritania': 'MR',
+        'Senegal': 'SN',
+        'Burkina Faso': 'BF',
+        'Benin': 'BJ',
+        'Togo': 'TG',
+        'Ghana': 'GH',
+        'Ivory Coast': 'CI',
+        'Liberia': 'LR',
+        'Guinea': 'GN',
+        'Sierra Leone': 'SL',
+        'Guinea-Bissau': 'GW',
+        'The Gambia': 'GM',
+        'Cape Verde': 'CV',
+        'Eritrea': 'ER',
+        'Lesotho': 'LS',
+        'Swaziland': 'SZ',
+        'Sao Tome and Principe': 'ST',
+        'Comoros': 'KM',
+        'Mauritius': 'MU',
+        'Seychelles': 'SC',
+    },
   },
   EU: {
     lonlat: [15.0, 54.18],
@@ -257,50 +314,42 @@ const CONTINENTS = {
     lonlat: [161.85, -21.84],
     zoom: 3.07,
     countries: [
-        'AU', // Australia
-        'NZ', // New Zealand
-        'PG', // Papua New Guinea
-        'SB', // Solomon Islands
-        'VU', // Vanuatu
-        'FJ', // Fiji
-        'FM', // Federated States of Micronesia
-        'MH', // Marshall Islands
-        'KI', // Kiribati
-        'WS', // Samoa
-        'TO', // Tonga
-        'TV', // Tuvalu
-        'NR', // Nauru
-        'PW', // Palau
-        'NC', // New Caledonia
-        'CK', // Cook Islands
+        'Australia',
+        'New Zealand',
+        'Papua New Guinea',
+        'Solomon Islands',
+        'Vanuatu',
+        'Fiji',
+        'Federated States of Micronesia',
+        'Marshall Islands',
+        'Kiribati',
+        'Samoa',
+        'Tonga',
+        'Tuvalu',
+        'Nauru',
+        'Palau',
+        'New Caledonia',
+        'Cook Islands',
     ],
+    abbrevs: {
+        'Australia': 'AU',
+        'New Zealand': 'NZ',
+        'Papua New Guinea': 'PG',
+        'Solomon Islands': 'SB',
+        'Vanuatu': 'VU',
+        'Fiji': 'FJ',
+        'Federated States of Micronesia': 'FM',
+        'Marshall Islands': 'MH',
+        'Kiribati': 'KI',
+        'Samoa': 'WS',
+        'Tonga': 'TO',
+        'Tuvalu': 'TV',
+        'Nauru': 'NR',
+        'Palau': 'PW',
+        'New Caledonia': 'NC',
+        'Cook Islands': 'CK',
+    },
   },
 }
 
 module.exports = CONTINENTS;
-
-
-
-
-/*
-countries: [
-    'AR', // Argentina
-    'BO', // Bolivia
-    'BR', // Brazil
-    'CL', // Chile
-    'CO', // Colombia
-    'EC', // Ecuador
-    'GY', // Guyana
-    'PY', // Paraguay
-    'PE', // Peru
-    'SR', // Suriname
-    'UY', // Uruguay
-    'VE', // Venezuela
-],
-
-*/
-
-
-
-
-
