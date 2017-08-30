@@ -1,6 +1,7 @@
 import React from 'react'
 import MapboxGl from 'mapbox-gl'
 import Keys from '../../keys'
+import Continents from '../../continentContents'
 
 const style = {
   map: {
@@ -37,7 +38,7 @@ export default class Maps extends React.Component {
     
     map.on('click', function(e) {
       var features = map.queryRenderedFeatures(e.point);
-      console.log('features: ', features[0].properties);
+      console.log('features: ', features[0]['properties']);
     })
 
   }
@@ -45,7 +46,7 @@ export default class Maps extends React.Component {
   componentWillReceiveProps(nextProps) {
     // will be checking previous props against nextProps in order
     // to determine what action needs to be performed on the map
-    console.log('map: ', map);
+    // console.log('map: ', map);
     // here I check if the map needs to pan to a new location
     if (this.props.location.lonlat !== nextProps.location.lonlat) {
       map.flyTo({center: nextProps.location.lonlat, zoom: nextProps.location.zoom})
@@ -80,6 +81,15 @@ export default class Maps extends React.Component {
           map.setLayoutProperty('country label big', 'visibility', 'visible')
         }
       })
+    }
+
+    // here I check for the selected continent
+    if (this.props.location.selectedContinent !== nextProps.location.selectedContinent) {
+      map.flyTo({center: nextProps.location.lonlat, zoom: nextProps.location.zoom})
+      // choose a country from selected continent
+      let country = Continents[nextProps.location.selectedContinent][0];
+      console.log('Country: ', country);
+      map.setPaintProperty('CA', 'fill-opacity', 0.1)
     }
 
   }

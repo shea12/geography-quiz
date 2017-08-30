@@ -16,7 +16,7 @@ class App extends React.Component {
     this.state = {
       lonlat: [11.6, 31],
       zoom: 1.4,
-      selectedContinent: '',
+      selectedContinent: 'XX',
       showLabels: true,
     }
 
