@@ -17,8 +17,8 @@ class App extends React.Component {
     super(props)
     this.state = {
       world: World,
-      lonlat: [11.6, 31],
-      zoom: 1.4,
+      lonlat: [11.6, 16.8],
+      zoom: 2,
       showLabels: true,
       selectedContinent: '',
       countryList: [],

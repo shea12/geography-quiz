@@ -2,7 +2,7 @@ import React from 'react'
 
 const style = {
   title_div: {
-    paddingLeft: 600,
+    paddingLeft: 1260,
   },
   title: {
     position: 'absolute',

@@ -3,9 +3,10 @@ import { Input, form, FormControl, FormGroup, ControlLabel, HelpBlock } from 're
 
 const style = {
   inputField: {
-    marginLeft: 500,
+    marginLeft: 1100,
     position: 'absolute',
     zIndex: 1,
+    marginTop: 400,
   }
 }
 
@@ -82,18 +83,19 @@ class InputForm extends React.Component {
 
   render() {
     return(
-      <form style={style.inputField}>
+      <form autoComplete='off' style={style.inputField}>
         <FormGroup controlId="formBasicText" >
-          <ControlLabel>Enter country name</ControlLabel>
+          <ControlLabel></ControlLabel>
           <FormControl
+
             type="text"
             value={this.state.value}
-            placeholder="type..."
+            placeholder='Enter country'
             onChange={this.handleChange}
             onKeyPress={this.handleKeyPress}
           />
           <FormControl.Feedback />
-          <HelpBlock> ?? </HelpBlock>
+          <HelpBlock></HelpBlock>
         </FormGroup>
       </form>
     )

@@ -61,6 +61,7 @@ export default class Maps extends React.Component {
       pitchWithRotate: false,
       dragRotate: false,
       hash: true,
+      minZoom: 2,
     })
     
     map.on('click', function(e) {
@@ -82,8 +83,8 @@ export default class Maps extends React.Component {
       let countryAbbrev = Continents[found_continent].abbrevs[nextProps.location.countryToShade]
 
       // shade in found country fill
-      map.setPaintProperty(countryAbbrev, 'fill-opacity', 0.3)
-      map.setPaintProperty(countryAbbrev, 'fill-outline-color', 'rgb(33, 200, 30)')
+      // map.setPaintProperty(countryAbbrev, 'fill-opacity', 1)
+      // map.setPaintProperty(countryAbbrev, 'fill-outline-color', 'rgb(33, 200, 30)')
 
       // display found country label
       let label = countryAbbrev + '_LABEL'

@@ -1,92 +1,92 @@
 const CONTINENTS = {
   NA: {
-    lonlat: [-86.49, 35.27],
+    lonlat: [-75.71, 37.42],
     zoom: 3.16,
     countries: [
-        // 'Antigua and Barbuda', // Antigua and Barbuda
-        // 'Bahamas', // Bahamas
-        // 'Barbados', // Barbados
-        // 'Belize', // Belize
+        'Antigua and Barbuda', // Antigua and Barbuda
+        'Bahamas', // Bahamas
+        'Barbados', // Barbados
+        'Belize', // Belize
         'Canada', // Canada
-        // 'Costa Rica', // Costa Rica
-        // 'Cuba', // Cuba
-        // 'Dominica', // Dominica
-        // 'Dominican Republic', // Dominican Republic
-        // 'El Salvador', // El Salvador
-        // 'Grenada', // Grenada
-        // 'Guatemala', // Guatemala
-        // 'Haiti', // Haiti
-        // 'Honduras', // Honduras
-        // 'Jamaica', // Jamaica
+        'Costa Rica', // Costa Rica
+        'Cuba', // Cuba
+        'Dominica', // Dominica
+        'Dominican Republic', // Dominican Republic
+        'El Salvador', // El Salvador
+        'Grenada', // Grenada
+        'Guatemala', // Guatemala
+        'Haiti', // Haiti
+        'Honduras', // Honduras
+        'Jamaica', // Jamaica
         'Mexico', // Mexico
-        // 'Nicaragua', // Nicaragua
-        // 'Panama', // Panama
-        // 'Saint Kitts and Nevis', // Saint Kitts and Nevis
-        // 'Saint Lucia', // Saint Lucia
-        // 'Saint Vincent and the Grenadines', // Saint Vincent and the Grenadines
-        // 'Trinidad and Tobago', // Trinidad and Tobago
+        'Nicaragua', // Nicaragua
+        'Panama', // Panama
+        'Saint Kitts and Nevis', // Saint Kitts and Nevis
+        'Saint Lucia', // Saint Lucia
+        'Saint Vincent and the Grenadines', // Saint Vincent and the Grenadines
+        'Trinidad and Tobago', // Trinidad and Tobago
         'United States', // United States of America
     ],
     abbrevs: {
-        // 'Antigua and Barbuda': 'AG', // Antigua and Barbuda
-        // 'Bahamas': 'BS', // Bahamas
-        // 'Barbados': 'BB', // Barbados
-        // 'Belize': 'BZ', // Belize
+        'Antigua and Barbuda': 'AG', // Antigua and Barbuda
+        'Bahamas': 'BS', // Bahamas
+        'Barbados': 'BB', // Barbados
+        'Belize': 'BZ', // Belize
         'Canada': 'CA', // Canada
-        // 'Costa Rica': 'CR', // Costa Rica
-        // 'Cuba': 'CU', // Cuba
-        // 'Dominica': 'DM', // Dominica
-        // 'Dominican Republic': 'DO', // Dominican Republic
-        // 'El Salvador': 'SV', // El Salvador
-        // 'Grenada': 'GD', // Grenada
-        // 'Guatemala': 'GT', // Guatemala
-        // 'Haiti': 'HT', // Haiti
-        // 'Honduras': 'HN', // Honduras
-        // 'Jamaica': 'JM', // Jamaica
+        'Costa Rica': 'CR', // Costa Rica
+        'Cuba': 'CU', // Cuba
+        'Dominica': 'DM', // Dominica
+        'Dominican Republic': 'DO', // Dominican Republic
+        'El Salvador': 'SV', // El Salvador
+        'Grenada': 'GD', // Grenada
+        'Guatemala': 'GT', // Guatemala
+        'Haiti': 'HT', // Haiti
+        'Honduras': 'HN', // Honduras
+        'Jamaica': 'JM', // Jamaica
         'Mexico': 'MX', // Mexico
-        // 'Nicaragua': 'NI', // Nicaragua
-        // 'Panama': 'PA', // Panama
-        // 'Saint Kitts and Nevis': 'KN', // Saint Kitts and Nevis
-        // 'Saint Lucia': 'LC', // Saint Lucia
-        // 'Saint Vincent and the Grenadines': 'VC', // Saint Vincent and the Grenadines
-        // 'Trinidad and Tobago': 'TT', // Trinidad and Tobago
-        'United States of America': 'US', // United States of America
+        'Nicaragua': 'NI', // Nicaragua
+        'Panama': 'PA', // Panama
+        'Saint Kitts and Nevis': 'KN', // Saint Kitts and Nevis
+        'Saint Lucia': 'LC', // Saint Lucia
+        'Saint Vincent and the Grenadines': 'VC', // Saint Vincent and the Grenadines
+        'Trinidad and Tobago': 'TT', // Trinidad and Tobago
+        'United States': 'US', // United States of America
     },
   },
   SA: {
     lonlat: [-60.81, -26.15],
     zoom: 2.8,
-  //   countries: [
-  //       'Argentina',
-  //       'Bolivia',
-  //       'Brazil',
-  //       'Chile',
-  //       'Colombia',
-  //       'Ecuador',
-  //       'Guyana',
-  //       'Paraguay',
-  //       'Peru',
-  //       'Suriname',
-  //       'Uruguay',
-  //       'Venezuela',
-  //   ],
-  //   abbrevs: {
-  //       'Argentina': 'AR',
-  //       'Bolivia': 'BO', 
-  //       'Brazil': 'BR',
-  //       'Chile': 'CL',
-  //       'Colombia': 'CO',
-  //       'Ecuador': 'EC',
-  //       'Guyana': 'GY',
-  //       'Paraguay': 'PY',
-  //       'Peru': 'PE',
-  //       'Suriname': 'SR',
-  //       'Uruguay': 'UY',
-  //       'Venezuela': 'VE',
-  //   },
+    countries: [
+        'Argentina',
+        'Bolivia',
+        'Brazil',
+        'Chile',
+        'Colombia',
+        'Ecuador',
+        'Guyana',
+        'Paraguay',
+        'Peru',
+        'Suriname',
+        'Uruguay',
+        'Venezuela',
+    ],
+    abbrevs: {
+        'Argentina': 'AR',
+        'Bolivia': 'BO', 
+        'Brazil': 'BR',
+        'Chile': 'CL',
+        'Colombia': 'CO',
+        'Ecuador': 'EC',
+        'Guyana': 'GY',
+        'Paraguay': 'PY',
+        'Peru': 'PE',
+        'Suriname': 'SR',
+        'Uruguay': 'UY',
+        'Venezuela': 'VE',
+    },
   },
   AF: {
-    lonlat: [22.48, 1.62],
+    lonlat: [32.54, 1.52],
     zoom: 2.79,
   //   countries: [
   //       'South Africa',
@@ -204,7 +204,7 @@ const CONTINENTS = {
   //   },
   },
   EU: {
-    lonlat: [15.0, 54.18],
+    lonlat: [15.21, 53.32],
     zoom: 3.34,
   //   countries: [
   //       'PT', // Portugal
