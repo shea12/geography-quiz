@@ -65,40 +65,59 @@ export default class Maps extends React.Component {
       // console.log('continent: ', Continents[continent]);
       let countryAbbrev = Continents[continent].abbrevs[nextProps.location.countryToShade]
       console.log('countryAbbrev: ', countryAbbrev);
+      map.setPaintProperty(countryAbbrev, 'fill-opacity', 0.3)
+      // map.setPaintProperty(countryAbbrev, 'fill-outline-width', 4)
+      map.setPaintProperty(countryAbbrev, 'fill-outline-color', 'rgb(33, 200, 30)')
 
-      map.setPaintProperty(countryAbbrev, 'fill-opacity', 0.5)
+      // console.log(map.style.stylesheet.layers.layout['text-field'])
+      console.log('MAP: ', map)
+
+      let features = map.queryRenderedFeatures({ layers: ['country-label-lg'] });
+      console.log('FEATURES: ', features);
+
+      // map.style.stylesheet.layers.forEach(function(layer) {
+      //   console.log('LAYER: ', layer);
+      //   if (layer.id === 'country-label-sm' && layer.properites.name === 'mexico' ||
+      //       layer.id === 'country-label-md' && layer.properties.name === 'mexico'||
+      //       layer.id === 'country-label-lg' && layer.properties.name === 'mexico') {
+      //     map.setLayoutProperty('country label small', 'visibility', 'none')
+      //     map.setLayoutProperty('country label medium', 'visibility', 'none')
+      //     map.setLayoutProperty('country label big', 'visibility', 'none')
+      //   }
+      // })
     }
 
     // here I check if the map needs to hide/display labels
     // TODO: this is messy, will need to clean it up
-    if (this.props.location.showLabels === true && nextProps.location.showLabels === false) {
-      map.style.stylesheet.layers.forEach(function(layer) {
-        if (layer.id === 'country label small' ||
-            layer.id === 'country label medium' ||
-            layer.id === 'country label big' ) {
-          map.setLayoutProperty('country label small', 'visibility', 'none')
-          map.setLayoutProperty('country label medium', 'visibility', 'none')
-          map.setLayoutProperty('country label big', 'visibility', 'none')
+    // if (this.props.location.showLabels === true && nextProps.location.showLabels === false) {
+    //   map.style.stylesheet.layers.forEach(function(layer) {
 
-          map.setLayoutProperty('city label major', 'visibility', 'none')
-          map.setLayoutProperty('city label minor', 'visibility', 'none')
-          map.setLayoutProperty('state label', 'visibility', 'none')
-          map.setLayoutProperty('admin state', 'visibility', 'none')
-          map.setLayoutProperty('admin state case', 'visibility', 'none')
-          map.setLayoutProperty('urban', 'visibility', 'none')
-        }
-      })
-    } else if (this.props.location.showLabels === false && nextProps.location.showLabels === true) {
-      map.style.stylesheet.layers.forEach(function(layer) {
-        if (layer.id === 'country label small' ||
-            layer.id === 'country label medium' ||
-            layer.id === 'country label big' ) {
-          map.setLayoutProperty('country label small', 'visibility', 'visible')
-          map.setLayoutProperty('country label medium', 'visibility', 'visible')
-          map.setLayoutProperty('country label big', 'visibility', 'visible')
-        }
-      })
-    }
+    //     if (layer.id === 'country label small' ||
+    //         layer.id === 'country label medium' ||
+    //         layer.id === 'country label big' ) {
+    //       map.setLayoutProperty('country label small', 'visibility', 'none')
+    //       map.setLayoutProperty('country label medium', 'visibility', 'none')
+    //       map.setLayoutProperty('country label big', 'visibility', 'none')
+
+    //       map.setLayoutProperty('city label major', 'visibility', 'none')
+    //       map.setLayoutProperty('city label minor', 'visibility', 'none')
+    //       map.setLayoutProperty('state label', 'visibility', 'none')
+    //       map.setLayoutProperty('admin state', 'visibility', 'none')
+    //       map.setLayoutProperty('admin state case', 'visibility', 'none')
+    //       map.setLayoutProperty('urban', 'visibility', 'none')
+    //     }
+    //   })
+    // } else if (this.props.location.showLabels === false && nextProps.location.showLabels === true) {
+    //   map.style.stylesheet.layers.forEach(function(layer) {
+    //     if (layer.id === 'country label small' ||
+    //         layer.id === 'country label medium' ||
+    //         layer.id === 'country label big' ) {
+    //       map.setLayoutProperty('country label small', 'visibility', 'visible')
+    //       map.setLayoutProperty('country label medium', 'visibility', 'visible')
+    //       map.setLayoutProperty('country label big', 'visibility', 'visible')
+    //     }
+    //   })
+    // }
   }
 
   render() {
