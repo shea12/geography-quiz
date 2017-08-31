@@ -3,6 +3,7 @@ import Maps from './map.jsx'
 import Title from './title.jsx'
 import Continents from './continent.jsx'
 import InputForm from './input.jsx'
+import World from '../../continentContents'
 
 const style = {
   container: {
@@ -15,6 +16,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      world: World,
       lonlat: [11.6, 31],
       zoom: 1.4,
       showLabels: true,
