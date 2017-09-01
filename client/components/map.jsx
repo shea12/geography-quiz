@@ -126,17 +126,3 @@ export default class Maps extends React.Component {
     )
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

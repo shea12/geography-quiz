@@ -15,7 +15,7 @@ const style = {
 
 }
 
-class ContinentMenu extends React.Component {
+export default class ContinentMenu extends React.Component {
   componentWillMount() {
     console.log('mounting continent buttons')
   }
@@ -46,5 +46,3 @@ class ContinentMenu extends React.Component {
   }
 
 }
-
-module.exports = ContinentMenu

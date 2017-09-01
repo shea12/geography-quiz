@@ -3,6 +3,7 @@ import Maps from './map.jsx'
 import Title from './title.jsx'
 import Continents from './continent.jsx'
 import InputForm from './input.jsx'
+import ScoreKeeper from './scorekeeper.jsx'
 import World from '../../continentContents'
 
 const style = {
@@ -12,7 +13,7 @@ const style = {
   },
 }
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -32,9 +33,6 @@ class App extends React.Component {
 
   handleLocation(lonlat, zoom, continent, countryList, abbrevs) {
     // location will be an object with [lon, lat] [(float), (float)] and zoom (float)
-    // console.log('changing location to: ', name)
-    // console.log('lonlat: ', lonlat + ' zoom: ', zoom + '  continent: ', continent + '  countryList: ', countryList )
-    // console.log('countryList in App: ', countryList);
 
     this.setState({
       lonlat: lonlat,
@@ -54,11 +52,14 @@ class App extends React.Component {
   render() {
     let continentSelected = this.state.selectedContinent
     let inputform = null
+    let scorekeeper = null
     console.log('in render: ', this.state.countryList);
     if (continentSelected !== '') {
-      inputform = <InputForm countries={this.state.countryList} colorCountry={this.handleCountry}/>
+      inputform = <InputForm countries={this.state.countryList} colorCountry={this.handleCountry} />
+      scorekeeper = <ScoreKeeper countries={this.state.countryList} continent={this.state.selectedContinent} />
     } else {
       inputform = <div></div>
+      scorekeeper = <div></div>
     }
 
     return (
@@ -67,9 +68,8 @@ class App extends React.Component {
         <Maps location={this.state} />
         <Continents move={this.handleLocation} />
         {inputform}
+        {scorekeeper}
       </div>
     )
   }
 }
-
-module.exports = App

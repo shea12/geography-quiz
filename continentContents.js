@@ -206,54 +206,102 @@ const CONTINENTS = {
   EU: {
     lonlat: [15.21, 53.32],
     zoom: 3.34,
-  //   countries: [
-  //       'PT', // Portugal
-  //       'ES', // Spain
-  //       'FR', // France
-  //       'IE', // Ireland
-  //       'GB', // United Kingdom
-  //       'NL', // Nederland / Netherlands
-  //       'DK', // Danmark / Denmark
-  //       'DE', // Deutschland / Germany
-  //       'LU', // Luxembourg
-  //       'CH', // Switzerland
-  //       'IT', // Italia / Italy
-  //       'AT', // Osterreich / Austria
-  //       'SI', // Slovenija / Slovenia
-  //       'HR', // Hrvatska / Croatia
-  //       'BA', // Bosna i Hercegovina / Bosnia and Herzegovina
-  //       'ME', // Crna Gora / Montenegro
-  //       'XK', // Kosove / Kosovo
-  //       'AL', // Shqiperia / Albania
-  //       'ME', // Republic of Macedonia
-  //       'GR', // Greece
-  //       'BG', // Bulgaria
-  //       'RS', // Serbia
-  //       'MT', // Malta
-  //       'TR', // Turkey
-  //       'RO', // Romania
-  //       'MD', // Moldova
-  //       'UA', // Ukraine
-  //       'CY', // Cyprus
-  //       'EE', // Eesti / Estonia
-  //       'LV', // Latvija / Latvia
-  //       'LT', // Lietuva / Lithuania
-  //       'PL', // Polska / Poland
-  //       'SK', // Slovensko / Slovakia
-  //       'HU', // Hungary
-  //       'CZ', // Cesko / Czech Republic
-  //       'NO', // Norge / Norway
-  //       'SE', // Sverige / Sweden
-  //       'FI', // Suomi / Finland
-  //       'RU', // Russia
-  //       'IS', // Island / Iceland
-  //       'AD', // Andorra
-  //       'MC', // Monaco 
-  //       'SM', // San Marino
-  //       'LI', // Liechtenstein
-  //       'BY', // Belarus
-  //       'BE', // Belgique // Belgium
-  //   ],
+    countries: [
+        'Portugal',
+        'Spain',
+        'France',
+        'Ireland',
+        'United Kingdom',
+        'Netherlands',
+        'Denmark',
+        'Germany',
+        'Belgium',
+        'Luxembourg',
+        'Switzerland',
+        'Italy',
+        'Iceland',
+        'Norway',
+        'Sweden',
+        'Finland',
+        'Estonia',
+        'Latvia',
+        'Lithuania',
+        'Austria',
+        'Slovenia',
+        'Croatia',
+        'Bosnia and Herzegovina',
+        'Montenegro',
+        'Kosovo',
+        'Albania',
+        'Republic of Macedonia',
+        'Greece',
+        'Turkey',
+        'Romania',
+        'Bulgaria',
+        'Serbia',
+        'Malta',
+        'Moldova',
+        'Ukraine',
+        'Cyprus',
+        'Poland',
+        'Slovakia',
+        'Hungary',
+        'Czech Republic',
+        'Russia',
+        'Belarus',
+        'Andorra',
+        'Monaco',
+        'San Marino',
+        'Liechtenstein',
+    ],
+    abbrevs: {
+        'Portugal': 'PT',
+        'Spain': 'ES',
+        'France': 'FR',
+        'Ireland': 'IE',
+        'United Kingdom': 'GB',
+        'Netherlands': 'NL',
+        'Denmark': 'DK',
+        'Germany': 'DE',
+        'Belgium': 'BE',
+        'Luxembourg': 'LU',
+        'Switzerland': 'CH',
+        'Italy': 'IT',
+        'Iceland': 'IS',
+        'Norway': 'NO',
+        'Sweden': 'SE',
+        'Finland': 'FI',
+        'Estonia': 'EE',
+        'Latvia': 'LV',
+        'Lithuania': 'LT',
+        'Austria': 'AT',
+        'Slovenia': 'SI',
+        'Croatia': 'HR',
+        'Bosnia and Herzegovina': 'BA',
+        'Montenegro': 'ME',
+        'Kosovo': 'XK',
+        'Albania': 'AL',
+        'Republic of Macedonia': 'MK',
+        'Greece': 'GR',
+        'Turkey': 'TR',
+        'Romania': 'RO',
+        'Bulgaria': 'BG',
+        'Serbia': 'RS',
+        'Malta': 'MT',
+        'Moldova': 'MD',
+        'Ukraine': 'UA',
+        'Cyprus': 'CY',
+        'Poland': 'PL',
+        'Slovakia': 'SK',
+        'Hungary': 'HU',
+        'Czech Republic': 'CZ',
+        'Russia': 'RU',
+        'Belarus': 'BY',
+        'Andorra': 'AD',
+        'Monaco': 'MC',
+        'San Marino': 'SM',
+        'Liechtenstein': 'LI',
+    }
   },
   AS: {
     lonlat: [90.93, 28.19],
@@ -353,3 +401,53 @@ const CONTINENTS = {
 }
 
 module.exports = CONTINENTS;
+
+
+// 'PT', // Portugal
+// 'ES', // Spain
+// 'FR', // France
+// 'IE', // Ireland
+// 'GB', // United Kingdom
+// 'NL', // Nederland / Netherlands
+// 'DK', // Danmark / Denmark
+// 'DE', // Deutschland / Germany
+// 'BE', // Belgique // Belgium
+// 'LU', // Luxembourg
+// 'CH', // Switzerland
+// 'IT', // Italia / Italy
+// 'IS', // Island / Iceland
+// 'NO', // Norge / Norway
+// 'SE', // Sverige / Sweden
+// 'FI', // Suomi / Finland
+// 'EE', // Eesti / Estonia
+// 'LV', // Latvija / Latvia
+// 'LT', // Lietuva / Lithuania
+// 'AT', // Osterreich / Austria
+// 'SI', // Slovenija / Slovenia
+// 'HR', // Hrvatska / Croatia
+// 'BA', // Bosna i Hercegovina / Bosnia and Herzegovina
+// 'ME', // Crna Gora / Montenegro
+// 'XK', // Kosove / Kosovo
+// 'AL', // Shqiperia / Albania
+// 'MK', // Republic of Macedonia
+// 'GR', // Greece
+// 'TR', // Turkey
+// 'RO', // Romania
+// 'BG', // Bulgaria
+// 'RS', // Serbia
+// 'MT', // Malta
+// 'MD', // Moldova
+// 'UA', // Ukraine
+// 'CY', // Cyprus
+// 'PL', // Polska / Poland
+// 'SK', // Slovensko / Slovakia
+// 'HU', // Hungary
+// 'CZ', // Cesko / Czech Republic
+// 'RU', // Russia
+// 'BY', // Belarus
+// 'AD', // Andorra
+// 'MC', // Monaco 
+// 'SM', // San Marino
+// 'LI', // Liechtenstein
+
+

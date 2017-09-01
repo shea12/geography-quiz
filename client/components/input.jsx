@@ -3,14 +3,14 @@ import { Input, form, FormControl, FormGroup, ControlLabel, HelpBlock } from 're
 
 const style = {
   inputField: {
-    marginLeft: 1100,
+    marginLeft: 900,
     position: 'absolute',
     zIndex: 1,
     marginTop: 400,
   }
 }
 
-class InputForm extends React.Component {
+export default class InputForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -52,6 +52,7 @@ class InputForm extends React.Component {
             console.log(length-1 + ' countries left') 
           } else {
             console.log('You named all the countries!')
+            alert('You named all the countries!')
           }
 
         } else if (i === length-1) {
@@ -101,5 +102,3 @@ class InputForm extends React.Component {
     )
   }
 }
-
-module.exports = InputForm
