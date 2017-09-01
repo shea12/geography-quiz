@@ -12,7 +12,7 @@ const style = {
 
 export default class Title extends React.Component {
   componentDidMount() {
-    console.log('Title mounted');
+    // console.log('Title mounted')
   }
 
   render() {

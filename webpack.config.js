@@ -19,5 +19,6 @@ module.exports = {
       { test: /\.(js|jsx)$/, loader: 'babel-loader', exclude: /node_modules/ },
     ],
   },
+  // resolve: ["", ".webpack.js", ".web.js", ".js", ".jsx", ".json"],
   plugins: [HtmlWebpackPluginConfig],
 }

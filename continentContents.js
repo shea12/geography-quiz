@@ -54,8 +54,8 @@ const CONTINENTS = {
     },
   },
   SA: {
-    lonlat: [-60.81, -26.15],
-    zoom: 2.8,
+    lonlat: [-53.74, -22.99],
+    zoom: 2.66,
     countries: [
         'Argentina',
         'Bolivia',
@@ -204,8 +204,8 @@ const CONTINENTS = {
   //   },
   },
   EU: {
-    lonlat: [15.21, 53.32],
-    zoom: 3.34,
+    lonlat: [23.57, 53.38],
+    zoom: 3.36,
     countries: [
         'Portugal',
         'Spain',

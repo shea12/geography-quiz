@@ -1,10 +1,12 @@
 import React from 'react'
+/* eslint-disable */
 import Maps from './map.jsx'
 import Title from './title.jsx'
 import Continents from './continent.jsx'
 import InputForm from './input.jsx'
 import ScoreKeeper from './scorekeeper.jsx'
 import World from '../../continentContents'
+/* eslint-enable */
 
 const style = {
   container: {
@@ -31,40 +33,51 @@ export default class App extends React.Component {
     this.handleCountry = this.handleCountry.bind(this)
   }
 
-  handleLocation(lonlat, zoom, continent, countryList, abbrevs) {
+  handleLocation(ll, zm, co, cl, ab) {
     // location will be an object with [lon, lat] [(float), (float)] and zoom (float)
 
     this.setState({
-      lonlat: lonlat,
-      zoom: zoom,
+      lonlat: ll,
+      zoom: zm,
       showLabels: false,
-      selectedContinent: continent,
-      countryList: countryList,
-      abbrevs: abbrevs,
+      selectedContinent: co,
+      countryList: cl,
+      abbrevs: ab,
     })
-
   }
 
   handleCountry(country) {
-    this.setState({countryToShade: country})
+    this.setState({ countryToShade: country })
   }
 
   render() {
-    let continentSelected = this.state.selectedContinent
+    const continentSelected = this.state.selectedContinent
     let inputform = null
     let scorekeeper = null
     if (continentSelected !== '') {
-      inputform = <InputForm countries={this.state.countryList} colorCountry={this.handleCountry} />
-      scorekeeper = <ScoreKeeper countries={this.state.countryList} continent={this.state.selectedContinent} />
+      inputform = (<InputForm
+        countries={this.state.countryList}
+        colorCountry={this.handleCountry}
+      />)
+      scorekeeper = (<ScoreKeeper
+        countries={this.state.countryList}
+        continent={this.state.selectedContinent}
+      />)
     } else {
-      inputform = <div></div>
-      scorekeeper = <div></div>
+      inputform = <div />
+      scorekeeper = <div />
     }
 
     return (
       <div style={style.container}>
         <Title />
-        <Maps location={this.state} />
+        <Maps
+          lonlat={this.state.lonlat}
+          zoom={this.state.zoom}
+          countryToShade={this.state.countryToShade}
+          selectedContinent={this.state.selectedContinent}
+          showLabels={this.state.showLabels}
+        />
         <Continents move={this.handleLocation} />
         {inputform}
         {scorekeeper}

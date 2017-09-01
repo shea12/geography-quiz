@@ -1,17 +1,17 @@
 import React from 'react'
-import {  } from 'react-bootstrap'
+import PropTypes from 'prop-types'
+// import {  } from 'react-bootstrap'
 
 const style = {
   scoreDiv: {
     position: 'absolute',
     zIndex: 1,
     marginTop: 20,
-    marginLeft: 840
-  }
-
+    marginLeft: 840,
+  },
 }
 
-export default class ScoreKeeper extends React.Component {
+class ScoreKeeper extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -23,23 +23,23 @@ export default class ScoreKeeper extends React.Component {
   componentWillMount() {
     this.setState({
       continent: this.props.continent,
-      remain: this.props.countries.length
-    })  
+      remain: this.props.countries.length,
+    })
   }
 
   componentWillReceiveProps(nextProps) {
-    let remain = nextProps.countries.length
+    const remaining = nextProps.countries.length
     if (this.state.continent === nextProps.continent) {
       // the continent has not changed
       // check for updates to found and remaining
       this.setState({
-        remain: remain
+        remain: remaining,
       })
     } else {
       // the continent has changed, must reset state
       this.setState({
         continent: nextProps.continent,
-        remain: remain
+        remain: remaining,
       })
     }
   }
@@ -52,3 +52,10 @@ export default class ScoreKeeper extends React.Component {
     )
   }
 }
+
+ScoreKeeper.propTypes = {
+  continent: PropTypes.string.isRequired,
+  countries: PropTypes.arrayOf(PropTypes.string).isRequired,
+}
+
+module.exports = ScoreKeeper
