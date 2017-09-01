@@ -5,7 +5,8 @@ const style = {
   scoreDiv: {
     position: 'absolute',
     zIndex: 1,
-    marginTop: 200,
+    marginTop: 20,
+    marginLeft: 840
   }
 
 }
@@ -22,7 +23,7 @@ export default class ScoreKeeper extends React.Component {
   componentWillMount() {
     this.setState({
       continent: this.props.continent,
-      remain: this.props.continent.length
+      remain: this.props.countries.length
     })  
   }
 
@@ -46,7 +47,6 @@ export default class ScoreKeeper extends React.Component {
   render() {
     return (
       <div style={style.scoreDiv}>
-        <h2>Score</h2>
         <h4>Remaining: {this.state.remain}</h4>
       </div>
     )

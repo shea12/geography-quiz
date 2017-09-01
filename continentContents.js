@@ -1,6 +1,6 @@
 const CONTINENTS = {
   NA: {
-    lonlat: [-75.71, 37.42],
+    lonlat: [-68.56, 35.7],
     zoom: 3.16,
     countries: [
         'Antigua and Barbuda', // Antigua and Barbuda

@@ -18,7 +18,7 @@ export default class App extends React.Component {
     super(props)
     this.state = {
       world: World,
-      lonlat: [11.6, 16.8],
+      lonlat: [0.2, 20.6],
       zoom: 2,
       showLabels: true,
       selectedContinent: '',
@@ -53,7 +53,6 @@ export default class App extends React.Component {
     let continentSelected = this.state.selectedContinent
     let inputform = null
     let scorekeeper = null
-    console.log('in render: ', this.state.countryList);
     if (continentSelected !== '') {
       inputform = <InputForm countries={this.state.countryList} colorCountry={this.handleCountry} />
       scorekeeper = <ScoreKeeper countries={this.state.countryList} continent={this.state.selectedContinent} />

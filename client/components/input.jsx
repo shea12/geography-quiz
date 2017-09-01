@@ -3,10 +3,11 @@ import { Input, form, FormControl, FormGroup, ControlLabel, HelpBlock } from 're
 
 const style = {
   inputField: {
-    marginLeft: 900,
     position: 'absolute',
     zIndex: 1,
-    marginTop: 400,
+    marginTop: 2,
+    marginLeft: 600,
+    paddingBottom: 10
   }
 }
 
@@ -15,7 +16,8 @@ export default class InputForm extends React.Component {
     super(props)
     this.state = {
       value: '',
-      countries: []
+      countries: [],
+      inputcheck: null
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -24,58 +26,44 @@ export default class InputForm extends React.Component {
 
   // TODO: this method is doing a lot, will refactor out some logic 
   handleKeyPress(target) {
+    this.setState({ inputcheck: null })
     //check if user enters valid country
     if (target.charCode === 13) {
       // upon enter being pressed, iterate through countries array
       // checking for a match to the user input
-
-      console.log('countryList: ', this.state.countries);
       let length = this.state.countries.length
       for (var i = 0; i < this.state.countries.length; i++) {
-
         if (this.state.value.toLowerCase() === this.state.countries[i].toLowerCase()) {
-          console.log('Good!')
-
+          this.setState({ inputcheck: 'success', value: '' })
           // call colorCountry function to shade in the named country
           this.props.colorCountry(this.state.countries[i]);
-
-          // when correct country is named reset input area
-          this.setState({value: ''})
-
           // remove named country from list
           this.state.countries.splice(i, 1)
           // setState with updated list
           this.setState({countries: this.state.countries})
 
           // check if they have countries left to name
-          if (this.state.countries.length > 0) {
-            console.log(length-1 + ' countries left') 
-          } else {
-            console.log('You named all the countries!')
+          if (this.state.countries.length === 0) {
             alert('You named all the countries!')
           }
 
         } else if (i === length-1) {
           // iterated through country array without match
-          console.log('Sorry, not a country. Try again')
+          this.setState({ inputcheck: 'error' })
         }
       }
     } else {
-      // do something if the take a really long time to
-      // press enter... maybe have a timer?
-
+      // user has typed, has not pressed enter, remind user to press enter
     }
     
   }
 
   componentDidMount() {
     this.setState({ countries: this.props.countries })
-    // console.log('initial inputForm countries')
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ countries: nextProps.countries })
-    // console.log('updated inputForm countries')
   }
 
   handleChange(e) {
@@ -85,10 +73,9 @@ export default class InputForm extends React.Component {
   render() {
     return(
       <form autoComplete='off' style={style.inputField}>
-        <FormGroup controlId="formBasicText" >
+        <FormGroup validationState={this.state.inputcheck}>
           <ControlLabel></ControlLabel>
           <FormControl
-
             type="text"
             value={this.state.value}
             placeholder='Enter country'
