@@ -18,9 +18,9 @@ export default class Title extends React.Component {
   render() {
     return (
       <div style={style.title_div} >
-        <h1 style={style.title} >
+        <h3 style={style.title} >
           geoQuiz
-        </h1>
+        </h3>
       </div>
     )
   }

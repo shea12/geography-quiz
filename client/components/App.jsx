@@ -1,10 +1,13 @@
 import React from 'react'
 /* eslint-disable */
 import Maps from './map.jsx'
-import Title from './title.jsx'
+// import Title from './title.jsx'
 import Continents from './continent.jsx'
+import HeaderCard from './headercard.jsx'
 import InputForm from './input.jsx'
 import ScoreKeeper from './scorekeeper.jsx'
+// import Timer from './timer.jsx'
+
 import World from '../../continentContents'
 /* eslint-enable */
 
@@ -54,6 +57,7 @@ export default class App extends React.Component {
     const continentSelected = this.state.selectedContinent
     let inputform = null
     let scorekeeper = null
+    let timer = null
     if (continentSelected !== '') {
       inputform = (<InputForm
         countries={this.state.countryList}
@@ -63,14 +67,19 @@ export default class App extends React.Component {
         countries={this.state.countryList}
         continent={this.state.selectedContinent}
       />)
+      // timer = (<Timer
+      //   countries={this.state.countryList}
+      //   continent={this.state.selectedContinent}
+      // />)
     } else {
       inputform = <div />
       scorekeeper = <div />
+      timer = <div />
     }
 
     return (
       <div style={style.container}>
-        <Title />
+
         <Maps
           lonlat={this.state.lonlat}
           zoom={this.state.zoom}
@@ -78,9 +87,12 @@ export default class App extends React.Component {
           selectedContinent={this.state.selectedContinent}
           showLabels={this.state.showLabels}
         />
+
+        <HeaderCard /> 
         <Continents move={this.handleLocation} />
         {inputform}
         {scorekeeper}
+
       </div>
     )
   }

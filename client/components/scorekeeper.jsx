@@ -6,12 +6,12 @@ const style = {
   scoreDiv: {
     position: 'absolute',
     zIndex: 1,
-    marginTop: 20,
-    marginLeft: 840,
+    marginTop: 8,
+    marginLeft: 1140,
   },
 }
 
-class ScoreKeeper extends React.Component {
+export default class ScoreKeeper extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -47,7 +47,7 @@ class ScoreKeeper extends React.Component {
   render() {
     return (
       <div style={style.scoreDiv}>
-        <h4>Remaining: {this.state.remain}</h4>
+        <h5>Remaining: {this.state.remain}</h5>
       </div>
     )
   }
@@ -57,5 +57,3 @@ ScoreKeeper.propTypes = {
   continent: PropTypes.string.isRequired,
   countries: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
-
-module.exports = ScoreKeeper

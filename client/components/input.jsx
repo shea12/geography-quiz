@@ -5,14 +5,23 @@ import { form, FormControl, FormGroup, ControlLabel, HelpBlock } from 'react-boo
 const style = {
   inputField: {
     position: 'absolute',
-    zIndex: 1,
-    marginTop: 2,
-    marginLeft: 600,
+    zIndex: 2,
+    marginTop: 4,
+    marginLeft: 826,
     paddingBottom: 10,
+    fontColor: 'black',
   },
+  input: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    paddingLeft: '10px',
+    marginTop: '10px',
+    width: '240px',
+    fontColor: 'black',
+    height: '36px',
+  }
 }
 
-class InputForm extends React.Component {
+export default class InputForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -74,16 +83,16 @@ class InputForm extends React.Component {
     return (
       <form autoComplete="off" style={style.inputField}>
         <FormGroup validationState={this.state.inputcheck}>
-          <ControlLabel />
-          <FormControl
-            type="text"
-            value={this.state.value}
-            placeholder="Enter country"
-            onChange={this.handleChange}
-            onKeyPress={this.handleKeyPress}
-          />
-          <FormControl.Feedback />
-          <HelpBlock />
+          <div>
+            <FormControl
+              style={style.input}
+              type="text"
+              value={this.state.value}
+              placeholder="Enter country"
+              onChange={this.handleChange}
+              onKeyPress={this.handleKeyPress}
+            />
+          </div>
         </FormGroup>
       </form>
     )
@@ -94,5 +103,3 @@ InputForm.propTypes = {
   countries: PropTypes.arrayOf(PropTypes.string).isRequired,
   colorCountry: PropTypes.func.isRequired,
 }
-
-module.exports = InputForm

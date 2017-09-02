@@ -46,7 +46,7 @@ const showHideLabels = (labelArray, status) => {
   }
 }
 
-class Maps extends React.Component {
+export default class Maps extends React.Component {
   componentDidMount() {
     MapboxGl.accessToken = Keys.access_token
     // remember: mapbox uses [long, lat] not [lat, long]
@@ -130,5 +130,3 @@ Maps.propTypes = {
   selectedContinent: PropTypes.string.isRequired,
   showLabels: PropTypes.bool.isRequired,
 }
-
-module.exports = Maps
