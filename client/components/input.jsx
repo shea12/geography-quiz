@@ -67,7 +67,7 @@ export default class InputForm extends React.Component {
             /* eslint-disable */
             // alert('You named all the countries!')
             /* eslint-enable */
-            this.props.handleTimer(false)
+            this.props.handleTimer(false, true)
           }
         } else if (i === length - 1) {
           // iterated through country array without match

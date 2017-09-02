@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'react-materialize'
+import RaisedButton from 'material-ui/RaisedButton'
 
 const style = {
   buttonGrouping: {
@@ -41,53 +41,53 @@ export default class ContinentMenu extends React.Component {
     return (
 
       <div style={style.buttonGrouping}>
-        <Button
+        <RaisedButton
           className="waves-effect"
           style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
           onClick={() => this.onButtonClick('NA')}
         >
           N. America
-        </Button>
+        </RaisedButton>
 
-        <Button
+        <RaisedButton
           className="waves-effect"
           style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
           onClick={() => this.onButtonClick('SA')}
         >
           S. America
-        </Button>
+        </RaisedButton>
 
-        <Button
+        <RaisedButton
           className="waves-effect"
           style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
           onClick={() => this.onButtonClick('EU')}
         >
           Europe
-        </Button>
+        </RaisedButton>
 
-        <Button
+        <RaisedButton
           className="waves-effect"
           style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
           onClick={() => this.onButtonClick('AF')}
         >
           Africa
-        </Button>
+        </RaisedButton>
 
-        <Button
+        <RaisedButton
           className="waves-effect"
           style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
           onClick={() => this.onButtonClick('AS')}
         >
           Asia
-        </Button>
+        </RaisedButton>
 
-        <Button
+        <RaisedButton
           className="waves-effect"
           style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
           onClick={() => this.onButtonClick('OC')}
         >
           Oceania
-        </Button>
+        </RaisedButton>
       </div>
     )
   }

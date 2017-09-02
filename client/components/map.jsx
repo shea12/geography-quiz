@@ -107,12 +107,12 @@ export default class Maps extends React.Component {
     // check if the map needs to pan to a new location
     if (this.props.lonlat !== nextProps.lonlat) {
       //
-      map.flyTo({ center: nextProps.lonlat, zoom: nextProps.zoom })
+      map.flyTo({ center: nextProps.lonlat, zoom: nextProps.zoom, speed: 0.4 })
     }
     // check for the selected continent
     if (this.props.selectedContinent !== nextProps.selectedContinent) {
       // 
-      map.flyTo({ center: nextProps.lonlat, zoom: nextProps.zoom })
+      map.flyTo({ center: nextProps.lonlat, zoom: nextProps.zoom, speed: 0.4 })
     }
   }
 

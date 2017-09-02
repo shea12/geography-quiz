@@ -1,4 +1,5 @@
 import React from 'react'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 /* eslint-disable */
 import Maps from './map.jsx'
 import Title from './title.jsx'
@@ -9,6 +10,7 @@ import ScoreKeeper from './scorekeeper.jsx'
 import StartButton from './startbutton.jsx'
 import BackButton from './backbutton.jsx'
 import Timer from './timer.jsx'
+import FinishModal from './finishmodal.jsx'
 import World from '../../continentContents'
 /* eslint-enable */
 
@@ -32,6 +34,7 @@ export default class App extends React.Component {
       abbrevs: [],
       countryToShade: '',
       timing: false,
+      showModal: false,
     }
 
     this.handleLocation = this.handleLocation.bind(this)
@@ -62,20 +65,21 @@ export default class App extends React.Component {
   }
 
   handleBack() {
-    this.setState({ selectedContinent: '', timing: false })
+    this.setState({ selectedContinent: '', timing: false, lonlat: [0.2, 20.6], zoom: 2, })
   }
 
   handleCountry(country) {
     this.setState({ countryToShade: country })
   }
 
-  handleTimer(startStop) {
-    if (startStop) {
+  handleTimer(startStop, complete) {
+    if (startStop && !complete) {
       // setState of timer to true
       this.setState({ timing: true })
-    } else {
-      // setState of timer to false
-      this.setState({ timing: false, selectedContinent: '' })
+    } else if (!startStop && complete) {
+      // user entered all contries setState of timer to false
+      // show modal, turn off timer, reset selection
+      this.setState({ timing: false, selectedContinent: '', showModal: true })
     }
   }
 
@@ -86,6 +90,7 @@ export default class App extends React.Component {
     let backbutton = null
     let timer = null
     let continentButtons = null
+    let modal = <div />
 
     if (this.state.selectedContinent !== '') {
       // user selected a continent, show start button and continent info
@@ -114,28 +119,33 @@ export default class App extends React.Component {
         timing={this.state.timing}
       />)
       startbutton = <div />
-    } else {
+    } else if (!this.state.timing && this.state.showModal) {
       // check if finished, gave up, or paused (need to make a pause button?)
+      console.log('wiininininiinienr')
+      modal = (<FinishModal show={true} onClose={this.handleBack}/>)
     }
 
     return (
-      <div style={style.container}>
-        <Title />
-        <Maps
-          lonlat={this.state.lonlat}
-          zoom={this.state.zoom}
-          countryToShade={this.state.countryToShade}
-          selectedContinent={this.state.selectedContinent}
-          showLabels={this.state.showLabels}
-        />
-        <HeaderCard />
-        {continentButtons}
-        {inputform}
-        {scorekeeper}
-        {startbutton}
-        {backbutton}
-        {timer}
-      </div>
+      <MuiThemeProvider>
+        <div style={style.container}>
+          <Title />
+          <Maps
+            lonlat={this.state.lonlat}
+            zoom={this.state.zoom}
+            countryToShade={this.state.countryToShade}
+            selectedContinent={this.state.selectedContinent}
+            showLabels={this.state.showLabels}
+          />
+          <HeaderCard />
+          {continentButtons}
+          {inputform}
+          {scorekeeper}
+          {startbutton}
+          {backbutton}
+          {timer}
+          {modal}
+        </div>
+      </MuiThemeProvider>
     )
   }
 }

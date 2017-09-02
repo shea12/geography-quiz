@@ -1,12 +1,12 @@
 import React from 'react'
-import { Button } from 'react-materialize'
+import RaisedButton from 'material-ui/RaisedButton'
 import PropTypes from 'prop-types'
 
 export default class StartButton extends React.Component {
   render() {
     console.log('this.props: ', this.props)
     return(
-      <Button
+     <RaisedButton
       style={{
         position: 'absolute',
         marginTop: 14,
@@ -18,7 +18,7 @@ export default class StartButton extends React.Component {
       }
       >
         Start Quiz
-      </Button>
+      </RaisedButton>
     )
   }
 }
