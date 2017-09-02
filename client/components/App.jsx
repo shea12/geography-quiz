@@ -6,8 +6,6 @@ import Continents from './continent.jsx'
 import HeaderCard from './headercard.jsx'
 import InputForm from './input.jsx'
 import ScoreKeeper from './scorekeeper.jsx'
-import Timer from './timer.jsx'
-
 import World from '../../continentContents'
 /* eslint-enable */
 
@@ -38,7 +36,6 @@ export default class App extends React.Component {
 
   handleLocation(ll, zm, co, cl, ab) {
     // location will be an object with [lon, lat] [(float), (float)] and zoom (float)
-
     this.setState({
       lonlat: ll,
       zoom: zm,
@@ -57,7 +54,6 @@ export default class App extends React.Component {
     const continentSelected = this.state.selectedContinent
     let inputform = null
     let scorekeeper = null
-    let timer = null
     if (continentSelected !== '') {
       inputform = (<InputForm
         countries={this.state.countryList}
@@ -67,13 +63,9 @@ export default class App extends React.Component {
         countries={this.state.countryList}
         continent={this.state.selectedContinent}
       />)
-      timer = (<Timer
-        start={Date.now()}
-      />)
     } else {
       inputform = <div />
       scorekeeper = <div />
-      timer = <div />
     }
 
     return (
@@ -90,7 +82,6 @@ export default class App extends React.Component {
         <Continents move={this.handleLocation} />
         {inputform}
         {scorekeeper}
-        {timer}
       </div>
     )
   }

@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { form, FormControl, FormGroup } from 'react-bootstrap'
+/* eslint-disable */
+import Timer from './timer.jsx'
+/* eslint-enable */
 
 const style = {
   inputField: {
@@ -42,7 +45,7 @@ export default class InputForm extends React.Component {
     this.setState({ countries: nextProps.countries })
   }
 
-  // TODO: this method is doing a lot, will refactor out some logic 
+  // TODO: this method is doing a lot, will refactor logic 
   handleKeyPress(target) {
     this.setState({ inputcheck: null })
     // check if user enters valid country
@@ -74,6 +77,8 @@ export default class InputForm extends React.Component {
       // user has typed, has not pressed enter, remind user to press enter
     }
   }
+
+
 
   handleChange(e) {
     this.setState({ value: e.target.value })

@@ -37,7 +37,7 @@ class Timer extends React.Component {
 
   render() {
     const elapsed = Math.round(this.state.time / 100)
-    const seconds = (elapsed / 10).toFixed(1)
+    const seconds = (elapsed / 10).toFixed(0)
 
     return (
       <div style={style.time}>
@@ -48,7 +48,7 @@ class Timer extends React.Component {
 }
 
 Timer.propTypes = {
-  start: PropTypes.Date.isRequired,
+  // start: PropTypes.Date.isRequired,
 }
 
 module.exports = Timer
