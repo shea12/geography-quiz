@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { form, FormControl, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap'
+import { form, FormControl, FormGroup } from 'react-bootstrap'
 
 const style = {
   inputField: {
     position: 'absolute',
     zIndex: 2,
     marginTop: 4,
-    marginLeft: 826,
+    marginLeft: 846,
     paddingBottom: 10,
     fontColor: 'black',
   },
@@ -18,7 +18,7 @@ const style = {
     width: '240px',
     fontColor: 'black',
     height: '36px',
-  }
+  },
 }
 
 export default class InputForm extends React.Component {

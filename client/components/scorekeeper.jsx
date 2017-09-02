@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 const style = {
   scoreDiv: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 2,
     marginTop: 8,
     marginLeft: 1140,
   },
@@ -47,7 +47,7 @@ export default class ScoreKeeper extends React.Component {
   render() {
     return (
       <div style={style.scoreDiv}>
-        <h5>Remaining: {this.state.remain}</h5>
+        <h5>{this.state.remain}</h5>
       </div>
     )
   }

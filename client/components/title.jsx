@@ -2,27 +2,23 @@ import React from 'react'
 
 const style = {
   title_div: {
-    paddingLeft: 1260,
+    paddingLeft: 1330,
   },
   title: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 2,
+    paddingTop: '6px',
   },
 }
 
-export default class Title extends React.Component {
-  componentDidMount() {
-    // console.log('Title mounted')
-  }
-
-  render() {
-    return (
-      <div style={style.title_div} >
-        <h3 style={style.title} >
-          geoQuiz
-        </h3>
-      </div>
-    )
-  }
+function Title() {
+  return (
+    <div style={style.title_div} >
+      <h5 style={style.title} >
+        geoQuiz
+      </h5>
+    </div>
+  )
 }
 
+module.exports = Title
