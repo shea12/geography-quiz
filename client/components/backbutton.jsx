@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'react-materialize'
 import PropTypes from 'prop-types'
 
-export default class StartButton extends React.Component {
+export default class BackButton extends React.Component {
   render() {
     console.log('this.props: ', this.props)
     return(
@@ -11,18 +11,18 @@ export default class StartButton extends React.Component {
         position: 'absolute',
         marginTop: 14,
         zIndex: 2,
-        marginLeft: 140,
+        marginLeft: 20,
       }}
       onClick={
-        () => this.props.handleStart()
+        () => this.props.handleBack()
       }
       >
-        Start Quiz
+        Back
       </Button>
     )
   }
 }
 
-StartButton.propTypes = {
-  handleStart: PropTypes.func.isRequired,
+BackButton.propTypes = {
+  handleBack: PropTypes.func.isRequired,
 }

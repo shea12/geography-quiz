@@ -65,7 +65,7 @@ export default class InputForm extends React.Component {
           // check if they have countries left to name
           if (this.state.countries.length === 0) {
             /* eslint-disable */
-            alert('You named all the countries!')
+            // alert('You named all the countries!')
             /* eslint-enable */
             this.props.handleTimer(false)
           }

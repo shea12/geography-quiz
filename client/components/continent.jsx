@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'react-materialize'
-import Continents from '../../continentContents'
 
 const style = {
   buttonGrouping: {
@@ -13,7 +12,6 @@ const style = {
     margin: 2,
     backgroundColor: 'rgba(35, 121, 196, 0.9)',
   },
-
 }
 
 export default class ContinentMenu extends React.Component {
@@ -33,8 +31,7 @@ export default class ContinentMenu extends React.Component {
   }
 
   onButtonClick(continent) {
-    const continentCopy = Object.assign({}, Continents[continent])
-    this.props.move(continentCopy, continent)
+    this.props.move(continent)
     this.setVisibilityOfButtons(false)
   }
 
@@ -42,6 +39,7 @@ export default class ContinentMenu extends React.Component {
   render() {
     let showOrHide = this.state.visible ? 2 : 0
     return (
+
       <div style={style.buttonGrouping}>
         <Button
           className="waves-effect"

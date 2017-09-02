@@ -22,7 +22,7 @@ class Timer extends React.Component {
   }
 
   getInitialState() {
-    // this.setState({ time: 0 })
+    this.setState({ time: 0 })
   }
 
   componentDidMount() {
@@ -30,7 +30,7 @@ class Timer extends React.Component {
   }
 
   componentWillUnmount() {
-    // clearInterval(this.timer)
+    clearInterval(this.timer)
   }
 
   ticktock() {
@@ -53,11 +53,9 @@ class Timer extends React.Component {
 
   render() {
     let timerComponent = null
-    if (this.state.timing) {
-      const elapsed = Math.round(this.state.time / 100)
-      const seconds = (elapsed / 10).toFixed(0)
-      timerComponent = (<p>Time: {seconds}</p>)
-    }
+    const elapsed = Math.round(this.state.time / 100)
+    const seconds = (elapsed / 10).toFixed(0)
+    timerComponent = (<p>Time: {seconds}</p>)
     return (
       <div style={style.time}>
         {timerComponent}

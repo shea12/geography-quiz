@@ -7,6 +7,7 @@ import HeaderCard from './headercard.jsx'
 import InputForm from './input.jsx'
 import ScoreKeeper from './scorekeeper.jsx'
 import StartButton from './startbutton.jsx'
+import BackButton from './backbutton.jsx'
 import Timer from './timer.jsx'
 import World from '../../continentContents'
 /* eslint-enable */
@@ -36,23 +37,32 @@ export default class App extends React.Component {
     this.handleLocation = this.handleLocation.bind(this)
     this.handleCountry = this.handleCountry.bind(this)
     this.handleStart = this.handleStart.bind(this)
+    this.handleBack = this.handleBack.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
   }
 
-  handleLocation(continentObj, selectedCont) {
-    console.log('continentObj: ', continentObj)
+  handleLocation(selectedContinent) {
+    console.log('Selected Continent: ', selectedContinent)
+
+    // access selected continent info from 'World', make copy
+    const continentCopy = World[selectedContinent].countries.slice()
+
     this.setState({
-      lonlat: continentObj.lonlat,
-      zoom: continentObj.zoom,
-      selectedContinent: selectedCont,
+      lonlat: World[selectedContinent].lonlat,
+      zoom: World[selectedContinent].zoom,
+      selectedContinent: selectedContinent,
       showLabels: true,
-      countryList: continentObj.countries,
-      abbrevs: continentObj.abbrevs,
+      countryList: continentCopy,
+      abbrevs: World[selectedContinent].abbrevs,
     })
   }
 
   handleStart() {
     this.setState({ timing: true })
+  }
+
+  handleBack() {
+    this.setState({ selectedContinent: '', timing: false })
   }
 
   handleCountry(country) {
@@ -73,16 +83,19 @@ export default class App extends React.Component {
     let inputform = null
     let scorekeeper = null
     let startbutton = null
+    let backbutton = null
     let timer = null
     let continentButtons = null
 
     if (this.state.selectedContinent !== '') {
       // user selected a continent, show start button and continent info
       startbutton = <StartButton handleStart={this.handleStart} />
+      backbutton = <BackButton handleBack={this.handleBack} />
       continentButtons = <div />
-    } else {
+    } else if (this.state.selectedContinent === '') {
       inputform = <div />
       scorekeeper = <div />
+      backbutton = <div />
       startbutton = <div />
       continentButtons = ( <Continents move={this.handleLocation} /> )
     }
@@ -120,7 +133,8 @@ export default class App extends React.Component {
         {inputform}
         {scorekeeper}
         {startbutton}
-        <Timer timing={this.state.timing} handleTimer={this.handleTimer} />
+        {backbutton}
+        {timer}
       </div>
     )
   }
