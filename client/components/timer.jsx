@@ -4,51 +4,70 @@ import PropTypes from 'prop-types'
 const style = {
   time: {
     position: 'absolute',
-    zIndex: 2,
+    zIndex: 3,
     marginTop: 8,
-    marginLeft: 1210,
+    marginLeft: 400,
   },
 }
 
+// TODO: format timer to MM:SS
 class Timer extends React.Component {
   constructor() {
     super()
     this.state = {
       time: null,
+      timing: false,
     }
     this.ticktock = this.ticktock.bind(this)
   }
 
   getInitialState() {
-    this.setState({ time: 0 })
+    // this.setState({ time: 0 })
   }
 
   componentDidMount() {
-    this.timer = setInterval(this.ticktock, 50)
+    // this.timer = setInterval(this.ticktock, 50)
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer)
+    // clearInterval(this.timer)
   }
 
   ticktock() {
-    this.setState({ time: new Date() - this.props.start })
+    this.setState({ time: new Date() - this.state.start })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if ((!this.state.timing) && (nextProps.timing)) {
+      this.setState({ 
+        timing: true, 
+        time: 0,
+        start: new Date(),
+      })
+      this.timer = setInterval(this.ticktock, 1000)
+    } else if ((this.state.timing) && (!nextProps.timing)) {
+      this.setState({ timing: false })
+      clearInterval(this.timer)
+    }
   }
 
   render() {
-    const elapsed = Math.round(this.state.time / 100)
-    const seconds = (elapsed / 10).toFixed(0)
-
+    let timerComponent = null
+    if (this.state.timing) {
+      const elapsed = Math.round(this.state.time / 100)
+      const seconds = (elapsed / 10).toFixed(0)
+      timerComponent = (<p>Time: {seconds}</p>)
+    }
     return (
       <div style={style.time}>
-        <p>Time: {seconds}</p>
+        {timerComponent}
       </div>
     )
   }
 }
 
 Timer.propTypes = {
-  // start: PropTypes.Date.isRequired,
+  timing: PropTypes.bool.isRequired,
 }
 
 module.exports = Timer

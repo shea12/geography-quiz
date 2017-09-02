@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'react-materialize'
-import CTS from '../../continentContents'
+import Continents from '../../continentContents'
 
 const style = {
   buttonGrouping: {
     position: 'absolute',
-    zIndex: 2,
     padding: 6,
     margin: 6,
   },
@@ -18,95 +17,76 @@ const style = {
 }
 
 export default class ContinentMenu extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      visible: true
+    }
+  }
+
   componentWillMount() {
     // console.log('mounting continent buttons')
   }
 
-  // TODO: refactor to dynamically render with map
-  // will reduce redundancy x6
+  setVisibilityOfButtons(visibility) {
+    this.setState({ visible: visibility })
+  }
+
+  onButtonClick(continent) {
+    const continentCopy = Object.assign({}, Continents[continent])
+    this.props.move(continentCopy, continent)
+    this.setVisibilityOfButtons(false)
+  }
+
+  // TODO: refactor to dynamically render with map fn, will reduce redundancy 
   render() {
+    let showOrHide = this.state.visible ? 2 : 0
     return (
       <div style={style.buttonGrouping}>
         <Button
           className="waves-effect"
-          style={style.button}
-          onClick={() => this.props.move(
-            CTS.NA.lonlat,
-            CTS.NA.zoom,
-            'NA',
-            CTS.NA.countries,
-            CTS.NA.abbrevs,
-          )}
+          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          onClick={() => this.onButtonClick('NA')}
         >
           N. America
         </Button>
 
         <Button
           className="waves-effect"
-          style={style.button}
-          onClick={() => this.props.move(
-            CTS.SA.lonlat,
-            CTS.SA.zoom,
-            'SA',
-            CTS.SA.countries,
-            CTS.SA.abbrevs,
-          )}
+          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          onClick={() => this.onButtonClick('SA')}
         >
           S. America
         </Button>
 
         <Button
           className="waves-effect"
-          style={style.button}
-          onClick={() => this.props.move(
-            CTS.EU.lonlat,
-            CTS.EU.zoom,
-            'EU',
-            CTS.EU.countries,
-            CTS.EU.abbrevs,
-          )}
+          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          onClick={() => this.onButtonClick('EU')}
         >
           Europe
         </Button>
 
         <Button
-          className="disabled"
-          style={style.button}
-          onClick={() => this.props.move(
-            CTS.AF.lonlat,
-            CTS.AF.zoom,
-            'AF',
-            CTS.AF.countries,
-            CTS.AF.abbrevs,
-          )}
+          className="waves-effect"
+          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          onClick={() => this.onButtonClick('AF')}
         >
           Africa
         </Button>
 
         <Button
-          className="disabled"
-          style={style.button}
-          onClick={() => this.props.move(
-            CTS.AS.lonlat,
-            CTS.AS.zoom,
-            'AS',
-            CTS.AS.countries,
-            CTS.AS.abbrevs,
-          )}
+          className="waves-effect"
+          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          onClick={() => this.onButtonClick('AS')}
         >
           Asia
         </Button>
 
         <Button
-          className="disabled"
-          style={style.button}
-          onClick={() => this.props.move(
-            CTS.OC.lonlat,
-            CTS.OC.zoom,
-            'OC',
-            CTS.OC.countries,
-            CTS.OC.abbrevs,
-          )}
+          className="waves-effect"
+          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          onClick={() => this.onButtonClick('OC')}
         >
           Oceania
         </Button>

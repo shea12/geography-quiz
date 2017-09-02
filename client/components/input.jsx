@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { form, FormControl, FormGroup } from 'react-bootstrap'
 /* eslint-disable */
-import Timer from './timer.jsx'
+// import Timer from './timer.jsx'
 /* eslint-enable */
 
 const style = {
@@ -67,6 +67,7 @@ export default class InputForm extends React.Component {
             /* eslint-disable */
             alert('You named all the countries!')
             /* eslint-enable */
+            this.props.handleTimer(false)
           }
         } else if (i === length - 1) {
           // iterated through country array without match

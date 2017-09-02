@@ -3,86 +3,86 @@ const CONTINENTS = {
     lonlat: [-68.56, 35.7],
     zoom: 3.16,
     countries: [
-        'Antigua and Barbuda', // Antigua and Barbuda
+        // 'Antigua and Barbuda', // Antigua and Barbuda
         'Bahamas', // Bahamas
         'Barbados', // Barbados
-        'Belize', // Belize
-        'Canada', // Canada
-        'Costa Rica', // Costa Rica
-        'Cuba', // Cuba
-        'Dominica', // Dominica
-        'Dominican Republic', // Dominican Republic
-        'El Salvador', // El Salvador
-        'Grenada', // Grenada
-        'Guatemala', // Guatemala
-        'Haiti', // Haiti
-        'Honduras', // Honduras
-        'Jamaica', // Jamaica
-        'Mexico', // Mexico
-        'Nicaragua', // Nicaragua
-        'Panama', // Panama
-        'Saint Kitts and Nevis', // Saint Kitts and Nevis
-        'Saint Lucia', // Saint Lucia
-        'Saint Vincent and the Grenadines', // Saint Vincent and the Grenadines
-        'Trinidad and Tobago', // Trinidad and Tobago
-        'United States', // United States of America
+        // 'Belize', // Belize
+        // 'Canada', // Canada
+        // 'Costa Rica', // Costa Rica
+        // 'Cuba', // Cuba
+        // 'Dominica', // Dominica
+        // 'Dominican Republic', // Dominican Republic
+        // 'El Salvador', // El Salvador
+        // 'Grenada', // Grenada
+        // 'Guatemala', // Guatemala
+        // 'Haiti', // Haiti
+        // 'Honduras', // Honduras
+        // 'Jamaica', // Jamaica
+        // 'Mexico', // Mexico
+        // 'Nicaragua', // Nicaragua
+        // 'Panama', // Panama
+        // 'Saint Kitts and Nevis', // Saint Kitts and Nevis
+        // 'Saint Lucia', // Saint Lucia
+        // 'Saint Vincent and the Grenadines', // Saint Vincent and the Grenadines
+        // 'Trinidad and Tobago', // Trinidad and Tobago
+        // 'United States', // United States of America
     ],
     abbrevs: {
-        'Antigua and Barbuda': 'AG', // Antigua and Barbuda
+        // 'Antigua and Barbuda': 'AG', // Antigua and Barbuda
         'Bahamas': 'BS', // Bahamas
         'Barbados': 'BB', // Barbados
-        'Belize': 'BZ', // Belize
-        'Canada': 'CA', // Canada
-        'Costa Rica': 'CR', // Costa Rica
-        'Cuba': 'CU', // Cuba
-        'Dominica': 'DM', // Dominica
-        'Dominican Republic': 'DO', // Dominican Republic
-        'El Salvador': 'SV', // El Salvador
-        'Grenada': 'GD', // Grenada
-        'Guatemala': 'GT', // Guatemala
-        'Haiti': 'HT', // Haiti
-        'Honduras': 'HN', // Honduras
-        'Jamaica': 'JM', // Jamaica
-        'Mexico': 'MX', // Mexico
-        'Nicaragua': 'NI', // Nicaragua
-        'Panama': 'PA', // Panama
-        'Saint Kitts and Nevis': 'KN', // Saint Kitts and Nevis
-        'Saint Lucia': 'LC', // Saint Lucia
-        'Saint Vincent and the Grenadines': 'VC', // Saint Vincent and the Grenadines
-        'Trinidad and Tobago': 'TT', // Trinidad and Tobago
-        'United States': 'US', // United States of America
+        // 'Belize': 'BZ', // Belize
+        // 'Canada': 'CA', // Canada
+        // 'Costa Rica': 'CR', // Costa Rica
+        // 'Cuba': 'CU', // Cuba
+        // 'Dominica': 'DM', // Dominica
+        // 'Dominican Republic': 'DO', // Dominican Republic
+        // 'El Salvador': 'SV', // El Salvador
+        // 'Grenada': 'GD', // Grenada
+        // 'Guatemala': 'GT', // Guatemala
+        // 'Haiti': 'HT', // Haiti
+        // 'Honduras': 'HN', // Honduras
+        // 'Jamaica': 'JM', // Jamaica
+        // 'Mexico': 'MX', // Mexico
+        // 'Nicaragua': 'NI', // Nicaragua
+        // 'Panama': 'PA', // Panama
+        // 'Saint Kitts and Nevis': 'KN', // Saint Kitts and Nevis
+        // 'Saint Lucia': 'LC', // Saint Lucia
+        // 'Saint Vincent and the Grenadines': 'VC', // Saint Vincent and the Grenadines
+        // 'Trinidad and Tobago': 'TT', // Trinidad and Tobago
+        // 'United States': 'US', // United States of America
     },
   },
   SA: {
     lonlat: [-53.74, -22.99],
     zoom: 2.66,
     countries: [
-        'Argentina',
+        // 'Argentina',
         'Bolivia',
         'Brazil',
-        'Chile',
-        'Colombia',
-        'Ecuador',
-        'Guyana',
-        'Paraguay',
-        'Peru',
-        'Suriname',
-        'Uruguay',
-        'Venezuela',
+        // 'Chile',
+        // 'Colombia',
+        // 'Ecuador',
+        // 'Guyana',
+        // 'Paraguay',
+        // 'Peru',
+        // 'Suriname',
+        // 'Uruguay',
+        // 'Venezuela',
     ],
     abbrevs: {
-        'Argentina': 'AR',
+        // 'Argentina': 'AR',
         'Bolivia': 'BO', 
         'Brazil': 'BR',
-        'Chile': 'CL',
-        'Colombia': 'CO',
-        'Ecuador': 'EC',
-        'Guyana': 'GY',
-        'Paraguay': 'PY',
-        'Peru': 'PE',
-        'Suriname': 'SR',
-        'Uruguay': 'UY',
-        'Venezuela': 'VE',
+        // 'Chile': 'CL',
+        // 'Colombia': 'CO',
+        // 'Ecuador': 'EC',
+        // 'Guyana': 'GY',
+        // 'Paraguay': 'PY',
+        // 'Peru': 'PE',
+        // 'Suriname': 'SR',
+        // 'Uruguay': 'UY',
+        // 'Venezuela': 'VE',
     },
   },
   AF: {
@@ -207,100 +207,100 @@ const CONTINENTS = {
     lonlat: [23.57, 53.38],
     zoom: 3.36,
     countries: [
-        'Portugal',
-        'Spain',
-        'France',
+        // 'Portugal',
+        // 'Spain',
+        // 'France',
         'Ireland',
-        'United Kingdom',
-        'Netherlands',
-        'Denmark',
-        'Germany',
-        'Belgium',
-        'Luxembourg',
-        'Switzerland',
+        // 'United Kingdom',
+        // 'Netherlands',
+        // 'Denmark',
+        // 'Germany',
+        // 'Belgium',
+        // 'Luxembourg',
+        // 'Switzerland',
         'Italy',
-        'Iceland',
-        'Norway',
-        'Sweden',
-        'Finland',
-        'Estonia',
-        'Latvia',
-        'Lithuania',
-        'Austria',
-        'Slovenia',
-        'Croatia',
-        'Bosnia and Herzegovina',
-        'Montenegro',
-        'Kosovo',
-        'Albania',
-        'Republic of Macedonia',
-        'Greece',
-        'Turkey',
-        'Romania',
-        'Bulgaria',
-        'Serbia',
-        'Malta',
-        'Moldova',
-        'Ukraine',
-        'Cyprus',
-        'Poland',
-        'Slovakia',
-        'Hungary',
-        'Czech Republic',
-        'Russia',
-        'Belarus',
-        'Andorra',
-        'Monaco',
-        'San Marino',
-        'Liechtenstein',
+        // 'Iceland',
+        // 'Norway',
+        // 'Sweden',
+        // 'Finland',
+        // 'Estonia',
+        // 'Latvia',
+        // 'Lithuania',
+        // 'Austria',
+        // 'Slovenia',
+        // 'Croatia',
+        // 'Bosnia and Herzegovina',
+        // 'Montenegro',
+        // 'Kosovo',
+        // 'Albania',
+        // 'Republic of Macedonia',
+        // 'Greece',
+        // 'Turkey',
+        // 'Romania',
+        // 'Bulgaria',
+        // 'Serbia',
+        // 'Malta',
+        // 'Moldova',
+        // 'Ukraine',
+        // 'Cyprus',
+        // 'Poland',
+        // 'Slovakia',
+        // 'Hungary',
+        // 'Czech Republic',
+        // 'Russia',
+        // 'Belarus',
+        // 'Andorra',
+        // 'Monaco',
+        // 'San Marino',
+        // 'Liechtenstein',
     ],
     abbrevs: {
-        'Portugal': 'PT',
-        'Spain': 'ES',
-        'France': 'FR',
+        // 'Portugal': 'PT',
+        // 'Spain': 'ES',
+        // 'France': 'FR',
         'Ireland': 'IE',
-        'United Kingdom': 'GB',
-        'Netherlands': 'NL',
-        'Denmark': 'DK',
-        'Germany': 'DE',
-        'Belgium': 'BE',
-        'Luxembourg': 'LU',
-        'Switzerland': 'CH',
+        // 'United Kingdom': 'GB',
+        // 'Netherlands': 'NL',
+        // 'Denmark': 'DK',
+        // 'Germany': 'DE',
+        // 'Belgium': 'BE',
+        // 'Luxembourg': 'LU',
+        // 'Switzerland': 'CH',
         'Italy': 'IT',
-        'Iceland': 'IS',
-        'Norway': 'NO',
-        'Sweden': 'SE',
-        'Finland': 'FI',
-        'Estonia': 'EE',
-        'Latvia': 'LV',
-        'Lithuania': 'LT',
-        'Austria': 'AT',
-        'Slovenia': 'SI',
-        'Croatia': 'HR',
-        'Bosnia and Herzegovina': 'BA',
-        'Montenegro': 'ME',
-        'Kosovo': 'XK',
-        'Albania': 'AL',
-        'Republic of Macedonia': 'MK',
-        'Greece': 'GR',
-        'Turkey': 'TR',
-        'Romania': 'RO',
-        'Bulgaria': 'BG',
-        'Serbia': 'RS',
-        'Malta': 'MT',
-        'Moldova': 'MD',
-        'Ukraine': 'UA',
-        'Cyprus': 'CY',
-        'Poland': 'PL',
-        'Slovakia': 'SK',
-        'Hungary': 'HU',
-        'Czech Republic': 'CZ',
-        'Russia': 'RU',
-        'Belarus': 'BY',
-        'Andorra': 'AD',
-        'Monaco': 'MC',
-        'San Marino': 'SM',
-        'Liechtenstein': 'LI',
+        // 'Iceland': 'IS',
+        // 'Norway': 'NO',
+        // 'Sweden': 'SE',
+        // 'Finland': 'FI',
+        // 'Estonia': 'EE',
+        // 'Latvia': 'LV',
+        // 'Lithuania': 'LT',
+        // 'Austria': 'AT',
+        // 'Slovenia': 'SI',
+        // 'Croatia': 'HR',
+        // 'Bosnia and Herzegovina': 'BA',
+        // 'Montenegro': 'ME',
+        // 'Kosovo': 'XK',
+        // 'Albania': 'AL',
+        // 'Republic of Macedonia': 'MK',
+        // 'Greece': 'GR',
+        // 'Turkey': 'TR',
+        // 'Romania': 'RO',
+        // 'Bulgaria': 'BG',
+        // 'Serbia': 'RS',
+        // 'Malta': 'MT',
+        // 'Moldova': 'MD',
+        // 'Ukraine': 'UA',
+        // 'Cyprus': 'CY',
+        // 'Poland': 'PL',
+        // 'Slovakia': 'SK',
+        // 'Hungary': 'HU',
+        // 'Czech Republic': 'CZ',
+        // 'Russia': 'RU',
+        // 'Belarus': 'BY',
+        // 'Andorra': 'AD',
+        // 'Monaco': 'MC',
+        // 'San Marino': 'SM',
+        // 'Liechtenstein': 'LI',
     }
   },
   AS: {
