@@ -5,8 +5,8 @@ const style = {
   time: {
     position: 'absolute',
     zIndex: 3,
-    marginTop: 8,
-    marginLeft: 400,
+    marginTop: 0,
+    marginLeft: 1200,
   },
 }
 
@@ -46,6 +46,7 @@ class Timer extends React.Component {
       })
       this.timer = setInterval(this.ticktock, 1000)
     } else if ((this.state.timing) && (!nextProps.timing)) {
+      // need to report back the final time 
       this.setState({ timing: false })
       clearInterval(this.timer)
     }

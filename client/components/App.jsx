@@ -61,7 +61,7 @@ export default class App extends React.Component {
   }
 
   handleStart() {
-    this.setState({ timing: true })
+    this.setState({ timing: true, showLabels: false })
   }
 
   handleBack() {
@@ -79,33 +79,33 @@ export default class App extends React.Component {
     } else if (!startStop && complete) {
       // user entered all contries setState of timer to false
       // show modal, turn off timer, reset selection
+      // need to record total countries, continent name, and final time
       this.setState({ timing: false, selectedContinent: '', showModal: true })
     }
   }
 
   render() {
-    let inputform = null
-    let scorekeeper = null
-    let startbutton = null
-    let backbutton = null
-    let timer = null
-    let continentButtons = null
+    let inputform, scorekeeper, startbutton, backbutton, timer, continentbuttons
     let modal = <div />
 
+    // elif block to control whether continent buttons
+    // or start & back buttons are shown
     if (this.state.selectedContinent !== '') {
-      // user selected a continent, show start button and continent info
+      // user selected continent, show start & back buttons, hide continents
       startbutton = <StartButton handleStart={this.handleStart} />
       backbutton = <BackButton handleBack={this.handleBack} />
-      continentButtons = <div />
+      continentbuttons = <div />
     } else if (this.state.selectedContinent === '') {
+      // hide all quiz components when no continent is selected
       inputform = <div />
       scorekeeper = <div />
       backbutton = <div />
       startbutton = <div />
-      continentButtons = ( <Continents move={this.handleLocation} /> )
+      continentbuttons = ( <Continents move={this.handleLocation} /> )
     }
 
     if (this.state.timing) {
+      // render timer, score, and input when start is clicked
       inputform = (<InputForm
         countries={this.state.countryList}
         colorCountry={this.handleCountry}
@@ -120,9 +120,10 @@ export default class App extends React.Component {
       />)
       startbutton = <div />
     } else if (!this.state.timing && this.state.showModal) {
-      // check if finished, gave up, or paused (need to make a pause button?)
-      console.log('wiininininiinienr')
+      // if all countries have been identified, modal pops up
       modal = (<FinishModal show={true} onClose={this.handleBack}/>)
+    } else {
+      // need to make a pause button
     }
 
     return (
@@ -137,7 +138,7 @@ export default class App extends React.Component {
             showLabels={this.state.showLabels}
           />
           <HeaderCard />
-          {continentButtons}
+          {continentbuttons}
           {inputform}
           {scorekeeper}
           {startbutton}

@@ -7,7 +7,7 @@ const style = {
   title: {
     position: 'absolute',
     zIndex: 2,
-    paddingTop: '6px',
+    paddingTop: 0,
   },
 }
 

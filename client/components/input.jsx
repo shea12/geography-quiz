@@ -9,18 +9,17 @@ const style = {
   inputField: {
     position: 'absolute',
     zIndex: 2,
-    marginTop: 4,
+    marginTop: 8,
     marginLeft: 846,
     paddingBottom: 10,
     fontColor: 'black',
   },
   input: {
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    paddingLeft: '10px',
-    marginTop: '10px',
-    width: '240px',
+    paddingLeft: 10,
+    width: 240,
     fontColor: 'black',
-    height: '36px',
+    height: 36,
   },
 }
 
@@ -64,9 +63,7 @@ export default class InputForm extends React.Component {
           this.setState({ countries: this.state.countries })
           // check if they have countries left to name
           if (this.state.countries.length === 0) {
-            /* eslint-disable */
-            // alert('You named all the countries!')
-            /* eslint-enable */
+            // parameters (endtimer, gotallcountries)
             this.props.handleTimer(false, true)
           }
         } else if (i === length - 1) {

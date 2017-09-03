@@ -9,7 +9,7 @@ export default class StartButton extends React.Component {
      <RaisedButton
       style={{
         position: 'absolute',
-        marginTop: 14,
+        marginTop: 8,
         zIndex: 2,
         marginLeft: 140,
       }}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { CardPanel } from 'react-materialize'
+import { Card, CardHeader } from 'material-ui/Card';
 
 const style = {
   headerStyle: {
@@ -12,10 +12,12 @@ const style = {
 
 function HeaderCard() {
   return (
-    <CardPanel
-      style={style.headerStyle}
-      className="small"
-    />
+    <Card>
+      <CardHeader
+        style={style.headerStyle}
+        className="small"
+      />
+    </Card>
   )
 }
 

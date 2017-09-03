@@ -6,7 +6,7 @@ const style = {
   scoreDiv: {
     position: 'absolute',
     zIndex: 2,
-    marginTop: 8,
+    marginTop: 0,
     marginLeft: 1140,
   },
 }

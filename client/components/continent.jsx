@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 const style = {
   buttonGrouping: {
     position: 'absolute',
-    padding: 6,
+    padding: 0,
     margin: 6,
   },
   button: {
