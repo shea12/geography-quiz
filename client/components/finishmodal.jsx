@@ -1,14 +1,12 @@
 import React from 'react'
 import Dialog from 'material-ui/Dialog'
-import FlatButton from 'material-ui/FlatButton'
-import RaisedButton from 'material-ui/RaisedButton'
 import PropTypes from 'prop-types'
 
 export default class FinishModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      open: true
+      open: true,
     }
 
     this.close = this.close.bind(this)
@@ -28,7 +26,7 @@ export default class FinishModal extends React.Component {
   }
 
   render() {
-    const actions = [];
+    const actions = []
     const number = '?'
     const continent = '?'
     const time = '?'
@@ -47,10 +45,8 @@ export default class FinishModal extends React.Component {
       </div>
     )
   }
-
 }
 
 FinishModal.propTypes = {
-  show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 }

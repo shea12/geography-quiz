@@ -18,16 +18,8 @@ export default class ContinentMenu extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      visible: true
+      visible: true,
     }
-  }
-
-  componentWillMount() {
-    // console.log('mounting continent buttons')
-  }
-
-  setVisibilityOfButtons(visibility) {
-    this.setState({ visible: visibility })
   }
 
   onButtonClick(continent) {
@@ -35,15 +27,19 @@ export default class ContinentMenu extends React.Component {
     this.setVisibilityOfButtons(false)
   }
 
+  setVisibilityOfButtons(visibility) {
+    this.setState({ visible: visibility })
+  }
+
   // TODO: refactor to dynamically render with map fn, will reduce redundancy 
   render() {
-    let showOrHide = this.state.visible ? 2 : 0
+    const showOrHide = this.state.visible ? 2 : 0
     return (
 
       <div style={style.buttonGrouping}>
         <RaisedButton
           className="waves-effect"
-          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={() => this.onButtonClick('NA')}
         >
           N. America
@@ -51,7 +47,7 @@ export default class ContinentMenu extends React.Component {
 
         <RaisedButton
           className="waves-effect"
-          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={() => this.onButtonClick('SA')}
         >
           S. America
@@ -59,7 +55,7 @@ export default class ContinentMenu extends React.Component {
 
         <RaisedButton
           className="waves-effect"
-          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={() => this.onButtonClick('EU')}
         >
           Europe
@@ -67,7 +63,7 @@ export default class ContinentMenu extends React.Component {
 
         <RaisedButton
           className="waves-effect"
-          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={() => this.onButtonClick('AF')}
         >
           Africa
@@ -75,7 +71,7 @@ export default class ContinentMenu extends React.Component {
 
         <RaisedButton
           className="waves-effect"
-          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={() => this.onButtonClick('AS')}
         >
           Asia
@@ -83,7 +79,7 @@ export default class ContinentMenu extends React.Component {
 
         <RaisedButton
           className="waves-effect"
-          style={{zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)',}}
+          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={() => this.onButtonClick('OC')}
         >
           Oceania

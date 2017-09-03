@@ -25,22 +25,10 @@ class Timer extends React.Component {
     this.setState({ time: 0 })
   }
 
-  componentDidMount() {
-    // this.timer = setInterval(this.ticktock, 50)
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer)
-  }
-
-  ticktock() {
-    this.setState({ time: new Date() - this.state.start })
-  }
-
   componentWillReceiveProps(nextProps) {
     if ((!this.state.timing) && (nextProps.timing)) {
-      this.setState({ 
-        timing: true, 
+      this.setState({
+        timing: true,
         time: 0,
         start: new Date(),
       })
@@ -50,6 +38,14 @@ class Timer extends React.Component {
       this.setState({ timing: false })
       clearInterval(this.timer)
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
+
+  ticktock() {
+    this.setState({ time: new Date() - this.state.start })
   }
 
   render() {

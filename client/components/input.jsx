@@ -76,8 +76,6 @@ export default class InputForm extends React.Component {
     }
   }
 
-
-
   handleChange(e) {
     this.setState({ value: e.target.value })
   }
@@ -105,4 +103,5 @@ export default class InputForm extends React.Component {
 InputForm.propTypes = {
   countries: PropTypes.arrayOf(PropTypes.string).isRequired,
   colorCountry: PropTypes.func.isRequired,
+  handleTimer: PropTypes.func.isRequired,
 }

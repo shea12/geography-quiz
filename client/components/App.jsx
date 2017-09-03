@@ -44,19 +44,17 @@ export default class App extends React.Component {
     this.handleTimer = this.handleTimer.bind(this)
   }
 
-  handleLocation(selectedContinent) {
-    console.log('Selected Continent: ', selectedContinent)
-
+  handleLocation(selectedContin) {
     // access selected continent info from 'World', make copy
-    const continentCopy = World[selectedContinent].countries.slice()
+    const continentCopy = World[selectedContin].countries.slice()
 
     this.setState({
-      lonlat: World[selectedContinent].lonlat,
-      zoom: World[selectedContinent].zoom,
-      selectedContinent: selectedContinent,
+      lonlat: World[selectedContin].lonlat,
+      zoom: World[selectedContin].zoom,
+      selectedContinent: selectedContin,
       showLabels: true,
       countryList: continentCopy,
-      abbrevs: World[selectedContinent].abbrevs,
+      abbrevs: World[selectedContin].abbrevs,
     })
   }
 
@@ -65,7 +63,7 @@ export default class App extends React.Component {
   }
 
   handleBack() {
-    this.setState({ selectedContinent: '', timing: false, lonlat: [0.2, 20.6], zoom: 2, })
+    this.setState({ selectedContinent: '', timing: false, lonlat: [0.2, 20.6], zoom: 2 })
   }
 
   handleCountry(country) {
@@ -85,7 +83,12 @@ export default class App extends React.Component {
   }
 
   render() {
-    let inputform, scorekeeper, startbutton, backbutton, timer, continentbuttons
+    let inputform
+    let scorekeeper
+    let startbutton
+    let backbutton
+    let timer
+    let continentbuttons
     let modal = <div />
 
     // elif block to control whether continent buttons
@@ -101,7 +104,7 @@ export default class App extends React.Component {
       scorekeeper = <div />
       backbutton = <div />
       startbutton = <div />
-      continentbuttons = ( <Continents move={this.handleLocation} /> )
+      continentbuttons = <Continents move={this.handleLocation} />
     }
 
     if (this.state.timing) {
@@ -121,7 +124,7 @@ export default class App extends React.Component {
       startbutton = <div />
     } else if (!this.state.timing && this.state.showModal) {
       // if all countries have been identified, modal pops up
-      modal = (<FinishModal show={true} onClose={this.handleBack}/>)
+      modal = <FinishModal onClose={this.handleBack} />
     } else {
       // need to make a pause button
     }
