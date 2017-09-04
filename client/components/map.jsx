@@ -31,9 +31,9 @@ const getCountryLabels = () => {
   return countryLabels
 }
 
-const setMapLayerProperty = (layer, labelArray, status) => {
-  if (layer.id === labelArray) {
-    map.setLayoutProperty(labelArray, 'visibility', status)
+const setMapLayerProperty = (layer, labelArrayItem, status) => {
+  if (layer.id === labelArrayItem) {
+    map.setLayoutProperty(labelArrayItem, 'visibility', status)
   }
 }
 
@@ -61,7 +61,7 @@ export default class Maps extends React.Component {
       minZoom: 2,
     })
     // map.on('click', (e) => {
-    //   // using e to pass linting error
+    //   // using e to pass = linting error
     //   return e
     //   // const features = map.queryRenderedFeatures(e.point)
     //   // console.log('features: ', features)
@@ -86,23 +86,28 @@ export default class Maps extends React.Component {
       const label = `${countryAbbrev}_LABEL`
       map.style.stylesheet.layers.forEach((layer) => {
         if (layer.id === label) {
+          console.log('labeling: ', countryAbbrev)
+          console.log('label: ', label)
           map.setLayoutProperty(label, 'visibility', 'visible')
+          console.log('map: ', map)
         }
       })
     }
     // check if the map needs to hide labels
-    if (this.props.showLabels === true && nextProps.showLabels === false) {
-      // gather array of country abbreviations
-      const allLabels = getCountryLabels()
-      // iterate through layers to hide country label layers
-      showHideLabels(allLabels, 'none')
-    }
-    // check if map needs to show labels
-    if (this.props.showLabels === false && nextProps.showLabels === true) {
-      // gather array of country abbreviations
-      const allLabels = getCountryLabels()
-      // iterate through layers to show country label layers
-      showHideLabels(allLabels, 'visible')
+    if (nextProps.showLabels !== this.props.showLabels) {
+      if (nextProps.showLabels === false) {
+        // gather array of country abbreviations
+        const allLabels = getCountryLabels()
+        // iterate through layers to hide country label layers
+        showHideLabels(allLabels, 'none')
+      }
+      // check if map needs to show labels
+      if (nextProps.showLabels === true) {
+        // gather array of country abbreviations
+        const allLabels = getCountryLabels()
+        // iterate through layers to show country label layers
+        showHideLabels(allLabels, 'visible')
+      }
     }
     // check if the map needs to pan to a new location
     if (this.props.lonlat !== nextProps.lonlat) {

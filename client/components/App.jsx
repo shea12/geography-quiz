@@ -63,7 +63,14 @@ export default class App extends React.Component {
   }
 
   handleBack() {
-    this.setState({ selectedContinent: '', timing: false, lonlat: [0.2, 20.6], zoom: 2 })
+    this.setState({ 
+      selectedContinent: '',
+      timing: false,
+      lonlat: [0.2, 20.6],
+      zoom: 2,
+      showLabels: true,
+      showModal: false,
+    })
   }
 
   handleCountry(country) {
