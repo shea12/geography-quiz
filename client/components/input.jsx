@@ -28,7 +28,7 @@ export default class InputForm extends React.Component {
     super(props)
     this.state = {
       value: '',
-      countries: [],
+      countryArray: [],
       inputcheck: null,
     }
 
@@ -37,11 +37,11 @@ export default class InputForm extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ countries: this.props.countries })
+    this.setState({ countryArray: this.props.countryArray })
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ countries: nextProps.countries })
+    this.setState({ countryArray: nextProps.countryArray })
   }
 
   // TODO: this method is doing a lot, will refactor logic 
@@ -51,19 +51,18 @@ export default class InputForm extends React.Component {
     if (target.charCode === 13) {
       // upon enter being pressed, iterate through countries array
       // checking for a match to the user input
-      const length = this.state.countries.length
-      for (let i = 0; i < this.state.countries.length; i += 1) {
-        if (this.state.value.toLowerCase() === this.state.countries[i].toLowerCase()) {
+      const length = this.state.countryArray.length
+      for (let i = 0; i < this.state.countryArray.length; i += 1) {
+        if (this.state.value.toLowerCase() === this.state.countryArray[i].name.toLowerCase()) {
           this.setState({ inputcheck: 'success', value: '' })
-          // call colorCountry function to shade in the named country
-          this.props.colorCountry(this.state.countries[i])
+          // call App's namedCountry function with country abbrv to shade in country
+          this.props.namedCountry(this.state.countryArray[i].abbrv)
           // remove named country from list
-          this.state.countries.splice(i, 1)
-          // setState with updated list
-          this.setState({ countries: this.state.countries })
+          this.state.countryArray.splice(i, 1)
+          this.setState({ countryArray: this.state.countryArray })
           // check if they have countries left to name
-          if (this.state.countries.length === 0) {
-            // parameters (endtimer, gotallcountries)
+          if (this.state.countryArray.length === 0) {
+            // parameters (endtimer, gotallcountries?)
             this.props.handleTimer(false, true)
           }
         } else if (i === length - 1) {
@@ -101,7 +100,7 @@ export default class InputForm extends React.Component {
 }
 
 InputForm.propTypes = {
-  countries: PropTypes.arrayOf(PropTypes.string).isRequired,
-  colorCountry: PropTypes.func.isRequired,
+  countryArray: PropTypes.arrayOf(PropTypes.object).isRequired,
+  namedCountry: PropTypes.func.isRequired,
   handleTimer: PropTypes.func.isRequired,
 }

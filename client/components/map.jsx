@@ -2,7 +2,9 @@ import React from 'react'
 import MapboxGl from 'mapbox-gl'
 import PropTypes from 'prop-types'
 import Keys from '../../keys'
-import Continents from '../../continentContents'
+import WORLD from '../../continentContents'
+import COUNTRYCODES from '../../countryCodes'
+
 
 const style = {
   map: {
@@ -16,35 +18,19 @@ const style = {
 
 let map = {}
 
-const getCountryLabels = () => {
-  // eventually could have a parameter 'continent' as a boolean to 
-  // indicate if should compile all labels or just the labels of the selected
-  const world = Continents
-  const countryLabels = []
-  // linter says for... in loops are very bad, refactor to Object. instead
-  for (const continent in world) {
-    for (const country in world[continent].abbrevs) {
-      const abbreviationLabel = `${world[continent].abbrevs[country]}_LABEL`
-      countryLabels.push(abbreviationLabel)
-    }
-  }
-  return countryLabels
-}
-
-const setMapLayerProperty = (layer, labelArrayItem, status) => {
-  if (layer.id === labelArrayItem) {
-    map.setLayoutProperty(labelArrayItem, 'visibility', status)
+const showHideCountryLabels = (countryCodeArray, status) => {
+  for (let i = 0; i < countryCodeArray.length; i += 1) {
+    map.setLayoutProperty(`${countryCodeArray[i]}_LABEL`, 'visibility', status)
   }
 }
 
-const showHideLabels = (labelArray, status) => {
-  // linter says 'don't make functions within a loop'
-  for (let i = 0; i < labelArray.length; i += 1) {
-    map.style.stylesheet.layers.forEach((layer) => {
-      setMapLayerProperty(layer, labelArray[i], status)
-    })
+/*
+const showHideStateLabels = (stateCodeArray, status) => {
+  for (let i = 0; i < stateCodeArray.length; i += 1) {
+    map.setLayoutProperty(`${stateCodeArray[i]}_LABEL`, 'visibility', status)
   }
 }
+*/
 
 export default class Maps extends React.Component {
   componentDidMount() {
@@ -72,51 +58,26 @@ export default class Maps extends React.Component {
     // will be checking previous props against nextProps in order
     // to determine what action needs to be performed on the map
 
-    // color in and display label of country after it is found
-    if (this.props.countryToShade !== nextProps.countryToShade) {
-      // translate this.props.countryToShade to its 2letter abbreviation
-      const foundContinent = this.props.selectedContinent
-      const countryAbbrev = Continents[foundContinent].abbrevs[nextProps.countryToShade]
-
-      // shade in found country fill
-      // map.setPaintProperty(countryAbbrev, 'fill-opacity', 1)
-      // map.setPaintProperty(countryAbbrev, 'fill-outline-color', 'rgb(33, 200, 30)')
-
-      // display found country label
-      const label = `${countryAbbrev}_LABEL`
-      map.style.stylesheet.layers.forEach((layer) => {
-        if (layer.id === label) {
-          console.log('labeling: ', countryAbbrev)
-          console.log('label: ', label)
-          map.setLayoutProperty(label, 'visibility', 'visible')
-          console.log('map: ', map)
-        }
-      })
+    // display country label, shade in country area after it is found
+    if (this.props.namedCountry !== nextProps.namedCountry) {
+      const countryCode = nextProps.namedCountry
+      map.setPaintProperty(countryCode, 'fill-opacity', 1)
+      map.setPaintProperty(countryCode, 'fill-outline-color', 'rgb(33, 200, 30)')
+      map.setLayoutProperty(`${countryCode}_LABEL`, 'visibility', 'visible')
     }
-    // check if the map needs to hide labels
+
+    // check if map needs to change visibility of labels
     if (nextProps.showLabels !== this.props.showLabels) {
-      if (nextProps.showLabels === false) {
-        // gather array of country abbreviations
-        const allLabels = getCountryLabels()
-        // iterate through layers to hide country label layers
-        showHideLabels(allLabels, 'none')
-      }
-      // check if map needs to show labels
-      if (nextProps.showLabels === true) {
-        // gather array of country abbreviations
-        const allLabels = getCountryLabels()
-        // iterate through layers to show country label layers
-        showHideLabels(allLabels, 'visible')
-      }
+      nextProps.showLabels ? showHideCountryLabels(COUNTRYCODES, 'visible') : showHideCountryLabels(COUNTRYCODES, 'none')
     }
+
     // check if the map needs to pan to a new location
     if (this.props.lonlat !== nextProps.lonlat) {
-      //
       map.flyTo({ center: nextProps.lonlat, zoom: nextProps.zoom, speed: 0.4 })
     }
+
     // check for the selected continent
     if (this.props.selectedContinent !== nextProps.selectedContinent) {
-      // 
       map.flyTo({ center: nextProps.lonlat, zoom: nextProps.zoom, speed: 0.4 })
     }
   }
@@ -131,7 +92,7 @@ export default class Maps extends React.Component {
 Maps.propTypes = {
   lonlat: PropTypes.arrayOf(PropTypes.number).isRequired,
   zoom: PropTypes.number.isRequired,
-  countryToShade: PropTypes.string.isRequired,
+  namedCountry: PropTypes.string.isRequired,
   selectedContinent: PropTypes.string.isRequired,
   showLabels: PropTypes.bool.isRequired,
 }

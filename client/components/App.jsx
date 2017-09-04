@@ -11,7 +11,7 @@ import StartButton from './startbutton.jsx'
 import BackButton from './backbutton.jsx'
 import Timer from './timer.jsx'
 import FinishModal from './finishmodal.jsx'
-import World from '../../continentContents'
+import WORLD from '../../continentContents'
 /* eslint-enable */
 
 const style = {
@@ -25,36 +25,34 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      world: World,
       lonlat: [0.2, 20.6],
       zoom: 2,
       showLabels: true,
       selectedContinent: '',
-      countryList: [],
-      abbrevs: [],
-      countryToShade: '',
+      countryArray: [],
+      // abbrevs: [],
       timing: false,
+      namedCountry: '',
       showModal: false,
     }
 
     this.handleLocation = this.handleLocation.bind(this)
-    this.handleCountry = this.handleCountry.bind(this)
+    this.handleNamedCountry = this.handleNamedCountry.bind(this)
     this.handleStart = this.handleStart.bind(this)
     this.handleBack = this.handleBack.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
   }
 
   handleLocation(selectedContin) {
-    // access selected continent info from 'World', make copy
-    const continentCopy = World[selectedContin].countries.slice()
-
+    // access selected continent info from 'WORLD', make copy
+    const countryArrayCopy = WORLD[selectedContin].countries.slice()
     this.setState({
-      lonlat: World[selectedContin].lonlat,
-      zoom: World[selectedContin].zoom,
+      lonlat: WORLD[selectedContin].lonlat,
+      zoom: WORLD[selectedContin].zoom,
       selectedContinent: selectedContin,
       showLabels: true,
-      countryList: continentCopy,
-      abbrevs: World[selectedContin].abbrevs,
+      countryArray: countryArrayCopy,
+      // abbrevs: WORLD[selectedContin].abbrevs,
     })
   }
 
@@ -73,8 +71,8 @@ export default class App extends React.Component {
     })
   }
 
-  handleCountry(country) {
-    this.setState({ countryToShade: country })
+  handleNamedCountry(country) {
+    this.setState({ namedCountry: country })
   }
 
   handleTimer(startStop, complete) {
@@ -117,12 +115,12 @@ export default class App extends React.Component {
     if (this.state.timing) {
       // render timer, score, and input when start is clicked
       inputform = (<InputForm
-        countries={this.state.countryList}
-        colorCountry={this.handleCountry}
+        countryArray={this.state.countryArray}
+        namedCountry={this.handleNamedCountry}
         handleTimer={this.handleTimer}
       />)
       scorekeeper = (<ScoreKeeper
-        countries={this.state.countryList}
+        countryArray={this.state.countryArray}
         continent={this.state.selectedContinent}
       />)
       timer = (<Timer
@@ -143,7 +141,7 @@ export default class App extends React.Component {
           <Maps
             lonlat={this.state.lonlat}
             zoom={this.state.zoom}
-            countryToShade={this.state.countryToShade}
+            namedCountry={this.state.namedCountry}
             selectedContinent={this.state.selectedContinent}
             showLabels={this.state.showLabels}
           />
