@@ -23,12 +23,12 @@ export default class ScoreKeeper extends React.Component {
   componentWillMount() {
     this.setState({
       continent: this.props.continent,
-      remain: this.props.countryArray.length,
+      remain: this.props.placesArray.length,
     })
   }
 
   componentWillReceiveProps(nextProps) {
-    const remaining = nextProps.countryArray.length
+    const remaining = nextProps.placesArray.length
     if (this.state.continent === nextProps.continent) {
       // the continent has not changed
       // check for updates to found and remaining
@@ -55,5 +55,5 @@ export default class ScoreKeeper extends React.Component {
 
 ScoreKeeper.propTypes = {
   continent: PropTypes.string.isRequired,
-  countryArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
 }

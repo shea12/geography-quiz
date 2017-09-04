@@ -29,31 +29,60 @@ export default class App extends React.Component {
       zoom: 2,
       showLabels: true,
       selectedContinent: '',
-      countryArray: [],
-      // abbrevs: [],
+      placesArray: [],
       timing: false,
-      namedCountry: '',
+      namedPlace: '',
       showModal: false,
+      capitals: false,
+      states: false,
     }
 
     this.handleLocation = this.handleLocation.bind(this)
-    this.handleNamedCountry = this.handleNamedCountry.bind(this)
+    this.handleNamedPlace = this.handleNamedPlace.bind(this)
     this.handleStart = this.handleStart.bind(this)
     this.handleBack = this.handleBack.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
   }
 
-  handleLocation(selectedContin) {
-    // access selected continent info from 'WORLD', make copy
-    const countryArrayCopy = WORLD[selectedContin].countries.slice()
+  /* PARAMS: 
+      selContinent: string: 2 Letter Continent Abbreviation,
+      selCountry: string: 2 Letter Country Abbreviation
+      capitals: boolean: capitals quiz
+  */
+  handleLocation(selContinent, selCountry, capitals) {
     this.setState({
-      lonlat: WORLD[selectedContin].lonlat,
-      zoom: WORLD[selectedContin].zoom,
-      selectedContinent: selectedContin,
+      lonlat: WORLD[selContinent].lonlat,
+      zoom: WORLD[selContinent].zoom,
+      selectedContinent: selContinent,
       showLabels: true,
-      countryArray: countryArrayCopy,
-      // abbrevs: WORLD[selectedContin].abbrevs,
     })
+
+    const countryArrayCopy = WORLD[selContinent].countries.slice()
+
+    if (selCountry) {
+      for (let i = 0; i < countryArrayCopy.length; i += 1) {
+        if (countryArrayCopy[i].abbrv === selCountry) {
+          const statesArrayCopy = countryArrayCopy[i].states.slice()
+          this.setState({ placesArray: statesArrayCopy, states: true })
+        }
+      }
+      if (capitals) {
+        // user selected a state capitals quiz
+        this.setState({ capitals: true })
+      } else {
+        // user selected states quiz
+        this.setState({ capitals: false })
+      }
+    } else if (!selCountry) {
+      this.setState({ placesArray: countryArrayCopy, states: false })
+      if (capitals) {
+        // user selected countries capitals quiz
+        this.setState({ capitals: true })
+      } else {
+        // user selected countries quiz
+        this.setState({ capitals: false })
+      }
+    }
   }
 
   handleStart() {
@@ -71,8 +100,8 @@ export default class App extends React.Component {
     })
   }
 
-  handleNamedCountry(country) {
-    this.setState({ namedCountry: country })
+  handleNamedPlace(place) {
+    this.setState({ namedPlace: place })
   }
 
   handleTimer(startStop, complete) {
@@ -115,12 +144,12 @@ export default class App extends React.Component {
     if (this.state.timing) {
       // render timer, score, and input when start is clicked
       inputform = (<InputForm
-        countryArray={this.state.countryArray}
-        namedCountry={this.handleNamedCountry}
+        placesArray={this.state.placesArray}
+        namedPlace={this.handleNamedPlace}
         handleTimer={this.handleTimer}
       />)
       scorekeeper = (<ScoreKeeper
-        countryArray={this.state.countryArray}
+        placesArray={this.state.placesArray}
         continent={this.state.selectedContinent}
       />)
       timer = (<Timer
@@ -141,9 +170,11 @@ export default class App extends React.Component {
           <Maps
             lonlat={this.state.lonlat}
             zoom={this.state.zoom}
-            namedCountry={this.state.namedCountry}
+            namedPlace={this.state.namedPlace}
             selectedContinent={this.state.selectedContinent}
             showLabels={this.state.showLabels}
+            capitals={this.state.capitals}
+            states={this.state.states}
           />
           <HeaderCard />
           {continentbuttons}

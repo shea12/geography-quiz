@@ -1,5 +1,6 @@
 const CONTINENTS = {
   NA: {
+    name: 'North America',
     lonlat: [-68.56, 35.7],
     zoom: 3.16,
     countries: [
@@ -240,6 +241,7 @@ const CONTINENTS = {
     ],
   },
   SA: {
+    name: 'South America',
     lonlat: [-53.74, -22.99],
     zoom: 2.66,
     countries: [
@@ -347,6 +349,7 @@ const CONTINENTS = {
     ],
   },
   AF: {
+    name: 'Africa',
     lonlat: [32.54, 1.52],
     zoom: 2.79,
     countries: [
@@ -940,7 +943,7 @@ const CONTINENTS = {
       },
       {
         abbrv: 'AD',
-        name: '',
+        name: 'Andorra',
         cap: '',
         states: [],
       },
@@ -965,6 +968,7 @@ const CONTINENTS = {
     ],
   },
   AS: {
+    name: 'Asia',
     lonlat: [90.93, 28.19],
     zoom: 2.87,
     countries: [
@@ -1265,6 +1269,7 @@ const CONTINENTS = {
     ],
   },
   OC: {
+    name: 'Oceania',
     lonlat: [169.21, -19.58],
     zoom: 3.07,
     countries: [

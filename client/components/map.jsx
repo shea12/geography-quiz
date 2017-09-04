@@ -3,7 +3,7 @@ import MapboxGl from 'mapbox-gl'
 import PropTypes from 'prop-types'
 import Keys from '../../keys'
 import WORLD from '../../continentContents'
-import COUNTRYCODES from '../../countryCodes'
+import CODES from '../../countryCodes'
 
 
 const style = {
@@ -21,16 +21,16 @@ let map = {}
 const showHideCountryLabels = (countryCodeArray, status) => {
   for (let i = 0; i < countryCodeArray.length; i += 1) {
     map.setLayoutProperty(`${countryCodeArray[i]}_LABEL`, 'visibility', status)
+    map.setPaintProperty(countryCodeArray[i], 'fill-opacity', 0)
   }
 }
 
-/*
 const showHideStateLabels = (stateCodeArray, status) => {
   for (let i = 0; i < stateCodeArray.length; i += 1) {
-    map.setLayoutProperty(`${stateCodeArray[i]}_LABEL`, 'visibility', status)
+    map.setLayoutProperty(`USST_${stateCodeArray[i]}`, 'visibility', status)
+    map.setLayoutProperty(`USSTCAP_${stateCodeArray[i]}`, 'visibility', status)
   }
 }
-*/
 
 export default class Maps extends React.Component {
   componentDidMount() {
@@ -59,16 +59,25 @@ export default class Maps extends React.Component {
     // to determine what action needs to be performed on the map
 
     // display country label, shade in country area after it is found
-    if (this.props.namedCountry !== nextProps.namedCountry) {
-      const countryCode = nextProps.namedCountry
-      map.setPaintProperty(countryCode, 'fill-opacity', 1)
-      map.setPaintProperty(countryCode, 'fill-outline-color', 'rgb(33, 200, 30)')
-      map.setLayoutProperty(`${countryCode}_LABEL`, 'visibility', 'visible')
+    if (this.props.namedPlace !== nextProps.namedPlace) {
+
+      const placeCode = nextProps.namedPlace
+      if (nextProps.states) {
+        map.setLayoutProperty(`USST_${placeCode}`, 'visibility', 'visible')
+      } else if (nextProps.capitals) {
+        map.setLayoutProperty(`USSTCAP_${placeCode}`, 'visibility', 'visible')
+      } else {
+        map.setLayoutProperty(`${placeCode}_LABEL`, 'visibility', 'visible')
+      }
+
+      // map.setPaintProperty(placeCode, 'fill-opacity', 1)
+      // map.setPaintProperty(placeCode, 'fill-outline-color', 'rgb(41, 169, 45)')
     }
 
     // check if map needs to change visibility of labels
     if (nextProps.showLabels !== this.props.showLabels) {
-      nextProps.showLabels ? showHideCountryLabels(COUNTRYCODES, 'visible') : showHideCountryLabels(COUNTRYCODES, 'none')
+      nextProps.showLabels ? showHideCountryLabels(CODES.COUNTRIES, 'visible') : showHideCountryLabels(CODES.COUNTRIES, 'none')
+      nextProps.showLabels ? showHideStateLabels(CODES.US_STATES, 'visible') : showHideStateLabels(CODES.US_STATES, 'none')
     }
 
     // check if the map needs to pan to a new location
@@ -92,7 +101,9 @@ export default class Maps extends React.Component {
 Maps.propTypes = {
   lonlat: PropTypes.arrayOf(PropTypes.number).isRequired,
   zoom: PropTypes.number.isRequired,
-  namedCountry: PropTypes.string.isRequired,
+  namedPlace: PropTypes.string.isRequired,
   selectedContinent: PropTypes.string.isRequired,
   showLabels: PropTypes.bool.isRequired,
+  states: PropTypes.bool.isRequired,
+  capitals: PropTypes.bool.isRequired,
 }

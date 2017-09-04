@@ -52,7 +52,8 @@ class Timer extends React.Component {
     let timerComponent = null
     const elapsed = Math.round(this.state.time / 100)
     const seconds = (elapsed / 10).toFixed(0)
-    timerComponent = (<p>Time: {seconds}</p>)
+    function fmtMSS(s){return(s-(s%=60))/60+(9<s?':':':0')+s}
+    timerComponent = (<p>Time: {fmtMSS(seconds)}</p>)
     return (
       <div style={style.time}>
         {timerComponent}

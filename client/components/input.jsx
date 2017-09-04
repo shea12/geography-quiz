@@ -28,7 +28,7 @@ export default class InputForm extends React.Component {
     super(props)
     this.state = {
       value: '',
-      countryArray: [],
+      placesArray: [],
       inputcheck: null,
     }
 
@@ -37,36 +37,36 @@ export default class InputForm extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ countryArray: this.props.countryArray })
+    this.setState({ placesArray: this.props.placesArray })
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ countryArray: nextProps.countryArray })
+    this.setState({ placesArray: nextProps.placesArray })
   }
 
   // TODO: this method is doing a lot, will refactor logic 
   handleKeyPress(target) {
     this.setState({ inputcheck: null })
-    // check if user enters valid country
+    // check if user enters valid place
     if (target.charCode === 13) {
       // upon enter being pressed, iterate through countries array
       // checking for a match to the user input
-      const length = this.state.countryArray.length
-      for (let i = 0; i < this.state.countryArray.length; i += 1) {
-        if (this.state.value.toLowerCase() === this.state.countryArray[i].name.toLowerCase()) {
+      const length = this.state.placesArray.length
+      for (let i = 0; i < this.state.placesArray.length; i += 1) {
+        if (this.state.value.toLowerCase() === this.state.placesArray[i].name.toLowerCase()) {
           this.setState({ inputcheck: 'success', value: '' })
-          // call App's namedCountry function with country abbrv to shade in country
-          this.props.namedCountry(this.state.countryArray[i].abbrv)
-          // remove named country from list
-          this.state.countryArray.splice(i, 1)
-          this.setState({ countryArray: this.state.countryArray })
-          // check if they have countries left to name
-          if (this.state.countryArray.length === 0) {
+          // call App's namedPlace function with place abbrv to shade in area
+          this.props.namedPlace(this.state.placesArray[i].abbrv)
+          // remove named palce from list
+          this.state.placesArray.splice(i, 1)
+          this.setState({ placesArray: this.state.placesArray })
+          // check if user has countries left to name
+          if (this.state.placesArray.length === 0) {
             // parameters (endtimer, gotallcountries?)
             this.props.handleTimer(false, true)
           }
         } else if (i === length - 1) {
-          // iterated through country array without match
+          // iterated through place array without match
           this.setState({ inputcheck: 'error' })
         }
       }
@@ -88,7 +88,7 @@ export default class InputForm extends React.Component {
               style={style.input}
               type="text"
               value={this.state.value}
-              placeholder="Enter country"
+              placeholder="Enter name of place"
               onChange={this.handleChange}
               onKeyPress={this.handleKeyPress}
             />
@@ -100,7 +100,7 @@ export default class InputForm extends React.Component {
 }
 
 InputForm.propTypes = {
-  countryArray: PropTypes.arrayOf(PropTypes.object).isRequired,
-  namedCountry: PropTypes.func.isRequired,
+  placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
+  namedPlace: PropTypes.func.isRequired,
   handleTimer: PropTypes.func.isRequired,
 }
