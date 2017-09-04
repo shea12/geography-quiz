@@ -1119,8 +1119,8 @@ const CONTINENTS = {
         states: [],
       },
       {
-        abbrv: 'Nepal',
-        name: 'NP',
+        abbrv: 'NP',
+        name: 'Nepal',
         cap: '',
         states: [],
       },
