@@ -3,451 +3,1369 @@ const CONTINENTS = {
     lonlat: [-68.56, 35.7],
     zoom: 3.16,
     countries: [
-        // 'Antigua and Barbuda', // Antigua and Barbuda
-        'Bahamas', // Bahamas
-        'Barbados', // Barbados
-        // 'Belize', // Belize
-        // 'Canada', // Canada
-        // 'Costa Rica', // Costa Rica
-        // 'Cuba', // Cuba
-        // 'Dominica', // Dominica
-        // 'Dominican Republic', // Dominican Republic
-        // 'El Salvador', // El Salvador
-        // 'Grenada', // Grenada
-        // 'Guatemala', // Guatemala
-        // 'Haiti', // Haiti
-        // 'Honduras', // Honduras
-        // 'Jamaica', // Jamaica
-        // 'Mexico', // Mexico
-        // 'Nicaragua', // Nicaragua
-        // 'Panama', // Panama
-        // 'Saint Kitts and Nevis', // Saint Kitts and Nevis
-        // 'Saint Lucia', // Saint Lucia
-        // 'Saint Vincent and the Grenadines', // Saint Vincent and the Grenadines
-        // 'Trinidad and Tobago', // Trinidad and Tobago
-        // 'United States', // United States of America
+      {
+        abbrv: 'US',
+        name: 'United States',
+        cap: 'Washington',
+        states: [
+          {abbrv: 'AK', name: 'Alaska', cap: 'Juneau'},
+          {abbrv: 'AL', name: 'Alabama', cap: 'Montgomery'},
+          {abbrv: 'AR', name: 'Arkansas', cap: 'Little Rock'},
+          {abbrv: 'AZ', name: 'Arizona', cap: 'Phoenix'},
+          {abbrv: 'CA', name: 'California', cap: 'Sacramento'},
+          {abbrv: 'CO', name: 'Colorado', cap: 'Denver'},
+          {abbrv: 'CT', name: 'Connecticut', cap: 'Hartford'},
+          {abbrv: 'DC', name: 'District of Columbia', cap: null},
+          {abbrv: 'DE', name: 'Delaware', cap: 'Dover'},
+          {abbrv: 'FL', name: 'Florida', cap: 'Tallahassee'},
+          {abbrv: 'GA', name: 'Georgia', cap: 'Atlanta'}, 
+          {abbrv: 'HI', name: 'Hawaii', cap: 'Honolulu'},
+          {abbrv: 'IA', name: 'Iowa', cap: 'Des Moines'},
+          {abbrv: 'ID', name: 'Idaho', cap: 'Boise'},
+          {abbrv: 'IL', name: 'Illinois', cap: 'Springfield'},
+          {abbrv: 'IN', name: 'Indiana', cap: 'Indianapolis'}, 
+          {abbrv: 'KS', name: 'Kansas', cap: 'Topeka'},
+          {abbrv: 'KY', name: 'Kentucky', cap: 'Frankfort'},
+          {abbrv: 'LA', name: 'Louisiana', cap: 'Baton Rouge'},
+          {abbrv: 'MA', name: 'Massachusetts', cap: 'Boston'},
+          {abbrv: 'MD', name: 'Maryland', cap: 'Annapolis'},
+          {abbrv: 'ME', name: 'Maine', cap: 'Augusta'},
+          {abbrv: 'MI', name: 'Michigan', cap: 'Lansing'},
+          {abbrv: 'MN', name: 'Minnesota', cap: 'Saint Paul'},
+          {abbrv: 'MO', name: 'Missouri', cap: 'Jefferson City'},
+          {abbrv: 'MS', name: 'Mississippi', cap: 'Jackson'},
+          {abbrv: 'MT', name: 'Montana', cap: 'Helena'},
+          {abbrv: 'NC', name: 'North Carolina', cap: 'Raleigh'},
+          {abbrv: 'ND', name: 'North Dakota', cap: 'Bismark'},
+          {abbrv: 'NE', name: 'Nebraska', cap: 'Lincoln'},
+          {abbrv: 'NH', name: 'New Hampshire', cap: 'Concord'},
+          {abbrv: 'NJ', name: 'New Jersey', cap: 'Trenton'},
+          {abbrv: 'NM', name: 'New Mexico', cap: 'Santa Fe'}, 
+          {abbrv: 'NV', name: 'Nevada', cap: 'Carson City'},
+          {abbrv: 'NY', name: 'New York', cap: 'Albany'},
+          {abbrv: 'OH', name: 'Ohio', cap: 'Columbus'},
+          {abbrv: 'OK', name: 'Oklahoma', cap: 'Oklahoma City'}, 
+          {abbrv: 'OR', name: 'Oregon', cap: 'Salem'},
+          {abbrv: 'PA', name: 'Pennsylvania', cap: 'Harrisburg'},
+          {abbrv: 'RI', name: 'Rhode Island', cap: 'Providence'},
+          {abbrv: 'SC', name: 'South Carolina', cap: 'Columbia'},
+          {abbrv: 'SD', name: 'South Dakota', cap: 'Pierre'},
+          {abbrv: 'TN', name: 'Tennessee', cap: 'Nashville'},
+          {abbrv: 'TX', name: 'Texas', cap: 'Austin'},
+          {abbrv: 'UT', name: 'Utah', cap: 'Salt Lake City'},
+          {abbrv: 'VA', name: 'Virginia', cap: 'Richmond'},
+          {abbrv: 'VT', name: 'Vermont', cap: 'Montpelier'},
+          {abbrv: 'WA', name: 'Washington', cap: 'Olympia'},
+          {abbrv: 'WI', name: 'Wisconsin', cap: 'Madison'},
+          {abbrv: 'WV', name: 'West Virginia', cap: 'Charleston'},
+          {abbrv: 'WY', name: 'Wyoming', cap: 'Cheyenne'},
+        ],
+      },
+      {
+        abbrv: 'MX',
+        name: 'Mexico',
+        cap: 'Mexico City',
+        states: [
+          {name: 'Campeche'},
+          {name: 'Chiapas'},
+          {name: 'Chihuahua'},
+          {name: 'Coahuila'},
+          {name: 'Colima'},
+          {name: 'Distrito Federal'},
+          {name: 'Durango'},
+          {name: 'Guanajuato'},
+          {name: 'Guerrero'},
+          {name: 'Hidalgo'},
+          {name: 'Jalisco'},
+          {name: 'Michoacán'},
+          {name: 'Morelos'},
+          {name: 'México'},
+          {name: 'Nayarit'},
+          {name: 'Nuevo León'},
+          {name: 'Oaxaca'},
+          {name: 'Puebla'},
+          {name: 'Querétaro'},
+          {name: 'Quintana Roo'},
+          {name: 'San Luis Potosi'},
+          {name: 'Sinaloa'},
+          {name: 'Sonora'},
+          {name: 'Tabasco'},
+          {name: 'Tamaulipas'},
+          {name: 'Tlaxcala'},
+          {name: 'Veracruz'},
+          {name: 'Yucatán'},
+          {name: 'Zacatecas'},
+        ],
+      },
+      {
+        abbrv: 'CA',
+        name: 'Canada',
+        cap: 'Ottawa',
+        states: [
+          {name: 'Alberta'},
+          {name: 'British Columbia'},
+          {name: 'Manitoba'},
+          {name: 'New Brunswick'},
+          {name: 'Newfoundland'},
+          {name: 'Northwest Territories'},
+          {name: 'Nova Scotia'},
+          {name: 'Nunavut'},
+          {name: 'Ontario'},
+          {name: 'Prince Edward Island'},
+          {name: 'Quebec'},
+          {name: 'Saskatchewan'},
+          {name: 'Yukon'},
+        ],
+      },
+      {
+        abbrv: 'AG',
+        name: 'Antigua and Barbuda',
+        cap: 'St. Johns',
+        states: [],
+      },
+      {
+        abbrv: 'BS',
+        name: 'Bahamas',
+        cap: 'Nassau',
+        states: [],
+      },
+      {
+        abbrv: 'BB',
+        name: 'Barbados',
+        cap: 'Bridgetown',
+        states: [],
+      },
+      {
+        abbrv: 'BZ',
+        name: 'Belize',
+        cap: 'Belmopan',
+        states: [],
+      },
+      {
+        abbrv: 'CR',
+        name: 'Costa Rica',
+        cap: 'San Jose',
+        states: [],
+      },
+      {
+        abbrv: 'CU',
+        name: 'Cuba',
+        cap: 'Havana',
+        states: [],
+      },
+      {
+        abbrv: 'DO',
+        name: 'Dominican Republic',
+        cap: 'Santo Domingo',
+        states: [],
+      },
+      {
+        abbrv: 'DM',
+        name: 'Dominica',
+        cap: 'Roseau',
+        states: [],
+      },
+      {
+        abbrv: 'SV',
+        name: 'El Salvador',
+        cap: 'San Salvador',
+        states: [],
+      },
+      {
+        abbrv: 'GD',
+        name: 'Grenada',
+        cap: 'St. George',
+        states: [],
+      },
+      {
+        abbrv: 'HT',
+        name: 'Haiti',
+        cap: 'Port-au-Prince',
+        states: [],
+      },
+      {
+        abbrv: 'GT',
+        name: 'Guatemala',
+        cap: 'Guatemala City',
+        states: [],
+      },
+      {
+        abbrv: 'HN',
+        name: 'Honduras',
+        cap: 'Tegucigalpa',
+        states: [],
+      },
+      {
+        abbrv: 'JM',
+        name: 'Jamaica',
+        cap: 'Kingston',
+        states: [],
+      },
+      {
+        abbrv: 'NI',
+        name: 'Nicaragua',
+        cap: 'Managua',
+        states: {},
+      },
+      {
+        abbrv: 'PA',
+        name: 'Panama',
+        cap: 'Panama City',
+        states: {},
+      },
+      {
+        abbrv: 'KN',
+        name: 'Saint Kitts and Nevis',
+        cap: 'Basseterre',
+        states: {},
+      },
+      {
+        abbrv: 'LC',
+        name: 'Saint Lucia',
+        cap: 'Castries',
+        states: {},
+      },
+      {
+        abbrv: 'VC',
+        name: 'Saint Vincent and the Grenadines',
+        cap: 'Kingstown',
+        states: {},
+      },
+      {
+        abbrv: 'TT',
+        name: 'Trinidad and Tobago',
+        cap: 'Port of Spain',
+        states: {},
+      },
     ],
-    abbrevs: {
-        // 'Antigua and Barbuda': 'AG', // Antigua and Barbuda
-        'Bahamas': 'BS', // Bahamas
-        'Barbados': 'BB', // Barbados
-        // 'Belize': 'BZ', // Belize
-        // 'Canada': 'CA', // Canada
-        // 'Costa Rica': 'CR', // Costa Rica
-        // 'Cuba': 'CU', // Cuba
-        // 'Dominica': 'DM', // Dominica
-        // 'Dominican Republic': 'DO', // Dominican Republic
-        // 'El Salvador': 'SV', // El Salvador
-        // 'Grenada': 'GD', // Grenada
-        // 'Guatemala': 'GT', // Guatemala
-        // 'Haiti': 'HT', // Haiti
-        // 'Honduras': 'HN', // Honduras
-        // 'Jamaica': 'JM', // Jamaica
-        // 'Mexico': 'MX', // Mexico
-        // 'Nicaragua': 'NI', // Nicaragua
-        // 'Panama': 'PA', // Panama
-        // 'Saint Kitts and Nevis': 'KN', // Saint Kitts and Nevis
-        // 'Saint Lucia': 'LC', // Saint Lucia
-        // 'Saint Vincent and the Grenadines': 'VC', // Saint Vincent and the Grenadines
-        // 'Trinidad and Tobago': 'TT', // Trinidad and Tobago
-        // 'United States': 'US', // United States of America
-    },
   },
   SA: {
     lonlat: [-53.74, -22.99],
     zoom: 2.66,
     countries: [
-        // 'Argentina',
-        'Bolivia',
-        'Brazil',
-        // 'Chile',
-        // 'Colombia',
-        // 'Ecuador',
-        // 'Guyana',
-        // 'Paraguay',
-        // 'Peru',
-        // 'Suriname',
-        // 'Uruguay',
-        // 'Venezuela',
+      {
+        abbrv: 'AR',
+        name: 'Argentina',
+        cap: 'Buenos Aires',
+        states: [],
+      },
+      {
+        abbrv: 'BO',
+        name: 'Bolivia',
+        cap: 'La Paz',
+        alt_cap: 'Sucre',
+        states: [],
+      },
+      {
+        abbrv: 'BR',
+        name: 'Brazil',
+        cap: 'Brasília',
+        states: [
+          {name: 'Acre'},
+          {name: 'Alagoas'},
+          {name: 'Amapá'},
+          {name: 'Amazonas'},
+          {name: 'Bahia'},
+          {name: 'Ceará'},
+          {name: 'Distrito Federal'},
+          {name: 'Espírito Santo'},
+          {name: 'Goiás'},
+          {name: 'Maranhão'},
+          {name: 'Mato Grasso'},
+          {name: 'Mato Grosso do Sul'},
+          {name: 'Minas Gerais'},
+          {name: 'Paraná'},
+          {name: 'Paraíba'},
+          {name: 'Pará'},
+          {name: 'Pernambuco'},
+          {name: 'Piauí'},
+          {name: 'Rio Grande do Norte'},
+          {name: 'Rio Grande do Sul'},
+          {name: 'Rio de Janeiro'},
+          {name: 'Rondônia'},
+          {name: 'Roraima'},
+          {name: 'Santa Catarina'},
+          {name: 'Sergipe'},
+          {name: 'São Paulo'},
+          {name: 'Tocantins'},
+        ],
+      },
+      {
+        abbrv: 'CL',
+        name: 'Chile',
+        cap: 'Santiago',
+        states: [],
+      },
+      {
+        abbrv: 'CO',
+        name: 'Colombia',
+        cap: 'Bogota',
+        states: [],
+      },
+      {
+        abbrv: 'EC',
+        name: 'Ecuador',
+        cap: 'Quito',
+        states: [],
+      },
+      {
+        abbrv: 'GY',
+        name: 'Guyana',
+        cap: 'Georgetown',
+        states: [],
+      },
+      {
+        abbrv: 'PY',
+        name: 'Paraguay',
+        cap: 'Asuncion',
+        states: [],
+      },
+      {
+        abbrv: 'PE',
+        name: 'Peru',
+        cap: 'Lima',
+        states: [],
+      },
+      {
+        abbrv: 'SR',
+        name: 'Suriname',
+        cap: 'Paramaribo',
+        states: [],
+      },
+      {
+        abbrv: 'UY',
+        name: 'Uruguay',
+        cap: 'Montevideo',
+        states: [],
+      },
+      {
+        abbrv: 'VE',
+        name: 'Venezuela',
+        cap: 'Caracas',
+        states: [],
+      },
     ],
-    abbrevs: {
-        // 'Argentina': 'AR',
-        'Bolivia': 'BO', 
-        'Brazil': 'BR',
-        // 'Chile': 'CL',
-        // 'Colombia': 'CO',
-        // 'Ecuador': 'EC',
-        // 'Guyana': 'GY',
-        // 'Paraguay': 'PY',
-        // 'Peru': 'PE',
-        // 'Suriname': 'SR',
-        // 'Uruguay': 'UY',
-        // 'Venezuela': 'VE',
-    },
   },
   AF: {
     lonlat: [32.54, 1.52],
     zoom: 2.79,
-  //   countries: [
-  //       'South Africa',
-  //       'Botswana', 
-  //       'Namibia',
-  //       'Madagascar',
-  //       'Zimbabwe',
-  //       'Mozambique',
-  //       'Angola',
-  //       'Malawi',
-  //       'Zambia',
-  //       'Tanzania',
-  //       'Burundi',
-  //       'Rwanda',
-  //       'Democratic Republic of the Congo', 
-  //       'Republic of the Congo',
-  //       'Gabon',
-  //       'Equatorial Guinea',
-  //       'Uganda',
-  //       'Kenya',
-  //       'Cameroon',
-  //       'Central African Repulic',
-  //       'South Sudan',
-  //       'Djibouti',
-  //       'Ethiopia',
-  //       'Somalia',
-  //       'Sudan',
-  //       'Egypt',
-  //       'Libya',
-  //       'Chad',
-  //       'Nigeria',
-  //       'Niger',
-  //       'Algeria',
-  //       'Tunisia',
-  //       'Morocco',
-  //       'Western Sahara',
-  //       'Mali',
-  //       'Mauritania',
-  //       'Senegal',
-  //       'Burkina Faso',
-  //       'Benin',
-  //       'Togo',
-  //       'Ghana',
-  //       'Ivory Coast',
-  //       'Liberia',
-  //       'Guinea',
-  //       'Sierra Leone',
-  //       'Guinea-Bissau',
-  //       'The Gambia',
-  //       'Cape Verde',
-  //       'Eritrea',
-  //       'Lesotho',
-  //       'Swaziland',
-  //       'Sao Tome and Principe',
-  //       'Comoros',
-  //       'Mauritius',
-  //       'Seychelles',
-  //   ],
-  //   abbrevs: {
-  //       'South Africa': 'ZA',
-  //       'Botswana': 'BW', 
-  //       'Namibia': 'NA',
-  //       'Madagascar': 'MG',
-  //       'Zimbabwe': 'ZW',
-  //       'Mozambique': 'MZ',
-  //       'Angola': 'AO',
-  //       'Malawi': 'MW',
-  //       'Zambia': 'ZM',
-  //       'Tanzania': 'TZ',
-  //       'Burundi': 'BI',
-  //       'Rwanda': 'RW',
-  //       'Democratic Republic of the Congo': 'CD', 
-  //       'Republic of the Congo': 'CG',
-  //       'Gabon': 'GA',
-  //       'Equatorial Guinea': 'GQ',
-  //       'Uganda': 'UG',
-  //       'Kenya': 'KE',
-  //       'Cameroon': 'CM',
-  //       'Central African Repulic': 'CF',
-  //       'South Sudan': 'SS',
-  //       'Djibouti': 'DJ',
-  //       'Ethiopia': 'ET',
-  //       'Somalia': 'SO',
-  //       'Sudan': 'SD',
-  //       'Egypt': 'EG',
-  //       'Libya':'LY',
-  //       'Chad': 'TD',
-  //       'Nigeria': 'NG',
-  //       'Niger': 'NE',
-  //       'Algeria': 'DZ',
-  //       'Tunisia': 'TN',
-  //       'Morocco': 'MA',
-  //       'Western Sahara': 'EH',
-  //       'Mali': 'ML',
-  //       'Mauritania': 'MR',
-  //       'Senegal': 'SN',
-  //       'Burkina Faso': 'BF',
-  //       'Benin': 'BJ',
-  //       'Togo': 'TG',
-  //       'Ghana': 'GH',
-  //       'Ivory Coast': 'CI',
-  //       'Liberia': 'LR',
-  //       'Guinea': 'GN',
-  //       'Sierra Leone': 'SL',
-  //       'Guinea-Bissau': 'GW',
-  //       'The Gambia': 'GM',
-  //       'Cape Verde': 'CV',
-  //       'Eritrea': 'ER',
-  //       'Lesotho': 'LS',
-  //       'Swaziland': 'SZ',
-  //       'Sao Tome and Principe': 'ST',
-  //       'Comoros': 'KM',
-  //       'Mauritius': 'MU',
-  //       'Seychelles': 'SC',
-  //   },
+    countries: [
+      {
+        abbrv: 'ZA',
+        name: 'South Africa',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BW',
+        name: 'Botswana',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'NA',
+        name: 'Namibia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MG',
+        name: 'Madagascar',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'ZW',
+        name: 'Zimbabwe',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MZ',
+        name: 'Mozambique',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'AO',
+        name: 'Angola',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MW',
+        name: 'Malawi',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'ZM',
+        name: 'Zambia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TZ',
+        name: 'Tanzania',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BI',
+        name: 'Burundi',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'RW',
+        name: 'Rwanda',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'CD',
+        name: 'Democratic Republic of the Congo',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'CG',
+        name: 'Republic of the Congo',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'GA',
+        name: 'Gabon',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'GQ',
+        name: 'Equatorial Guinea',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'UG',
+        name: 'Uganda',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'KE',
+        name: 'Kenya',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'CM',
+        name: 'Cameroon',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'CF',
+        name: 'Central African Repulic',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SS',
+        name: 'South Sudan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'DJ',
+        name: 'Djibouti',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'ET',
+        name: 'Ethiopia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SO',
+        name: 'Somalia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SD',
+        name: 'Sudan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'EG',
+        name: 'Egypt',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'LY',
+        name: 'Libya',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TD',
+        name: 'Chad',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'NG',
+        name: 'Nigeria',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'NE',
+        name: 'Niger',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'DZ',
+        name: 'Algeria',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TN',
+        name: 'Tunisia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MA',
+        name: 'Morocco',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'EH',
+        name: 'Western Sahara',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'ML',
+        name: 'Mali',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MR',
+        name: 'Mauritania',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SN',
+        name: 'Senegal',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BF',
+        name: 'Burkina Faso',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BJ',
+        name: 'Benin',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TG',
+        name: 'Togo',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'GH',
+        name: 'Ghana',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'CI',
+        name: 'Ivory Coast',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'LR',
+        name: 'Liberia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'GN',
+        name: 'Guinea',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SL',
+        name: 'Sierra Leone',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'GW',
+        name: 'Guinea-Bissau',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'GM',
+        name: 'Gambia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'CV',
+        name: 'Cape Verde',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'ER',
+        name: 'Eritrea',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'LS',
+        name: 'Lesotho',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SZ',
+        name: 'Swaziland',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'ST',
+        name: 'Sao Tome and Principe',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'KM',
+        name: 'Comoros',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MU',
+        name: 'Mauritius',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SC',
+        name: 'Seychelles',
+        cap: '',
+        states: [],
+      },
+    ],
   },
   EU: {
     lonlat: [23.57, 53.38],
     zoom: 3.36,
     countries: [
-        'Portugal',
-        'Spain',
-        'France',
-        'Ireland',
-        'United Kingdom',
-        'Netherlands',
-        'Denmark',
-        'Germany',
-        'Belgium',
-        'Luxembourg',
-        'Switzerland',
-        'Italy',
-        'Iceland',
-        'Norway',
-        'Sweden',
-        'Finland',
-        'Estonia',
-        'Latvia',
-        'Lithuania',
-        'Austria',
-        'Slovenia',
-        'Croatia',
-        'Bosnia and Herzegovina',
-        'Montenegro',
-        'Kosovo',
-        'Albania',
-        'Republic of Macedonia',
-        'Greece',
-        'Turkey',
-        'Romania',
-        'Bulgaria',
-        'Serbia',
-        'Malta',
-        'Moldova',
-        'Ukraine',
-        'Cyprus',
-        'Poland',
-        'Slovakia',
-        'Hungary',
-        'Czech Republic',
-        'Russia',
-        'Belarus',
-        'Andorra',
-        'Monaco',
-        'San Marino',
-        'Liechtenstein',
+      {
+        abbrv: 'PT',
+        name: 'Portugal',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'ES',
+        name: 'Spain',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'FR',
+        name: 'France',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'IE',
+        name: 'Ireland',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'GB',
+        name: 'United Kingdom',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'NL',
+        name: 'Netherlands',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'DK',
+        name: 'Denmark',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'DE',
+        name: 'Germany',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BE',
+        name: 'Belgium',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'LU',
+        name: 'Luxembourg',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'CH',
+        name: 'Switzerland',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'IT',
+        name: 'Italy',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'IS',
+        name: 'Iceland',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'NO',
+        name: 'Norway',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SE',
+        name: 'Sweden',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'FI',
+        name: 'Finland',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'EE',
+        name: 'Estonia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'LV',
+        name: 'Latvia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'LT',
+        name: 'Lithuania',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'AT',
+        name: 'Austria',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SI',
+        name: 'Slovenia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'HR',
+        name: 'Croatia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BA',
+        name: 'Bosnia and Herzegovina',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'ME',
+        name: 'Montenegro',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'XK',
+        name: 'Kosovo',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'AL',
+        name: 'Albania',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MK',
+        name: 'Republic of Macedonia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'GR',
+        name: 'Greece',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TR',
+        name: 'Turkey',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'RO',
+        name: 'Romania',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BG',
+        name: 'Bulgaria',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'RS',
+        name: 'Serbia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MT',
+        name: 'Malta',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MD',
+        name: 'Moldova',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'UA',
+        name: 'Ukraine',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'CY',
+        name: 'Cyprus',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'PL',
+        name: 'Poland',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SK',
+        name: 'Slovakia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'HU',
+        name: 'Hungary',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'CZ',
+        name: 'Czech Republic',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'RU',
+        name: 'Russia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BY',
+        name: 'Belarus',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'AD',
+        name: '',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MC',
+        name: 'Monaco',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SM',
+        name: 'San Marino',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'LI',
+        name: 'Liechtenstein',
+        cap: '',
+        states: [],
+      },
     ],
-    abbrevs: {
-        'Portugal': 'PT',
-        'Spain': 'ES',
-        'France': 'FR',
-        'Ireland': 'IE',
-        'United Kingdom': 'GB',
-        'Netherlands': 'NL',
-        'Denmark': 'DK',
-        'Germany': 'DE',
-        'Belgium': 'BE',
-        'Luxembourg': 'LU',
-        'Switzerland': 'CH',
-        'Italy': 'IT',
-        'Iceland': 'IS',
-        'Norway': 'NO',
-        'Sweden': 'SE',
-        'Finland': 'FI',
-        'Estonia': 'EE',
-        'Latvia': 'LV',
-        'Lithuania': 'LT',
-        'Austria': 'AT',
-        'Slovenia': 'SI',
-        'Croatia': 'HR',
-        'Bosnia and Herzegovina': 'BA',
-        'Montenegro': 'ME',
-        'Kosovo': 'XK',
-        'Albania': 'AL',
-        'Republic of Macedonia': 'MK',
-        'Greece': 'GR',
-        'Turkey': 'TR',
-        'Romania': 'RO',
-        'Bulgaria': 'BG',
-        'Serbia': 'RS',
-        'Malta': 'MT',
-        'Moldova': 'MD',
-        'Ukraine': 'UA',
-        'Cyprus': 'CY',
-        'Poland': 'PL',
-        'Slovakia': 'SK',
-        'Hungary': 'HU',
-        'Czech Republic': 'CZ',
-        'Russia': 'RU',
-        'Belarus': 'BY',
-        'Andorra': 'AD',
-        'Monaco': 'MC',
-        'San Marino': 'SM',
-        'Liechtenstein': 'LI',
-    }
   },
   AS: {
     lonlat: [90.93, 28.19],
     zoom: 2.87,
-  //   countries: [
-  //       'LB', // Lebanon 
-  //       'SY', // Syria
-  //       'IL', // Israel
-  //       'JO', // Jordan
-  //       'SA', // Saudi Arabia
-  //       'IQ', // Iraq
-  //       'BH', // Bahrain
-  //       'QA', // Qatar
-  //       'AE', // United Arab Emirates
-  //       'OM', // Oman
-  //       'YE', // Yemen
-  //       'KW', // Kuwait
-  //       'IR', // Iran
-  //       'GE', // Georgia
-  //       'AM', // Armenia
-  //       'AZ', // Azerbaijan
-  //       'TM', // Turkmenistan
-  //       'UZ', // Uzbekistan
-  //       'KZ', // Kazakhstan
-  //       'KG', // Kyrgyzstan
-  //       'TJ', // Tajikistan
-  //       'AF', // Afghanistan
-  //       'PK', // Pakistan
-  //       'MN', // Mongolia
-  //       'CN', // China
-  //       'NP', // Nepal
-  //       'IN', // India
-  //       'BT', // Bhutan
-  //       'BD', // Bangladesh
-  //       'MM', // Myanmar (Burma)
-  //       'TH', // Thailand
-  //       'VN', // Vietnam
-  //       'KH', // Cambodia
-  //       'KP', // North Korea
-  //       'KR', // South Korea
-  //       'JP', // Japan
-  //       'TW', // Taiwan
-  //       'PH', // Philippines
-  //       'MV', // Maldives
-  //       'LK', // Sri Lanka
-  //       'MY', // Malaysia
-  //       'SG', // Singapore
-  //       'ID', // Indonesia
-  //       'BN', // Brunei
-  //       'LA', // Laos
-  //       'TL', // Timor-Leste
-  //       'PS', // Palestine
-  //       'TR', // Turkey
-  //       'RU', // Russia
-  //   ],
+    countries: [
+      {
+        abbrv: 'LB',
+        name: 'Lebanon',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SY',
+        name: 'Syria',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'IL',
+        name: 'Israel',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'JO',
+        name: 'Jordan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SA',
+        name: 'Saudi Arabia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'IQ',
+        name: 'Iraq',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BH',
+        name: 'Bahrain',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'QA',
+        name: 'Qatar',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'AE',
+        name: 'United Arab Emirates',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'OM',
+        name: 'Oman',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'YE',
+        name: 'Yemen',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'KW',
+        name: 'Kuwait',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'IR',
+        name: 'Iran',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'GE',
+        name: 'Georgia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'AM',
+        name: 'Armenia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'AZ',
+        name: 'Azerbaijan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TM',
+        name: 'Turkmenistan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'UZ',
+        name: 'Uzbekistan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'KZ',
+        name: 'Kazakhstan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'KG',
+        name: 'Kyrgyzstan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TJ',
+        name: 'Tajikistan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'AF',
+        name: 'Afghanistan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'PK',
+        name: 'Pakistan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MN',
+        name: 'Mongolia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'CN',
+        name: 'China',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'Nepal',
+        name: 'NP',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'IN',
+        name: 'India',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BT',
+        name: 'Bhutan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BD',
+        name: 'Bangladesh',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MM',
+        name: 'Myanmar',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TH',
+        name: 'Thailand',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'VN',
+        name: 'Vietnam',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'KH',
+        name: 'Cambodia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'KP',
+        name: 'North Korea',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'KR',
+        name: 'South Korea',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'JP',
+        name: 'Japan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TW',
+        name: 'Taiwan',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'PH',
+        name: 'Philippines',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MV',
+        name: 'Maldives',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'LK',
+        name: 'Sri Lanka',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MY',
+        name: 'Malaysia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SG',
+        name: 'Singapore',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'ID',
+        name: 'Indonesia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'BN',
+        name: 'Brunei',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'LA',
+        name: 'Laos',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TL',
+        name: 'Timor-Leste',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'PS',
+        name: 'Palestine',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TR',
+        name: 'Turkey',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'RU',
+        name: 'Russia',
+        cap: '',
+        states: [],
+      },
+    ],
   },
   OC: {
-    lonlat: [161.85, -21.84],
+    lonlat: [169.21, -19.58],
     zoom: 3.07,
-  //   countries: [
-  //       'Australia',
-  //       'New Zealand',
-  //       'Papua New Guinea',
-  //       'Solomon Islands',
-  //       'Vanuatu',
-  //       'Fiji',
-  //       'Federated States of Micronesia',
-  //       'Marshall Islands',
-  //       'Kiribati',
-  //       'Samoa',
-  //       'Tonga',
-  //       'Tuvalu',
-  //       'Nauru',
-  //       'Palau',
-  //       'New Caledonia',
-  //       'Cook Islands',
-  //   ],
-  //   abbrevs: {
-  //       'Australia': 'AU',
-  //       'New Zealand': 'NZ',
-  //       'Papua New Guinea': 'PG',
-  //       'Solomon Islands': 'SB',
-  //       'Vanuatu': 'VU',
-  //       'Fiji': 'FJ',
-  //       'Federated States of Micronesia': 'FM',
-  //       'Marshall Islands': 'MH',
-  //       'Kiribati': 'KI',
-  //       'Samoa': 'WS',
-  //       'Tonga': 'TO',
-  //       'Tuvalu': 'TV',
-  //       'Nauru': 'NR',
-  //       'Palau': 'PW',
-  //       'New Caledonia': 'NC',
-  //       'Cook Islands': 'CK',
-  //   },
+    countries: [
+      {
+        abbrv: 'AU',
+        name: 'Australia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'NZ',
+        name: 'New Zealand',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'PG',
+        name: 'Papua New Guinea',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'SB',
+        name: 'Solomon Islands',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'VU',
+        name: 'Vanuatu',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'FJ',
+        name: 'Fiji',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'FM',
+        name: 'Federated States of Micronesia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'MH',
+        name: 'Marshall Islands',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'KI',
+        name: 'Kiribati',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'WS',
+        name: 'Samoa',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TO',
+        name: 'Tonga',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'TV',
+        name: 'Tuvalu',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'NR',
+        name: 'Nauru',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'PW',
+        name: 'Palau',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'NC',
+        name: 'New Caledonia',
+        cap: '',
+        states: [],
+      },
+      {
+        abbrv: 'CK',
+        name: 'Cook Islands',
+        cap: '',
+        states: [],
+      },
+    ],
   },
 }
 
-module.exports = CONTINENTS;
-
-
-// 'PT', // Portugal
-// 'ES', // Spain
-// 'FR', // France
-// 'IE', // Ireland
-// 'GB', // United Kingdom
-// 'NL', // Nederland / Netherlands
-// 'DK', // Danmark / Denmark
-// 'DE', // Deutschland / Germany
-// 'BE', // Belgique // Belgium
-// 'LU', // Luxembourg
-// 'CH', // Switzerland
-// 'IT', // Italia / Italy
-// 'IS', // Island / Iceland
-// 'NO', // Norge / Norway
-// 'SE', // Sverige / Sweden
-// 'FI', // Suomi / Finland
-// 'EE', // Eesti / Estonia
-// 'LV', // Latvija / Latvia
-// 'LT', // Lietuva / Lithuania
-// 'AT', // Osterreich / Austria
-// 'SI', // Slovenija / Slovenia
-// 'HR', // Hrvatska / Croatia
-// 'BA', // Bosna i Hercegovina / Bosnia and Herzegovina
-// 'ME', // Crna Gora / Montenegro
-// 'XK', // Kosove / Kosovo
-// 'AL', // Shqiperia / Albania
-// 'MK', // Republic of Macedonia
-// 'GR', // Greece
-// 'TR', // Turkey
-// 'RO', // Romania
-// 'BG', // Bulgaria
-// 'RS', // Serbia
-// 'MT', // Malta
-// 'MD', // Moldova
-// 'UA', // Ukraine
-// 'CY', // Cyprus
-// 'PL', // Polska / Poland
-// 'SK', // Slovensko / Slovakia
-// 'HU', // Hungary
-// 'CZ', // Cesko / Czech Republic
-// 'RU', // Russia
-// 'BY', // Belarus
-// 'AD', // Andorra
-// 'MC', // Monaco 
-// 'SM', // San Marino
-// 'LI', // Liechtenstein
-
-
+module.exports = CONTINENTS
