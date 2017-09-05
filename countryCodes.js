@@ -79,7 +79,7 @@ const CODES = {
     //'GF',
     //'PF',
     //'TF',
-    //'GA',
+    'GA',
     'GM',
     'GE',
     'DE',
