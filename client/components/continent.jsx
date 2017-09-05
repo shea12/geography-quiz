@@ -4,16 +4,20 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
+import NAButton from './continentButtons/na.jsx'
+import SAButton from './continentButtons/sa.jsx'
+import EUButton from './continentButtons/eu.jsx'
+import AFButton from './continentButtons/af.jsx'
+import OCButton from './continentButtons/oc.jsx'
+import ASButton from './continentButtons/as.jsx'
+
 
 const style = {
   buttonGrouping: {
     position: 'absolute',
     padding: 0,
     margin: 6,
-  },
-  button: {
-    margin: 2,
-    backgroundColor: 'rgba(35, 121, 196, 0.9)',
+    display: 'inline-block',
   },
 }
 
@@ -22,27 +26,10 @@ export default class ContinentMenu extends React.Component {
     super(props)
     this.state = {
       visible: true,
-      open: false,
     }
-    this.handleRequestClose = this.handleRequestClose.bind(this)
-    this.handleTouchTap = this.handleTouchTap.bind(this)
+
+    this.onButtonClick = this.onButtonClick.bind(this)
   }
-
-  handleTouchTap(event) {
-    // This prevents ghost click.
-    event.preventDefault();
-
-    this.setState({
-      open: true,
-      anchorEl: event.currentTarget,
-    });
-  };
-
-  handleRequestClose() {
-    this.setState({
-      open: false,
-    });
-  };
 
   /* PARAMS: 
       selContinent: string: 2 Letter Continent Abbreviation,
@@ -71,75 +58,24 @@ export default class ContinentMenu extends React.Component {
     this.setState({ visible: visibility })
   }
 
-  // TODO: refactor to dynamically render with map fn, will reduce redundancy 
+  // TODO: refactor
   render() {
     const showOrHide = this.state.visible ? 2 : 0
     return (
-
       <div style={style.buttonGrouping}>
-        <div>
-          <RaisedButton
-            className="waves-effect"
-            style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
-            // onClick={() => this.onButtonClick('NA')}
-            onClick={this.handleTouchTap}
-            label='N. America'
-          />
-          <Popover
-            open={this.state.open}
-            anchorEl={this.state.anchorEl}
-            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'left', vertical: 'top'}}
-            onRequestClose={this.handleRequestClose}
-          >
-            <Menu>
-              <MenuItem primaryText='All countries' onClick={() => this.onButtonClick('NA', false, null, false)}/>
-              <MenuItem primaryText='Capitals of Countries'  onClick={() => this.onButtonClick('NA', true, null, false)}/>
-              <MenuItem primaryText='States of US' onClick={() => this.onButtonClick('NA', false, 'US', false)}/>
-              <MenuItem primaryText='Capitals of US States' onClick={() => this.onButtonClick('NA', false, 'US', true)}/>
-            </Menu>
-          </Popover>
-        </div>
 
-        <RaisedButton
-          className="waves-effect"
-          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
-          onClick={() => this.onButtonClick('SA')}
-        >
-          S. America
-        </RaisedButton>
+        <NAButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
 
-        <RaisedButton
-          className="waves-effect"
-          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
-          onClick={() => this.onButtonClick('EU')}
-        >
-          Europe
-        </RaisedButton>
+        <SAButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
 
-        <RaisedButton
-          className="waves-effect"
-          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
-          onClick={() => this.onButtonClick('AF')}
-        >
-          Africa
-        </RaisedButton>
+        <AFButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
 
-        <RaisedButton
-          className="waves-effect"
-          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
-          onClick={() => this.onButtonClick('AS')}
-        >
-          Asia
-        </RaisedButton>
+        <EUButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
 
-        <RaisedButton
-          className="waves-effect"
-          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
-          onClick={() => this.onButtonClick('OC')}
-        >
-          Oceania
-        </RaisedButton>
+        <ASButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+
+        <OCButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+
       </div>
     )
   }
