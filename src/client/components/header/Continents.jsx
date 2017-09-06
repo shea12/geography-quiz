@@ -4,12 +4,13 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
-import NAButton from './continentButtons/na.jsx'
-import SAButton from './continentButtons/sa.jsx'
-import EUButton from './continentButtons/eu.jsx'
-import AFButton from './continentButtons/af.jsx'
-import OCButton from './continentButtons/oc.jsx'
-import ASButton from './continentButtons/as.jsx'
+
+import NAButton from './continents/na.jsx'
+import SAButton from './continents/sa.jsx'
+import EUButton from './continents/eu.jsx'
+import AFButton from './continents/af.jsx'
+import OCButton from './continents/oc.jsx'
+import ASButton from './continents/as.jsx'
 
 
 const style = {
@@ -21,7 +22,7 @@ const style = {
   },
 }
 
-export default class ContinentMenu extends React.Component {
+export default class Continents extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -40,16 +41,16 @@ export default class ContinentMenu extends React.Component {
   onButtonClick(selContinent, countryCaps, selCountry, stateCaps) {
     if (stateCaps) {
       // user selects state capitals quiz
-      this.props.move(selContinent, selCountry, true)
+      this.props.handleLocation(selContinent, selCountry, true)
     } else if (!stateCaps) {
       // user selects states quiz
-      this.props.move(selContinent, selCountry, false)
+      this.props.handleLocation(selContinent, selCountry, false)
     } else if(countryCaps) {
       // user selects country capitals quiz
-      this.props.move(selContinent, null, true)
+      this.props.handleLocation(selContinent, null, true)
     } else {
       // user selects countries of continent quiz
-      this.props.move(selContinent, null, false)
+      this.props.handleLocation(selContinent, null, false)
     }
     this.setVisibilityOfButtons(false)
   }
@@ -81,6 +82,6 @@ export default class ContinentMenu extends React.Component {
   }
 }
 
-ContinentMenu.propTypes = {
-  move: PropTypes.func.isRequired,
+Continents.propTypes = {
+  handleLocation: PropTypes.func,
 }

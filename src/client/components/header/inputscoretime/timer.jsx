@@ -10,7 +10,6 @@ const style = {
   },
 }
 
-// TODO: format timer to MM:SS
 class Timer extends React.Component {
   constructor() {
     super()

@@ -2,7 +2,7 @@ import React from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import PropTypes from 'prop-types'
 
-export default class BackButton extends React.Component {
+export default class StartButton extends React.Component {
   render() {
     return (
       <RaisedButton
@@ -10,18 +10,18 @@ export default class BackButton extends React.Component {
           position: 'absolute',
           marginTop: 8,
           zIndex: 2,
-          marginLeft: 20,
+          marginLeft: 140,
         }}
         onClick={
-          () => this.props.handleBack()
+          () => this.props.handleStart()
         }
       >
-        Back
+        Start Quiz
       </RaisedButton>
     )
   }
 }
 
-BackButton.propTypes = {
-  handleBack: PropTypes.func.isRequired,
+StartButton.propTypes = {
+  handleStart: PropTypes.func,
 }

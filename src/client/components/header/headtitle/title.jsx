@@ -6,7 +6,7 @@ const style = {
   },
   title: {
     position: 'absolute',
-    zIndex: 2,
+    zIndex: 3,
     paddingTop: 0,
   },
 }

@@ -4,7 +4,7 @@ import { Card, CardHeader } from 'material-ui/Card'
 const style = {
   headerStyle: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 2,
     width: '100%',
     backgroundColor: 'rgba(140, 140, 140, 0.7)',
   },
