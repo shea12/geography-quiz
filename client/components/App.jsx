@@ -11,7 +11,7 @@ import StartButton from './startbutton.jsx'
 import BackButton from './backbutton.jsx'
 import Timer from './timer.jsx'
 import FinishModal from './finishmodal.jsx'
-import WORLD from '../../continentContents'
+import WORLD from '../../assets/continentContents'
 /* eslint-enable */
 
 const style = {
