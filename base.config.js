@@ -1,4 +1,4 @@
-const path = require('path')
+const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -10,10 +10,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 module.exports = {
   entry: './client/index.jsx',
-  output: {
-    path: path.resolve('dist'),
-    filename: 'index_bundle.js',
-  },
+
   module: {
     loaders: [
       { 
@@ -23,5 +20,9 @@ module.exports = {
       },
     ],
   },
-  plugins: [HtmlWebpackPluginConfig],
-}
+
+  plugins: [
+    new webpack.EnvironmentPlugin(['NODE_ENV',]),
+    HtmlWebpackPluginConfig,
+  ],
+};
