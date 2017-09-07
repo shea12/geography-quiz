@@ -32,11 +32,12 @@ export default class Header extends React.Component {
       // render timer, score, and input when start is clicked
       inscoretime = <InputScoreTime 
         placesArray={this.props.placesArray}
-        handleNamedPlace={this.props.handleNamedPlace}
-        handleTimer={this.props.handleTimer}
         continent={this.props.selectedContinent}
         timing={this.props.timing}
+        capitals={this.props.capitals}
         handleBack={this.props.handleBack}
+        handleNamedPlace={this.props.handleNamedPlace}
+        handleTimer={this.props.handleTimer}
       />
       backstart = <div />
 

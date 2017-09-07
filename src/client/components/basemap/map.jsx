@@ -46,6 +46,7 @@ export default class Maps extends React.Component {
       hash: true,
       minZoom: 2,
     })
+
     // map.on('click', (e) => {
     //   // using e to pass = linting error
     //   return e
@@ -75,7 +76,7 @@ export default class Maps extends React.Component {
     }
 
     // check if map needs to change visibility of labels
-    if (nextProps.showLabels !== this.props.showLabels) {
+    if (!nextProps.showLabels || !this.props.showLabels) {
       nextProps.showLabels ? showHideCountryLabels(CODES.COUNTRIES, 'visible') : showHideCountryLabels(CODES.COUNTRIES, 'none')
       nextProps.showLabels ? showHideStateLabels(CODES.US_STATES, 'visible') : showHideStateLabels(CODES.US_STATES, 'none')
     }

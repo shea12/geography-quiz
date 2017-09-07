@@ -13,6 +13,7 @@ export default class InputScoreTime extends React.Component {
       <div>
         <Input 
           placesArray={this.props.placesArray}
+          capitals={this.props.capitals}
           handleNamedPlace={this.props.handleNamedPlace}
           handleTimer={this.props.handleTimer}
         />

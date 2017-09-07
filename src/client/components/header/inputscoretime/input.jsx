@@ -42,8 +42,13 @@ export default class InputForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ placesArray: nextProps.placesArray })
+    
   }
-
+  // TODO: need to make separate searching functions for:
+  //    country name in continent
+  //    country capital in continent
+  //    state name in country in continent
+  //    capital of state in country in continent
   // TODO: this method is doing a lot, will refactor logic 
   handleKeyPress(target) {
     this.setState({ inputcheck: null })
@@ -52,6 +57,8 @@ export default class InputForm extends React.Component {
       // upon enter being pressed, iterate through countries array
       // checking for a match to the user input
       const length = this.state.placesArray.length
+
+      // TODO refactor the crap out of this
       for (let i = 0; i < this.state.placesArray.length; i += 1) {
         if (this.state.value.toLowerCase() === this.state.placesArray[i].name.toLowerCase()) {
           this.setState({ inputcheck: 'success', value: '' })

@@ -22,7 +22,7 @@ export default class App extends React.Component {
     this.state = {
       lonlat: [0.2, 20.6],
       zoom: 2,
-      showLabels: true,
+      showLabels: false,
       selectedContinent: '',
       placesArray: [],
       timing: false,
@@ -47,7 +47,7 @@ export default class App extends React.Component {
   handleLocation(selContinent, selCountry, capitals) {
     this.setState({
       selectedContinent: selContinent,
-      showLabels: true,
+      showLabels: false,
     })
 
     const countryArrayCopy = WORLD[selContinent].countries.slice()
@@ -98,7 +98,7 @@ export default class App extends React.Component {
       timing: false,
       lonlat: [0.2, 20.6],
       zoom: 2,
-      showLabels: true,
+      showLabels: false,
       showModal: false,
     })
   }
@@ -136,6 +136,7 @@ export default class App extends React.Component {
             placesArray={this.state.placesArray}
             selectedContinent={this.state.selectedContinent}
             timing={this.state.timing}
+            capitals={this.state.capitals}
             handleLocation={this.handleLocation}
             handleNamedPlace={this.handleNamedPlace}
             handleTimer={this.handleTimer}
