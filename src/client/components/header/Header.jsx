@@ -16,30 +16,32 @@ export default class Header extends React.Component {
     let backstart = null
     let inscoretime = null
 
-    if (this.props.appState.selectedContinent !== '') {
+    if (this.props.selectedContinent !== '') {
       // user selected continent, show start & back buttons, hide continents, inscoretime
       continents = <div />
       backstart = <BackStart handleStart={this.props.handleStart} handleBack={this.props.handleBack} />
       inscoretime = <div />
-    } else if (this.props.appState.selectedContinent === '') {
+    } else if (this.props.selectedContinent === '') {
       // hide inscoretime, backstart buttons when no continent is selected
       continents = <Continents handleLocation={this.props.handleLocation} />
       backstart = <div />
       inscoretime = <div />
     }
 
-    if (this.props.appState.timing) {
+    if (this.props.timing) {
       // render timer, score, and input when start is clicked
       inscoretime = <InputScoreTime 
-        placesArray={this.props.appState.placesArray}
+        placesArray={this.props.placesArray}
         handleNamedPlace={this.props.handleNamedPlace}
         handleTimer={this.props.handleTimer}
-        continent={this.props.appState.selectedContinent}
-        timing={this.props.appState.timing}
+        continent={this.props.selectedContinent}
+        timing={this.props.timing}
+        handleBack={this.props.handleBack}
       />
       backstart = <div />
+
     } else {
-      // need to make a pause button
+      // need to make a stop button
     }
 
     return (

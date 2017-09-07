@@ -46,8 +46,6 @@ export default class App extends React.Component {
   */
   handleLocation(selContinent, selCountry, capitals) {
     this.setState({
-      lonlat: WORLD[selContinent].lonlat,
-      zoom: WORLD[selContinent].zoom,
       selectedContinent: selContinent,
       showLabels: true,
     })
@@ -58,7 +56,12 @@ export default class App extends React.Component {
       for (let i = 0; i < countryArrayCopy.length; i += 1) {
         if (countryArrayCopy[i].abbrv === selCountry) {
           const statesArrayCopy = countryArrayCopy[i].states.slice()
-          this.setState({ placesArray: statesArrayCopy, states: true })
+          this.setState({
+            placesArray: statesArrayCopy,
+            states: true,
+            lonlat: countryArrayCopy[i].lonlat,
+            zoom: countryArrayCopy[i].zoom,
+          })
         }
       }
       if (capitals) {
@@ -69,7 +72,12 @@ export default class App extends React.Component {
         this.setState({ capitals: false })
       }
     } else if (!selCountry) {
-      this.setState({ placesArray: countryArrayCopy, states: false })
+      this.setState({
+        placesArray: countryArrayCopy,
+        states: false,
+        lonlat: WORLD[selContinent].lonlat,
+        zoom: WORLD[selContinent].zoom,
+      })
       if (capitals) {
         // user selected countries capitals quiz
         this.setState({ capitals: true })
@@ -115,7 +123,6 @@ export default class App extends React.Component {
     let modal = <div />
 
     if (!this.state.timing && this.state.showModal) {
-      // if all countries have been identified, modal pops up
       modal = <Modal onClose={this.handleBack} />
     } else {
       modal = <div />
@@ -126,7 +133,9 @@ export default class App extends React.Component {
         <div style={style.container}>
           
           <Header 
-            appState={this.state}
+            placesArray={this.state.placesArray}
+            selectedContinent={this.state.selectedContinent}
+            timing={this.state.timing}
             handleLocation={this.handleLocation}
             handleNamedPlace={this.handleNamedPlace}
             handleTimer={this.handleTimer}

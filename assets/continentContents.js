@@ -8,6 +8,8 @@ const CONTINENTS = {
         abbrv: 'US',
         name: 'United States',
         cap: 'Washington',
+        lonlat: [-95.784,39.01],
+        zoom: 4,
         states: [
           {abbrv: 'AK', name: 'Alaska', cap: 'Juneau'},
           {abbrv: 'AL', name: 'Alabama', cap: 'Montgomery'},
@@ -66,6 +68,8 @@ const CONTINENTS = {
         abbrv: 'MX',
         name: 'Mexico',
         cap: 'Mexico City',
+        lonlat: [-100.13,25.061],
+        zoom: 4.68,
         states: [
           {abbrv: 'AGS', name: 'Aguascalientes', cap: 'Aguascalientes'},
           {abbrv: 'BC',  name: 'Baja California', cap: 'Mexicali'},
@@ -104,6 +108,8 @@ const CONTINENTS = {
         abbrv: 'CA',
         name: 'Canada',
         cap: 'Ottawa',
+        lonlat: [-93.84,56.75],
+        zoom: 3.61,
         states: [
           {name: 'Alberta', cap: 'Edmonton', abbrv: 'AB'},
           {name: 'British Columbia', cap: 'Victoria', abbrv: 'BC'},
@@ -264,6 +270,8 @@ const CONTINENTS = {
         abbrv: 'BR',
         name: 'Brazil',
         cap: 'Brasília',
+        lonlat: [-51.46,-12.9],
+        zoom: 3.74,
         states: [
           {name: 'Acre'},
           {name: 'Alagoas'},
@@ -359,6 +367,8 @@ const CONTINENTS = {
         abbrv: 'ZA',
         name: 'South Africa',
         cap: ['Cape Town', 'Bloemfontein', 'Pretoria'],
+        lonlat: [25.612,-27.794],
+        zoom: 5.05,
         states: [
           {abbrv: 'ECP', name: 'Eastern Cape', cap: 'Bhisho'},
           {abbrv: 'FST', name: 'Free State', cap: 'Bloemfontein'},
@@ -729,6 +739,8 @@ const CONTINENTS = {
         abbrv: 'GB',
         name: 'United Kingdom',
         cap: 'London',
+        lonlat: [-2.698,55.115],
+        zoom: 5.05,
         states: [
           {abbrv: 'ENG', name: 'England', cap: 'London'},
           {abbrv: 'SCO', name: 'Scotland', cap: 'Edinburgh'},
@@ -1149,6 +1161,8 @@ const CONTINENTS = {
         abbrv: 'IN',
         name: 'India',
         cap: '',
+        lonlat: [81.29,24.074],
+        zoom: 4.04,
         states: [],
       },
       {
@@ -1294,6 +1308,8 @@ const CONTINENTS = {
         abbrv: 'AU',
         name: 'Australia',
         cap: 'Canberra',
+        lonlat: [136.33,-27.06],
+        zoom: 3.76,
         states: [
           {abbrv: 'NSW', name: 'New South Wales', cap: 'Sydney'},
           {abbrv: 'QLD', name: 'Queensland', cap: 'Brisbane'},

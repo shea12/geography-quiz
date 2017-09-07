@@ -55,7 +55,7 @@ export default class ASButton extends React.Component {
           <Menu>
             <MenuItem primaryText='Countries' onClick={() => this.props.onButtonClick('AS', false, null, false)}/>
             <MenuItem primaryText='Capitals'  onClick={() => this.props.onButtonClick('AS', true, null, false)}/>
-            <MenuItem primaryText='States: India' onClick={() => this.props.onButtonClick('AS', false, 'CN', false)}/>
+            <MenuItem primaryText='States: India' onClick={() => this.props.onButtonClick('AS', false, 'IN', false)}/>
           </Menu>
         </Popover>
       </div>

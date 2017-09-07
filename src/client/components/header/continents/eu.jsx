@@ -55,8 +55,8 @@ export default class EUButton extends React.Component {
           <Menu>
             <MenuItem primaryText='Countries' onClick={() => this.props.onButtonClick('EU', false, null, false)}/>
             <MenuItem primaryText='Capitals'  onClick={() => this.props.onButtonClick('EU', true, null, false)}/>
-            <MenuItem primaryText='Countries: United Kingdom' onClick={() => this.props.onButtonClick('EU', false, 'UK', false)}/>
-            <MenuItem primaryText='Capitals: United Kingdom' onClick={() => this.props.onButtonClick('EU', false, 'UK', true)}/>
+            <MenuItem primaryText='Countries: United Kingdom' onClick={() => this.props.onButtonClick('EU', false, 'GB', false)}/>
+            <MenuItem primaryText='Capitals: United Kingdom' onClick={() => this.props.onButtonClick('EU', false, 'GB', true)}/>
           </Menu>
         </Popover>
       </div>

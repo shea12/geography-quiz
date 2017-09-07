@@ -55,8 +55,8 @@ export default class InputForm extends React.Component {
       for (let i = 0; i < this.state.placesArray.length; i += 1) {
         if (this.state.value.toLowerCase() === this.state.placesArray[i].name.toLowerCase()) {
           this.setState({ inputcheck: 'success', value: '' })
-          // call App's namedPlace function with place abbrv to shade in area
-          this.props.namedPlace(this.state.placesArray[i].abbrv)
+          // call App's handleNamedPlace function with place abbrv to shade in area
+          this.props.handleNamedPlace(this.state.placesArray[i].abbrv)
           // remove named palce from list
           this.state.placesArray.splice(i, 1)
           this.setState({ placesArray: this.state.placesArray })
@@ -101,6 +101,6 @@ export default class InputForm extends React.Component {
 
 InputForm.propTypes = {
   placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
-  namedPlace: PropTypes.func.isRequired,
+  handleNamedPlace: PropTypes.func.isRequired,
   handleTimer: PropTypes.func.isRequired,
 }

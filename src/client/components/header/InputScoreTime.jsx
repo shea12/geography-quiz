@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Input from './inputscoretime/input.jsx'
 import ScoreKeeper from './inputscoretime/scorekeeper.jsx'
 import Timer from './inputscoretime/timer.jsx'
+import BackButton from './backstart/backbutton.jsx'
 
 export default class InputScoreTime extends React.Component {
 
@@ -17,11 +18,12 @@ export default class InputScoreTime extends React.Component {
         />
         <ScoreKeeper
           placesArray={this.props.placesArray}
-          continent={this.props.selectedContinent}
+          continent={this.props.continent}
         />
         <Timer 
           timing={this.props.timing}
         />
+        <BackButton handleBack={this.props.handleBack} />
       </div>
     )
   }
