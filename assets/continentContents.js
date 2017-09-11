@@ -18,7 +18,7 @@ const CONTINENTS = {
           {abbrv: 'CA', name: 'California', cap: 'Sacramento'},
           {abbrv: 'CO', name: 'Colorado', cap: 'Denver'},
           {abbrv: 'CT', name: 'Connecticut', cap: 'Hartford'},
-          {abbrv: 'DC', name: 'District of Columbia', cap: null},
+          {abbrv: 'DC', name: 'District of Columbia', cap: ''},
           {abbrv: 'DE', name: 'Delaware', cap: 'Dover'},
           {abbrv: 'FL', name: 'Florida', cap: 'Tallahassee'},
           {abbrv: 'GA', name: 'Georgia', cap: 'Atlanta'}, 
