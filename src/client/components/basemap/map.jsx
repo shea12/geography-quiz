@@ -18,14 +18,14 @@ const style = {
 
 let map = {}
 
-const showHideCountryLabels = (countryCodeArray, status) => {
+const showHideAllCountryLabels = (countryCodeArray, status) => {
   for (let i = 0; i < countryCodeArray.length; i += 1) {
     map.setLayoutProperty(`${countryCodeArray[i]}_LABEL`, 'visibility', status)
     map.setPaintProperty(countryCodeArray[i], 'fill-opacity', 0)
   }
 }
 
-const showHideStateLabels = (stateCodeArray, status) => {
+const showHideAllStateLabels = (stateCodeArray, status) => {
   for (let i = 0; i < stateCodeArray.length; i += 1) {
     map.setLayoutProperty(`USST_${stateCodeArray[i]}`, 'visibility', status)
     map.setLayoutProperty(`USSTCAP_${stateCodeArray[i]}`, 'visibility', status)
@@ -63,11 +63,22 @@ export default class Maps extends React.Component {
     if (this.props.namedPlace !== nextProps.namedPlace) {
 
       const placeCode = nextProps.namedPlace
-      if (nextProps.states) {
+      console.log('nextProps: ', nextProps)
+      if (nextProps.states && nextProps.capitals) {
+        // show state and state capital name
+        console.log('state & capital')
         map.setLayoutProperty(`USST_${placeCode}`, 'visibility', 'visible')
-      } else if (nextProps.capitals) {
         map.setLayoutProperty(`USSTCAP_${placeCode}`, 'visibility', 'visible')
+      } else if (!nextProps.states && nextProps.capitals) {
+        // need to add label layers for every country capital
+        // map.setLayoutProperty(`${placeCode}_LABEL`, 'visibility', 'visible')
+      } else if (nextProps.states && !nextProps.capitals) {
+        // show state name
+        console.log('state')
+        map.setLayoutProperty(`USST_${placeCode}`, 'visibility', 'visible')
       } else {
+        // show country name
+        console.log('country')
         map.setLayoutProperty(`${placeCode}_LABEL`, 'visibility', 'visible')
       }
 
@@ -77,8 +88,8 @@ export default class Maps extends React.Component {
 
     // check if map needs to change visibility of labels
     if (!nextProps.showLabels || !this.props.showLabels) {
-      nextProps.showLabels ? showHideCountryLabels(CODES.COUNTRIES, 'visible') : showHideCountryLabels(CODES.COUNTRIES, 'none')
-      nextProps.showLabels ? showHideStateLabels(CODES.US_STATES, 'visible') : showHideStateLabels(CODES.US_STATES, 'none')
+      nextProps.showLabels ? showHideAllCountryLabels(CODES.COUNTRIES, 'visible') : showHideAllCountryLabels(CODES.COUNTRIES, 'none')
+      nextProps.showLabels ? showHideAllStateLabels(CODES.US_STATES, 'visible') : showHideAllStateLabels(CODES.US_STATES, 'none')
     }
 
     // check if the map needs to pan to a new location

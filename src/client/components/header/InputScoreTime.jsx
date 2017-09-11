@@ -21,9 +21,7 @@ export default class InputScoreTime extends React.Component {
           placesArray={this.props.placesArray}
           continent={this.props.continent}
         />
-        <Timer 
-          timing={this.props.timing}
-        />
+        <Timer timing={this.props.timing} />
         <BackButton handleBack={this.props.handleBack} />
       </div>
     )

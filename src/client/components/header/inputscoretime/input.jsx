@@ -30,6 +30,7 @@ export default class InputForm extends React.Component {
       value: '',
       placesArray: [],
       inputcheck: null,
+      modifier: null,
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -37,48 +38,70 @@ export default class InputForm extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ placesArray: this.props.placesArray })
+    let modifier = null
+    if (this.props.capitals) {
+      modifier = 'cap'
+    } else {
+      modifier = 'name'
+    }
+    this.setState({
+      placesArray: this.props.placesArray,
+      modifier: modifier,
+    })
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ placesArray: nextProps.placesArray })
-    
+    let modifier = null
+    if (this.props.capitals) {
+      modifier = 'cap'
+    } else {
+      modifier = 'name'
+    }
+    this.setState({
+      placesArray: nextProps.placesArray,
+      modifier: modifier,
+    })
   }
-  // TODO: need to make separate searching functions for:
-  //    country name in continent
-  //    country capital in continent
-  //    state name in country in continent
-  //    capital of state in country in continent
+
+  checkUserInput(modifier) {
+    for (let p = 0; p < this.state.placesArray.length; p += 1) {
+      if (this.state.value.toLowerCase() === this.state.placesArray[p][modifier].toLowerCase()) {
+        return p
+      }
+    }
+    return -1
+  }
+  
   // TODO: this method is doing a lot, will refactor logic 
   handleKeyPress(target) {
     this.setState({ inputcheck: null })
     // check if user enters valid place
     if (target.charCode === 13) {
-      // upon enter being pressed, iterate through countries array
-      // checking for a match to the user input
-      const length = this.state.placesArray.length
+      // const length = this.state.placesArray.length
 
-      // TODO refactor the crap out of this
-      for (let i = 0; i < this.state.placesArray.length; i += 1) {
-        if (this.state.value.toLowerCase() === this.state.placesArray[i].name.toLowerCase()) {
-          this.setState({ inputcheck: 'success', value: '' })
-          // call App's handleNamedPlace function with place abbrv to shade in area
-          this.props.handleNamedPlace(this.state.placesArray[i].abbrv)
-          // remove named palce from list
-          this.state.placesArray.splice(i, 1)
-          this.setState({ placesArray: this.state.placesArray })
-          // check if user has countries left to name
-          if (this.state.placesArray.length === 0) {
-            // parameters (endtimer, gotallcountries?)
-            this.props.handleTimer(false, true)
-          }
-        } else if (i === length - 1) {
-          // iterated through place array without match
-          this.setState({ inputcheck: 'error' })
+      let foundIndex = this.checkUserInput(this.state.modifier)
+      // foundIndex will be the index in the array where the match was found
+      // or -1 if not found, thus evaluating to false
+      if (foundIndex) {
+        this.setState({ inputcheck: 'success', value: '' })
+        // call App's handleNamedPlace function with place abbrv to shade in area
+        this.props.handleNamedPlace(this.state.placesArray[foundIndex].abbrv)
+        // remove named palce from list
+        this.state.placesArray.splice(foundIndex, 1)
+        this.setState({ placesArray: this.state.placesArray })
+        // check if user has countries left to name
+        if (this.state.placesArray.length === 0) {
+          // parameters (endtimer, gotallcountries?)
+          this.props.handleTimer(false, true)
+        } else {
+          // still names/capitals left for user to name, keep going
         }
-      }
+      } else {
+        // user input does not match any modifier (name/capital) in placesArray
+        this.setState({ inputcheck: 'error' })
+      }   
     } else {
-      // user has typed, has not pressed enter, remind user to press enter
+      // user hasn't pressed enter
     }
   }
 
