@@ -258,7 +258,6 @@ const CODES = {
     'CA',
     'CO',
     'CT',
-    //'DC',
     'DE',
     'FL',
     'GA',
