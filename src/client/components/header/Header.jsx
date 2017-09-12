@@ -15,12 +15,14 @@ export default class Header extends React.Component {
     let continents = null
     let backstart = null
     let inscoretime = null
+    let quiztitle = null
 
     if (this.props.selectedContinent !== '') {
       // user selected continent, show start & back buttons, hide continents, inscoretime
       continents = <div />
       backstart = <BackStart handleStart={this.props.handleStart} handleBack={this.props.handleBack} />
       inscoretime = <div />
+      quiztitle = <h5 style={{position: 'absolute', zIndex: 2, marginLeft: 380}}>{this.props.quizTitle}</h5>
     } else if (this.props.selectedContinent === '') {
       // hide inscoretime, backstart buttons when no continent is selected
       continents = <Continents handleLocation={this.props.handleLocation} />
@@ -38,9 +40,11 @@ export default class Header extends React.Component {
         handleBack={this.props.handleBack}
         handleNamedPlace={this.props.handleNamedPlace}
         handleTimer={this.props.handleTimer}
+        handleGiveUp={this.props.handleGiveUp}
+        handlePause={this.props.handlePause}
+        quizTitle={this.props.quizTitle}
       />
       backstart = <div />
-
     } else {
       // need to make a stop button
     }
@@ -52,6 +56,7 @@ export default class Header extends React.Component {
         {continents}
         {backstart}
         {inscoretime}
+        {quiztitle}
       </div>
     )
   }

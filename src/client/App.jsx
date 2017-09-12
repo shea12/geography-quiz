@@ -22,7 +22,6 @@ export default class App extends React.Component {
     this.state = {
       lonlat: [0.2, 20.6],
       zoom: 2,
-      showLabels: false,
       selectedContinent: '',
       placesArray: [],
       timing: false,
@@ -30,6 +29,7 @@ export default class App extends React.Component {
       showModal: false,
       capitals: false,
       states: false,
+      quizTitle: null,
     }
 
     this.handleLocation = this.handleLocation.bind(this)
@@ -47,7 +47,6 @@ export default class App extends React.Component {
   handleLocation(selContinent, selCountry, capitals) {
     this.setState({
       selectedContinent: selContinent,
-      showLabels: false,
     })
 
     const countryArrayCopy = WORLD[selContinent].countries.slice()
@@ -66,10 +65,10 @@ export default class App extends React.Component {
       }
       if (capitals) {
         // user selected a state capitals quiz
-        this.setState({ capitals: true })
+        this.setState({ capitals: true, quizTitle: 'State Capitals' })
       } else {
         // user selected states quiz
-        this.setState({ capitals: false })
+        this.setState({ capitals: false, quizTitle: 'States' })
       }
     } else if (!selCountry) {
       this.setState({
@@ -80,16 +79,18 @@ export default class App extends React.Component {
       })
       if (capitals) {
         // user selected countries capitals quiz
-        this.setState({ capitals: true })
+        this.setState({ capitals: true, quizTitle: 'Country Capitals' })
       } else {
         // user selected countries quiz
-        this.setState({ capitals: false })
+        this.setState({ capitals: false, quizTitle: 'Countries' })
       }
     }
   }
 
   handleStart() {
-    this.setState({ timing: true, showLabels: false })
+    this.setState({
+      timing: true,
+    })
   }
 
   handleBack() {
@@ -98,7 +99,6 @@ export default class App extends React.Component {
       timing: false,
       lonlat: [0.2, 20.6],
       zoom: 2,
-      showLabels: false,
       showModal: false,
     })
   }
@@ -119,6 +119,18 @@ export default class App extends React.Component {
     }
   }
 
+  handleGiveUp() {
+    this.setState({
+      timing: false,
+    })
+  }
+
+  handlePause() {
+    this.setState({
+      timing: false,
+    })
+  }
+
   render() {
     let modal = <div />
 
@@ -137,11 +149,14 @@ export default class App extends React.Component {
             selectedContinent={this.state.selectedContinent}
             timing={this.state.timing}
             capitals={this.state.capitals}
+            quizTitle={this.state.quizTitle}
             handleLocation={this.handleLocation}
             handleNamedPlace={this.handleNamedPlace}
-            handleTimer={this.handleTimer}
             handleBack={this.handleBack}
             handleStart={this.handleStart}
+            handleTimer={this.handleTimer}
+            handleGiveUp={this.props.handleGiveUp}
+            handlePause={this.props.handlePause}
           />
 
           <Maps
@@ -149,7 +164,6 @@ export default class App extends React.Component {
             zoom={this.state.zoom}
             namedPlace={this.state.namedPlace}
             selectedContinent={this.state.selectedContinent}
-            showLabels={this.state.showLabels}
             capitals={this.state.capitals}
             states={this.state.states}
           />

@@ -29,7 +29,7 @@ export default class InputForm extends React.Component {
     this.state = {
       value: '',
       placesArray: [],
-      inputcheck: null,
+      inputCheck: null,
       modifier: null,
     }
 
@@ -74,32 +74,29 @@ export default class InputForm extends React.Component {
   
   // TODO: this method is doing a lot, will refactor logic 
   handleKeyPress(target) {
-    this.setState({ inputcheck: null })
-    // check if user enters valid place
     if (target.charCode === 13) {
-      // const length = this.state.placesArray.length
-
       let foundIndex = this.checkUserInput(this.state.modifier)
       // foundIndex will be the index in the array where the match was found
-      // or -1 if not found, thus evaluating to false
-      if (foundIndex) {
-        this.setState({ inputcheck: 'success', value: '' })
+      // or false if not found
+      if (foundIndex >= 0) {
+        this.setState({ inputCheck: 'success', value: '' })
         // call App's handleNamedPlace function with place abbrv to shade in area
         this.props.handleNamedPlace(this.state.placesArray[foundIndex].abbrv)
         // remove named palce from list
         this.state.placesArray.splice(foundIndex, 1)
         this.setState({ placesArray: this.state.placesArray })
-        // check if user has countries left to name
+
+        // check if user has places left to name
         if (this.state.placesArray.length === 0) {
           // parameters (endtimer, gotallcountries?)
           this.props.handleTimer(false, true)
         } else {
-          // still names/capitals left for user to name, keep going
+          // user still has names/capitals left to name, keep going
         }
       } else {
         // user input does not match any modifier (name/capital) in placesArray
-        this.setState({ inputcheck: 'error' })
-      }   
+        this.setState({ inputCheck: 'error' })
+      }
     } else {
       // user hasn't pressed enter
     }
@@ -112,7 +109,7 @@ export default class InputForm extends React.Component {
   render() {
     return (
       <form autoComplete="off" style={style.inputField}>
-        <FormGroup validationState={this.state.inputcheck}>
+        <FormGroup validationState={this.state.inputCheck}>
           <div>
             <FormControl
               style={style.input}

@@ -4,7 +4,10 @@ import PropTypes from 'prop-types'
 import Input from './inputscoretime/input.jsx'
 import ScoreKeeper from './inputscoretime/scorekeeper.jsx'
 import Timer from './inputscoretime/timer.jsx'
-import BackButton from './backstart/backbutton.jsx'
+import BackButton from './buttons/backbutton.jsx'
+
+import GiveUpButton from './buttons/giveupbutton.jsx'
+import PauseButton from './buttons/pausebutton.jsx'
 
 export default class InputScoreTime extends React.Component {
 
@@ -23,6 +26,9 @@ export default class InputScoreTime extends React.Component {
         />
         <Timer timing={this.props.timing} />
         <BackButton handleBack={this.props.handleBack} />
+
+        <GiveUpButton handleGiveUp={this.props.handleGiveUp} />
+        <PauseButton handlePause={this.props.handlePause} />
       </div>
     )
   }
