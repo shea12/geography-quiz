@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import RaisedButton from 'material-ui/RaisedButton'
-import Popover from 'material-ui/Popover'
-import Menu from 'material-ui/Menu'
-import MenuItem from 'material-ui/MenuItem'
-
+// import RaisedButton from 'material-ui/RaisedButton'
+// import Popover from 'material-ui/Popover'
+// import Menu from 'material-ui/Menu'
+// import MenuItem from 'material-ui/MenuItem'
+/* eslint-disable */
 import NAButton from './continents/na.jsx'
 import SAButton from './continents/sa.jsx'
 import EUButton from './continents/eu.jsx'
 import AFButton from './continents/af.jsx'
 import OCButton from './continents/oc.jsx'
 import ASButton from './continents/as.jsx'
-
+/* eslint-enable */
 
 const style = {
   buttonGrouping: {
@@ -45,7 +45,7 @@ export default class Continents extends React.Component {
     } else if (!stateCaps) {
       // user selects states quiz
       this.props.handleLocation(selContinent, selCountry, false)
-    } else if(countryCaps) {
+    } else if (countryCaps) {
       // user selects country capitals quiz
       this.props.handleLocation(selContinent, null, true)
     } else {
@@ -61,7 +61,7 @@ export default class Continents extends React.Component {
 
   // TODO: refactor
   render() {
-    const showOrHide = this.state.visible ? 2 : 0
+    // const showOrHide = this.state.visible ? 2 : 0
     return (
       <div style={style.buttonGrouping}>
 
@@ -83,5 +83,5 @@ export default class Continents extends React.Component {
 }
 
 Continents.propTypes = {
-  handleLocation: PropTypes.func,
+  handleLocation: PropTypes.func.isRequired,
 }

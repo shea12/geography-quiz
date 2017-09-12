@@ -17,46 +17,49 @@ export default class AFButton extends React.Component {
     this.handleTouchTap = this.handleTouchTap.bind(this)
   }
 
+  // LINT: do not use setState in componentDidMount
+  /* eslint-disable */
   componentDidMount() {
     this.setState({ visible: this.props.showOrHide })
   }
+  /* eslint-enable */
 
   handleTouchTap(event) {
-    event.preventDefault();
+    event.preventDefault()
     this.setState({
       open: true,
       anchorEl: event.currentTarget,
-    });
-  };
+    })
+  }
 
   handleRequestClose() {
     this.setState({
       open: false,
-    });
-  };
+    })
+  }
 
   render() {
     const showOrHide = this.state.visible ? 2 : 0
     return (
-      <div style={{display: 'inline-block'}}>
+      <div style={{ display: 'inline-block' }}>
         <RaisedButton
           className="waves-effect"
           style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={this.handleTouchTap}
-          label='Africa'
+          label="Africa"
         />
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
-          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+          targetOrigin={{ horizontal: 'left', vertical: 'top' }}
           onRequestClose={this.handleRequestClose}
         >
           <Menu>
-            <MenuItem primaryText='Countries' onClick={() => this.props.onButtonClick('AF', false, null, false)}/>
-            <MenuItem primaryText='Capitals'  onClick={() => this.props.onButtonClick('AF', true, null, false)}/>
-            <MenuItem primaryText='Provinces: South Africa' onClick={() => this.props.onButtonClick('AF', false, 'ZA', false)}/>
-            <MenuItem primaryText='Capitals: South Africa' onClick={() => this.props.onButtonClick('AF', false, 'ZA', true)}/>
+            <MenuItem primaryText="Countries" onClick={() => this.props.onButtonClick('AF', false, null, false)} />
+            <MenuItem primaryText="Capitals" onClick={() => this.props.onButtonClick('AF', true, null, false)} />
+            <MenuItem primaryText="Provinces: South Africa" onClick={() => this.props.onButtonClick('AF', false, 'ZA', false)} />
+            <MenuItem primaryText="Capitals: South Africa" onClick={() => this.props.onButtonClick('AF', false, 'ZA', true)} />
           </Menu>
         </Popover>
       </div>

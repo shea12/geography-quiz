@@ -2,6 +2,7 @@ import React from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import PropTypes from 'prop-types'
 
+// LINT: component should be written as a pure function
 export default class PauseButton extends React.Component {
   render() {
     return (
@@ -13,7 +14,7 @@ export default class PauseButton extends React.Component {
           marginLeft: 260,
         }}
         onClick={
-          () => this.props.handleBack()
+          () => this.props.handlePause()
         }
       >
         Pause
@@ -23,5 +24,5 @@ export default class PauseButton extends React.Component {
 }
 
 PauseButton.propTypes = {
-  handlePause: PropTypes.func,
+  handlePause: PropTypes.func.isRequired,
 }

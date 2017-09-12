@@ -2,6 +2,7 @@ import React from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import PropTypes from 'prop-types'
 
+// LINT: component should be written as a pure function
 export default class GiveUpButton extends React.Component {
   render() {
     return (
@@ -13,7 +14,7 @@ export default class GiveUpButton extends React.Component {
           marginLeft: 140,
         }}
         onClick={
-          () => this.props.handleBack()
+          () => this.props.handleGiveUp()
         }
       >
         Give Up
@@ -23,5 +24,5 @@ export default class GiveUpButton extends React.Component {
 }
 
 GiveUpButton.propTypes = {
-  handleGiveUp: PropTypes.func,
+  handleGiveUp: PropTypes.func.isRequired,
 }

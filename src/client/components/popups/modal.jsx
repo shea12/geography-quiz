@@ -12,9 +12,12 @@ export default class FinishModal extends React.Component {
     this.close = this.close.bind(this)
   }
 
+  // LINT: do not use setState in componentDidMount
+  /* eslint-disable */
   componentDidMount() {
     this.setState({ showModal: true })
   }
+  /* eslint-enable */
 
   open() {
     this.setState({ open: true })

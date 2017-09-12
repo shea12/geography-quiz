@@ -10,6 +10,16 @@ const style = {
   },
 }
 
+function convertTime(seconds) {
+  let sec = seconds
+  const numerator = (sec - (sec %= 60))
+  // LINT: expected literal to be on the right side of <
+  /* eslint-disable */
+  const denominator = 60 + (9 < sec ? ':' : ':0') + sec
+  /* eslint-enable */
+  return numerator / denominator
+}
+
 class Timer extends React.Component {
   constructor() {
     super()
@@ -51,8 +61,8 @@ class Timer extends React.Component {
     let timerComponent = null
     const elapsed = Math.round(this.state.time / 100)
     const seconds = (elapsed / 10).toFixed(0)
-    function fmtMSS(s){return(s-(s%=60))/60+(9<s?':':':0')+s}
-    timerComponent = (<p>Time: {fmtMSS(seconds)}</p>)
+    // function fmtMSS(s) { return (s-(s%=60))/60+(9<s?':':':0')+s }
+    timerComponent = (<p>Time: {convertTime(seconds)}</p>)
     return (
       <div style={style.time}>
         {timerComponent}

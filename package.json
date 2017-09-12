@@ -10,7 +10,7 @@
     "start": "NODE_ENV=development webpack-dev-server --config dev.config.js",
     "build": "NODE_ENV=production webpack --config prod.config.js",
     "deploy": "npm run build && <some build script>",
-    "lint": "eslint client webpack.config.js --ext .js,.jsx",
+    "lint": "eslint src dev.config.js --ext .js,.jsx",
     "precommit": "lint"
   },
   "dependencies": {

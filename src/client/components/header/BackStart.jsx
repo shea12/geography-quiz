@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+/* eslint-disable */
 import StartButton from './buttons/startbutton.jsx'
 import BackButton from './buttons/backbutton.jsx'
+/* eslint-enable */
 
+// LINT: component should be written as a pure function
 export default class BackStart extends React.Component {
   render() {
     return (
@@ -16,6 +18,6 @@ export default class BackStart extends React.Component {
 }
 
 BackStart.propTypes = {
-  handleStart: PropTypes.func,
-  handleBack: PropTypes.func
+  handleStart: PropTypes.func.isRequired,
+  handleBack: PropTypes.func.isRequired,
 }

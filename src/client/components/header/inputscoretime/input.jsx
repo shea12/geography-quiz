@@ -38,28 +38,28 @@ export default class InputForm extends React.Component {
   }
 
   componentWillMount() {
-    let modifier = null
+    let mod = null
     if (this.props.capitals) {
-      modifier = 'cap'
+      mod = 'cap'
     } else {
-      modifier = 'name'
+      mod = 'name'
     }
     this.setState({
       placesArray: this.props.placesArray,
-      modifier: modifier,
+      modifier: mod,
     })
   }
 
   componentWillReceiveProps(nextProps) {
-    let modifier = null
+    let mod = null
     if (this.props.capitals) {
-      modifier = 'cap'
+      mod = 'cap'
     } else {
-      modifier = 'name'
+      mod = 'name'
     }
     this.setState({
       placesArray: nextProps.placesArray,
-      modifier: modifier,
+      modifier: mod,
     })
   }
 
@@ -71,11 +71,11 @@ export default class InputForm extends React.Component {
     }
     return -1
   }
-  
+
   // TODO: this method is doing a lot, will refactor logic 
   handleKeyPress(target) {
     if (target.charCode === 13) {
-      let foundIndex = this.checkUserInput(this.state.modifier)
+      const foundIndex = this.checkUserInput(this.state.modifier)
       // foundIndex will be the index in the array where the match was found
       // or false if not found
       if (foundIndex >= 0) {
@@ -130,4 +130,5 @@ InputForm.propTypes = {
   placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleNamedPlace: PropTypes.func.isRequired,
   handleTimer: PropTypes.func.isRequired,
+  capitals: PropTypes.bool.isRequired,
 }

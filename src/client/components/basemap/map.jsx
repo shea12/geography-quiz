@@ -2,7 +2,7 @@ import React from 'react'
 import MapboxGl from 'mapbox-gl'
 import PropTypes from 'prop-types'
 import Keys from '../../../../assets/keys'
-import WORLD from '../../../../assets/continentContents'
+// import WORLD from '../../../../assets/continentContents'
 import CODES from '../../../../assets/countryCodes'
 
 

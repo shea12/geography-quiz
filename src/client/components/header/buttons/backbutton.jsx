@@ -2,6 +2,7 @@ import React from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import PropTypes from 'prop-types'
 
+// LINT: component should be written as a pure function
 export default class BackButton extends React.Component {
   render() {
     return (
@@ -23,5 +24,5 @@ export default class BackButton extends React.Component {
 }
 
 BackButton.propTypes = {
-  handleBack: PropTypes.func,
+  handleBack: PropTypes.func.isRequired,
 }

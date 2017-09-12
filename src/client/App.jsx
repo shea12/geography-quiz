@@ -2,9 +2,7 @@ import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 /* eslint-disable */
 import Maps from './components/basemap/map.jsx'
-
 import Header from './components/header/Header.jsx'
-
 import Modal from './components/popups/modal.jsx'
 import WORLD from '../../assets/continentContents'
 /* eslint-enable */
@@ -37,6 +35,8 @@ export default class App extends React.Component {
     this.handleStart = this.handleStart.bind(this)
     this.handleBack = this.handleBack.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
+    this.handleGiveUp = this.handleGiveUp.bind(this)
+    this.handlePause = this.handlePause.bind(this)
   }
 
   /* PARAMS: 
@@ -94,7 +94,7 @@ export default class App extends React.Component {
   }
 
   handleBack() {
-    this.setState({ 
+    this.setState({
       selectedContinent: '',
       timing: false,
       lonlat: [0.2, 20.6],
@@ -143,8 +143,7 @@ export default class App extends React.Component {
     return (
       <MuiThemeProvider>
         <div style={style.container}>
-          
-          <Header 
+          <Header
             placesArray={this.state.placesArray}
             selectedContinent={this.state.selectedContinent}
             timing={this.state.timing}
@@ -155,10 +154,9 @@ export default class App extends React.Component {
             handleBack={this.handleBack}
             handleStart={this.handleStart}
             handleTimer={this.handleTimer}
-            handleGiveUp={this.props.handleGiveUp}
-            handlePause={this.props.handlePause}
+            handleGiveUp={this.handleGiveUp}
+            handlePause={this.handlePause}
           />
-
           <Maps
             lonlat={this.state.lonlat}
             zoom={this.state.zoom}
@@ -167,7 +165,6 @@ export default class App extends React.Component {
             capitals={this.state.capitals}
             states={this.state.states}
           />
-
           {modal}
         </div>
       </MuiThemeProvider>
