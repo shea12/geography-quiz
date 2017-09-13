@@ -2,7 +2,7 @@ import React from 'react'
 import Dialog from 'material-ui/Dialog'
 import PropTypes from 'prop-types'
 
-export default class FinishModal extends React.Component {
+export default class WelcomeModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -19,37 +19,30 @@ export default class FinishModal extends React.Component {
   }
   /* eslint-enable */
 
-  open() {
-    this.setState({ open: true })
-  }
-
   close() {
     this.setState({ open: false })
-    this.props.onClose()
+    // this.props.onClose()
   }
 
   render() {
     const actions = []
-    const number = '?'
-    const continent = '?'
-    const time = '?'
 
     return (
       <div>
         <Dialog
-          title="Great Job!"
+          title="Welcome to geoQuiz!"
           actions={actions}
           modal={false}
           open={this.state.open}
           onRequestClose={this.close}
         >
-          You named all {number} countries of {continent} in {time} time
+          Welcome!
         </Dialog>
       </div>
     )
   }
 }
 
-FinishModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
+WelcomeModal.propTypes = {
+  // onClose: PropTypes.func.isRequired,
 }

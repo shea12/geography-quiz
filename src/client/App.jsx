@@ -1,9 +1,10 @@
 import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 /* eslint-disable */
+import WelcomeModal from './components/popups/welcomemodal.jsx'
 import Maps from './components/basemap/map.jsx'
 import Header from './components/header/Header.jsx'
-import Modal from './components/popups/modal.jsx'
+import WinnerModal from './components/popups/winnermodal.jsx'
 import WORLD from '../../assets/continentContents'
 /* eslint-enable */
 
@@ -24,7 +25,7 @@ export default class App extends React.Component {
       placesArray: [],
       timing: false,
       namedPlace: '',
-      showModal: false,
+      showWinnerModal: false,
       capitals: false,
       states: false,
       quizTitle: null,
@@ -99,7 +100,7 @@ export default class App extends React.Component {
       timing: false,
       lonlat: [0.2, 20.6],
       zoom: 2,
-      showModal: false,
+      showWinnerModal: false,
     })
   }
 
@@ -113,9 +114,9 @@ export default class App extends React.Component {
       this.setState({ timing: true })
     } else if (!startStop && complete) {
       // user entered all contries setState of timer to false
-      // show modal, turn off timer, reset selection
+      // show winnermodal, turn off timer, reset selection
       // need to record total countries, continent name, and final time
-      this.setState({ timing: false, selectedContinent: '', showModal: true })
+      this.setState({ timing: false, selectedContinent: '', showWinnerModal: true })
     }
   }
 
@@ -132,17 +133,18 @@ export default class App extends React.Component {
   }
 
   render() {
-    let modal = <div />
+    let winnermodal = <div />
 
-    if (!this.state.timing && this.state.showModal) {
-      modal = <Modal onClose={this.handleBack} />
+    if (!this.state.timing && this.state.showWinnerModal) {
+      winnermodal = <WinnerModal onClose={this.handleBack} />
     } else {
-      modal = <div />
+      winnermodal = <div />
     }
 
     return (
       <MuiThemeProvider>
         <div style={style.container}>
+          <WelcomeModal />
           <Header
             placesArray={this.state.placesArray}
             selectedContinent={this.state.selectedContinent}
@@ -165,7 +167,7 @@ export default class App extends React.Component {
             capitals={this.state.capitals}
             states={this.state.states}
           />
-          {modal}
+          {winnermodal}
         </div>
       </MuiThemeProvider>
     )

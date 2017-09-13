@@ -70,7 +70,7 @@ export default class Header extends React.Component {
 Header.propTypes = {
   placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedContinent: PropTypes.string.isRequired,
-  quizTitle: PropTypes.string.isRequired,
+  quizTitle: PropTypes.string,
   capitals: PropTypes.bool.isRequired,
   timing: PropTypes.bool.isRequired,
   handleLocation: PropTypes.func.isRequired,

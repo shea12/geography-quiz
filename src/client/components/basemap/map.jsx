@@ -1,9 +1,9 @@
 import React from 'react'
 import MapboxGl from 'mapbox-gl'
 import PropTypes from 'prop-types'
-import Keys from '../../../../assets/keys'
-// import WORLD from '../../../../assets/continentContents'
+import KEYS from '../../../../assets/keys'
 import CODES from '../../../../assets/countryCodes'
+// import WORLD from '../../../../assets/continentContents'
 
 
 const style = {
@@ -34,11 +34,11 @@ const showHideAllStateLabels = (stateCodeArray, status) => {
 
 export default class Maps extends React.Component {
   componentDidMount() {
-    MapboxGl.accessToken = Keys.access_token
+    MapboxGl.accessToken = KEYS.access_token
     // remember: mapbox uses [long, lat] not [lat, long]
     map = new MapboxGl.Map({
       container: 'map',
-      style: Keys.style_key,
+      style: KEYS.style_key,
       center: this.props.lonlat,
       zoom: this.props.zoom,
       pitchWithRotate: false,
