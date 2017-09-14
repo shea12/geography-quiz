@@ -10,7 +10,7 @@ const style = {
     position: 'absolute',
     zIndex: 2,
     marginTop: 8,
-    marginLeft: 846,
+    marginLeft: '19%',
     paddingBottom: 10,
     fontColor: 'black',
   },

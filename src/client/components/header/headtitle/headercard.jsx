@@ -6,7 +6,7 @@ const style = {
     position: 'absolute',
     zIndex: 2,
     width: '100%',
-    backgroundColor: 'rgba(140, 140, 140, 0.7)',
+    backgroundColor: 'rgba(140, 140, 140, 0.5)',
   },
 }
 

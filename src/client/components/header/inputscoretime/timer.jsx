@@ -6,18 +6,19 @@ const style = {
     position: 'absolute',
     zIndex: 3,
     marginTop: 0,
-    marginLeft: 1200,
+    marginLeft: '42%',
   },
 }
 
-function convertTime(seconds) {
-  let sec = seconds
-  const numerator = (sec - (sec %= 60))
-  // LINT: expected literal to be on the right side of <
-  /* eslint-disable */
-  const denominator = 60 + (9 < sec ? ':' : ':0') + sec
-  /* eslint-enable */
-  return numerator / denominator
+function convertTime(s) {
+  // let sec = seconds
+  // const numerator = (sec - (sec %= 60))
+  // // LINT: expected literal to be on the right side of <
+  // /* eslint-disable */
+  // const denominator = 60 + (9 < sec ? ':' : ':0') + sec
+  // /* eslint-enable */
+  // return numerator / denominator
+  return (s-(s%=60))/60+(9<s?':':':0')+s
 }
 
 class Timer extends React.Component {
@@ -43,13 +44,16 @@ class Timer extends React.Component {
       })
       this.timer = setInterval(this.ticktock, 1000)
     } else if ((this.state.timing) && (!nextProps.timing)) {
-      // need to report back the final time 
       this.setState({ timing: false })
       clearInterval(this.timer)
     }
   }
 
   componentWillUnmount() {
+    // need to report back the final time
+    const seconds = ((Math.round(this.state.time / 100)) / 10).toFixed(0)
+    const finalTime = convertTime(seconds)
+    this.props.getFinalTime(finalTime)
     clearInterval(this.timer)
   }
 
@@ -61,7 +65,6 @@ class Timer extends React.Component {
     let timerComponent = null
     const elapsed = Math.round(this.state.time / 100)
     const seconds = (elapsed / 10).toFixed(0)
-    // function fmtMSS(s) { return (s-(s%=60))/60+(9<s?':':':0')+s }
     timerComponent = (<p>Time: {convertTime(seconds)}</p>)
     return (
       <div style={style.time}>
@@ -73,6 +76,7 @@ class Timer extends React.Component {
 
 Timer.propTypes = {
   timing: PropTypes.bool.isRequired,
+  getFinalTime: PropTypes.func.isRequired,
 }
 
 module.exports = Timer

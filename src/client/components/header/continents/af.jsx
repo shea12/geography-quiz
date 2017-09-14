@@ -5,6 +5,12 @@ import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 
+const style = {
+  item: {
+    fontSize: '14px',
+  },
+}
+
 export default class AFButton extends React.Component {
   constructor(props) {
     super(props)
@@ -44,10 +50,12 @@ export default class AFButton extends React.Component {
       <div style={{ display: 'inline-block' }}>
         <RaisedButton
           className="waves-effect"
-          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
+          style={{ 'border-radius': '0px', zIndex: showOrHide, marginRight: 20, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={this.handleTouchTap}
-          label="Africa"
-        />
+
+        >
+          Africa
+        </RaisedButton>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
@@ -56,10 +64,10 @@ export default class AFButton extends React.Component {
           onRequestClose={this.handleRequestClose}
         >
           <Menu>
-            <MenuItem primaryText="Countries" onClick={() => this.props.onButtonClick('AF', false, null, false)} />
-            <MenuItem primaryText="Capitals" onClick={() => this.props.onButtonClick('AF', true, null, false)} />
-            <MenuItem primaryText="Provinces: South Africa" onClick={() => this.props.onButtonClick('AF', false, 'ZA', false)} />
-            <MenuItem primaryText="Capitals: South Africa" onClick={() => this.props.onButtonClick('AF', false, 'ZA', true)} />
+            <MenuItem style={style.item} primaryText="Countries" onClick={() => this.props.onButtonClick('AF', false, null, false)} />
+            <MenuItem style={style.item} primaryText="Capitals" onClick={() => this.props.onButtonClick('AF', true, null, false)} />
+            <MenuItem style={style.item} primaryText="Provinces: South Africa" onClick={() => this.props.onButtonClick('AF', false, 'ZA', false)} />
+            <MenuItem style={style.item} primaryText="Capitals: South Africa" onClick={() => this.props.onButtonClick('AF', false, 'ZA', true)} />
           </Menu>
         </Popover>
       </div>

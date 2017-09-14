@@ -17,7 +17,8 @@ const style = {
   buttonGrouping: {
     position: 'absolute',
     padding: 0,
-    margin: 6,
+    marginLeft: '28%',
+    marginTop: 8,
     display: 'inline-block',
   },
 }
@@ -42,11 +43,12 @@ export default class Continents extends React.Component {
     if (stateCaps) {
       // user selects state capitals quiz
       this.props.handleLocation(selContinent, selCountry, true)
-    } else if (!stateCaps) {
+    } else if (!stateCaps && !countryCaps) {
       // user selects states quiz
       this.props.handleLocation(selContinent, selCountry, false)
     } else if (countryCaps) {
       // user selects country capitals quiz
+      console.log('country caps')
       this.props.handleLocation(selContinent, null, true)
     } else {
       // user selects countries of continent quiz

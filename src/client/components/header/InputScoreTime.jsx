@@ -7,7 +7,6 @@ import Timer from './inputscoretime/timer.jsx'
 import BackButton from './buttons/backbutton.jsx'
 
 import GiveUpButton from './buttons/giveupbutton.jsx'
-import PauseButton from './buttons/pausebutton.jsx'
 /* eslint-enable */
 
 // LINT: component should be written as a pure function
@@ -25,11 +24,13 @@ export default class InputScoreTime extends React.Component {
           placesArray={this.props.placesArray}
           continent={this.props.continent}
         />
-        <Timer timing={this.props.timing} />
+        <Timer
+          timing={this.props.timing}
+          getFinalTime={this.props.getFinalTime}
+        />
         <BackButton handleBack={this.props.handleBack} />
 
         <GiveUpButton handleGiveUp={this.props.handleGiveUp} />
-        <PauseButton handlePause={this.props.handlePause} />
       </div>
     )
   }
@@ -43,6 +44,6 @@ InputScoreTime.propTypes = {
   handleNamedPlace: PropTypes.func.isRequired,
   handleTimer: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
+  getFinalTime: PropTypes.func.isRequired,
   handleGiveUp: PropTypes.func.isRequired,
-  handlePause: PropTypes.func.isRequired,
 }

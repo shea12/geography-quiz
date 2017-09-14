@@ -5,6 +5,12 @@ import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 
+const style = {
+  item: {
+    fontSize: '14px',
+  },
+}
+
 export default class SAButton extends React.Component {
   constructor(props) {
     super(props)
@@ -44,10 +50,11 @@ export default class SAButton extends React.Component {
       <div style={{ display: 'inline-block' }}>
         <RaisedButton
           className="waves-effect"
-          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
+          style={{ zIndex: showOrHide, marginRight: 20, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={this.handleTouchTap}
-          label="S. America"
-        />
+        >
+        S. America
+        </RaisedButton>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
@@ -56,9 +63,9 @@ export default class SAButton extends React.Component {
           onRequestClose={this.handleRequestClose}
         >
           <Menu>
-            <MenuItem primaryText="Countries" onClick={() => this.props.onButtonClick('SA', false, null, false)} />
-            <MenuItem primaryText="Capitals" onClick={() => this.props.onButtonClick('SA', true, null, false)} />
-            <MenuItem primaryText="States: Brazil" onClick={() => this.props.onButtonClick('SA', false, 'BR', false)} />
+            <MenuItem style={style.item} primaryText="Countries" onClick={() => this.props.onButtonClick('SA', false, null, false)} />
+            <MenuItem style={style.item} primaryText="Capitals" onClick={() => this.props.onButtonClick('SA', true, null, false)} />
+            <MenuItem style={style.item} primaryText="States: Brazil" onClick={() => this.props.onButtonClick('SA', false, 'BR', false)} />
           </Menu>
         </Popover>
       </div>

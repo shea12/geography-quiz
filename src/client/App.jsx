@@ -21,23 +21,31 @@ export default class App extends React.Component {
     this.state = {
       lonlat: [0.2, 20.6],
       zoom: 2,
+      selectedCategory: '',
       selectedContinent: '',
       placesArray: [],
+      quizTitle: null,
+      capitals: false,
+      states: false,
       timing: false,
       namedPlace: '',
       showWinnerModal: false,
-      capitals: false,
-      states: false,
-      quizTitle: null,
+      finalTime: 0,
     }
 
+    this.handleCategorySelection = this.handleCategorySelection.bind(this)
     this.handleLocation = this.handleLocation.bind(this)
     this.handleNamedPlace = this.handleNamedPlace.bind(this)
     this.handleStart = this.handleStart.bind(this)
     this.handleBack = this.handleBack.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
+    this.getFinalTime = this.getFinalTime.bind(this)
     this.handleGiveUp = this.handleGiveUp.bind(this)
-    this.handlePause = this.handlePause.bind(this)
+  }
+
+
+  handleCategorySelection(selCategory) {
+    this.setState({ selectedCategory: selCategory })
   }
 
   /* PARAMS: 
@@ -49,13 +57,15 @@ export default class App extends React.Component {
     this.setState({
       selectedContinent: selContinent,
     })
-
+    let quizDesc = ''
+    let placeName = ''
     const countryArrayCopy = WORLD[selContinent].countries.slice()
 
     if (selCountry) {
       for (let i = 0; i < countryArrayCopy.length; i += 1) {
         if (countryArrayCopy[i].abbrv === selCountry) {
           const statesArrayCopy = countryArrayCopy[i].states.slice()
+          placeName = countryArrayCopy[i].name
           this.setState({
             placesArray: statesArrayCopy,
             states: true,
@@ -66,10 +76,13 @@ export default class App extends React.Component {
       }
       if (capitals) {
         // user selected a state capitals quiz
-        this.setState({ capitals: true, quizTitle: 'State Capitals' })
+        quizDesc = 'capitals of ' + placeName
+        this.setState({ capitals: true, quizTitle: quizDesc })
       } else {
         // user selected states quiz
-        this.setState({ capitals: false, quizTitle: 'States' })
+        quizDesc = 'states of ' + placeName
+        this.setState({ capitals: false, quizTitle: quizDesc })
+        console.log('quizDesc: ', quizDesc)
       }
     } else if (!selCountry) {
       this.setState({
@@ -78,12 +91,16 @@ export default class App extends React.Component {
         lonlat: WORLD[selContinent].lonlat,
         zoom: WORLD[selContinent].zoom,
       })
+      placeName = WORLD[selContinent].name
       if (capitals) {
         // user selected countries capitals quiz
-        this.setState({ capitals: true, quizTitle: 'Country Capitals' })
+        console.log('here')
+        quizDesc = 'capitals of ' + placeName
+        this.setState({ capitals: true, quizTitle: quizDesc })
       } else {
         // user selected countries quiz
-        this.setState({ capitals: false, quizTitle: 'Countries' })
+        quizDesc = 'countries of ' + placeName
+        this.setState({ capitals: false, quizTitle: quizDesc })
       }
     }
   }
@@ -96,6 +113,7 @@ export default class App extends React.Component {
 
   handleBack() {
     this.setState({
+      selectedCategory: '',
       selectedContinent: '',
       timing: false,
       lonlat: [0.2, 20.6],
@@ -116,17 +134,15 @@ export default class App extends React.Component {
       // user entered all contries setState of timer to false
       // show winnermodal, turn off timer, reset selection
       // need to record total countries, continent name, and final time
-      this.setState({ timing: false, selectedContinent: '', showWinnerModal: true })
+      this.setState({ timing: false, selectedCategory: '', selectedContinent: '', showWinnerModal: true })
     }
   }
 
-  handleGiveUp() {
-    this.setState({
-      timing: false,
-    })
+  getFinalTime(time) {
+    this.setState({ finalTime: time })
   }
 
-  handlePause() {
+  handleGiveUp() {
     this.setState({
       timing: false,
     })
@@ -136,7 +152,14 @@ export default class App extends React.Component {
     let winnermodal = <div />
 
     if (!this.state.timing && this.state.showWinnerModal) {
-      winnermodal = <WinnerModal onClose={this.handleBack} />
+      winnermodal = <WinnerModal
+        onClose={this.handleBack}
+        time={this.state.finalTime}
+        selectedContinent={this.state.selectedContinent}
+        quizTitle={this.state.quizTitle}
+        capital={this.state.capitals}
+        states={this.state.states}
+      />
     } else {
       winnermodal = <div />
     }
@@ -151,13 +174,16 @@ export default class App extends React.Component {
             timing={this.state.timing}
             capitals={this.state.capitals}
             quizTitle={this.state.quizTitle}
+            selectedCategory={this.state.selectedCategory}
+            handleCategorySelection={this.handleCategorySelection}
+
             handleLocation={this.handleLocation}
             handleNamedPlace={this.handleNamedPlace}
             handleBack={this.handleBack}
             handleStart={this.handleStart}
             handleTimer={this.handleTimer}
+            getFinalTime={this.getFinalTime}
             handleGiveUp={this.handleGiveUp}
-            handlePause={this.handlePause}
           />
           <Maps
             lonlat={this.state.lonlat}

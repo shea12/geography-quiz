@@ -6,10 +6,12 @@ const style = {
   modalTitle: {
     textAlign: 'center',
   },
-  modal: {
+  modalInner: {
     height: '400px',
   },
-
+  byLine: {
+    fontSize: '12px',
+  }
 }
 
 export default class WelcomeModal extends React.Component {
@@ -39,15 +41,23 @@ export default class WelcomeModal extends React.Component {
       <div>
         <Dialog
           style={style.modalTitle}
-          title="GeoQuiz"
+          title="Geography Quiz"
           actions={actions}
           modal={false}
           open={this.state.open}
           onRequestClose={this.close}
         >
-          <div style={style.modal}> 
+          <div style={style.modalInner}> 
             <p>
-              Hello and welcome to GeoQuiz! Use the buttons above to choose a quiz.
+              Hello and welcome to Geography Quiz!
+              <br/>
+              Use the buttons above to choose a quiz.
+            </p>
+          </div>
+
+          <div>
+            <p style={style.byLine}>
+              This project was created by Garol. Learn more <u>here</u>.
             </p>
           </div>
         </Dialog>

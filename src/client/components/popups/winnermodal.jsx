@@ -30,10 +30,7 @@ export default class WinnerModal extends React.Component {
 
   render() {
     const actions = []
-    const number = '?'
-    const continent = '?'
-    const time = '?'
-
+    const time = this.props.time
     return (
       <div>
         <Dialog
@@ -43,7 +40,7 @@ export default class WinnerModal extends React.Component {
           open={this.state.open}
           onRequestClose={this.close}
         >
-          You named all {number} countries of {continent} in {time} time
+          You completed {this.props.quizTitle} quiz in {time}
         </Dialog>
       </div>
     )
@@ -52,4 +49,9 @@ export default class WinnerModal extends React.Component {
 
 WinnerModal.propTypes = {
   onClose: PropTypes.func.isRequired,
+  time: PropTypes.number.isRequired,
+  quizTitle: PropTypes.string.isRequired,
+  selectedContinent: PropTypes.string.isRequired,
+  capital: PropTypes.bool.isRequired,
+  states: PropTypes.bool.isRequired,
 }

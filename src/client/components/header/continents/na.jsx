@@ -5,6 +5,12 @@ import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 
+const style = {
+  item: {
+    fontSize: '14px',
+  },
+}
+
 export default class NAButton extends React.Component {
   constructor(props) {
     super(props)
@@ -44,10 +50,11 @@ export default class NAButton extends React.Component {
       <div style={{ display: 'inline-block' }}>
         <RaisedButton
           className="waves-effect"
-          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
+          style={{ zIndex: showOrHide, marginRight: 20, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={this.handleTouchTap}
-          label="N. America"
-        />
+        >
+          N. America
+        </RaisedButton>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
@@ -56,14 +63,14 @@ export default class NAButton extends React.Component {
           onRequestClose={this.handleRequestClose}
         >
           <Menu>
-            <MenuItem primaryText="Countries" onClick={() => this.props.onButtonClick('NA', false, null, false)} />
-            <MenuItem primaryText="Capitals" onClick={() => this.props.onButtonClick('NA', true, null, false)} />
-            <MenuItem primaryText="States: USA" onClick={() => this.props.onButtonClick('NA', false, 'US', false)} />
-            <MenuItem primaryText="Capitals: USA" onClick={() => this.props.onButtonClick('NA', false, 'US', true)} />
-            <MenuItem primaryText="States: Mexico" onClick={() => this.props.onButtonClick('NA', false, 'MX', false)} />
-            <MenuItem primaryText="Capitals: Mexico" onClick={() => this.props.onButtonClick('NA', false, 'MX', true)} />
-            <MenuItem primaryText="Provinces: Canada" onClick={() => this.props.onButtonClick('NA', false, 'CA', false)} />
-            <MenuItem primaryText="Capitals: Canada" onClick={() => this.props.onButtonClick('NA', false, 'CA', true)} />
+            <MenuItem style={style.item} primaryText="Countries" onClick={() => this.props.onButtonClick('NA', false, null, false)} />
+            <MenuItem style={style.item} primaryText="Capitals" onClick={() => this.props.onButtonClick('NA', true, null, false)} />
+            <MenuItem style={style.item} primaryText="States: USA" onClick={() => this.props.onButtonClick('NA', false, 'US', false)} />
+            <MenuItem style={style.item} primaryText="Capitals: USA" onClick={() => this.props.onButtonClick('NA', false, 'US', true)} />
+            <MenuItem style={style.item} primaryText="States: Mexico" onClick={() => this.props.onButtonClick('NA', false, 'MX', false)} />
+            <MenuItem style={style.item} primaryText="Capitals: Mexico" onClick={() => this.props.onButtonClick('NA', false, 'MX', true)} />
+            <MenuItem style={style.item} primaryText="Provinces: Canada" onClick={() => this.props.onButtonClick('NA', false, 'CA', false)} />
+            <MenuItem style={style.item} primaryText="Capitals: Canada" onClick={() => this.props.onButtonClick('NA', false, 'CA', true)} />
           </Menu>
         </Popover>
       </div>

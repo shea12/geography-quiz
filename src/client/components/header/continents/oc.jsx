@@ -5,6 +5,12 @@ import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 
+const style = {
+  item: {
+    fontSize: '14px',
+  },
+}
+
 export default class OCButton extends React.Component {
   constructor(props) {
     super(props)
@@ -44,10 +50,11 @@ export default class OCButton extends React.Component {
       <div style={{ display: 'inline-block' }}>
         <RaisedButton
           className="waves-effect"
-          style={{ zIndex: showOrHide, margin: 2, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
+          style={{ zIndex: showOrHide, marginRight: 20, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={this.handleTouchTap}
-          label="Oceania"
-        />
+        >
+        Oceania
+        </RaisedButton>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
@@ -56,10 +63,10 @@ export default class OCButton extends React.Component {
           onRequestClose={this.handleRequestClose}
         >
           <Menu>
-            <MenuItem primaryText="Countries" onClick={() => this.props.onButtonClick('OC', false, null, false)} />
-            <MenuItem primaryText="Capitals" onClick={() => this.props.onButtonClick('OC', true, null, false)} />
-            <MenuItem primaryText="Provinces: Australia" onClick={() => this.props.onButtonClick('OC', false, 'AU', false)} />
-            <MenuItem primaryText="Capitals: Australia" onClick={() => this.props.onButtonClick('OC', false, 'AU', true)} />
+            <MenuItem style={style.item} primaryText="Countries" onClick={() => this.props.onButtonClick('OC', false, null, false)} />
+            <MenuItem style={style.item} primaryText="Capitals" onClick={() => this.props.onButtonClick('OC', true, null, false)} />
+            <MenuItem style={style.item} primaryText="Provinces: Australia" onClick={() => this.props.onButtonClick('OC', false, 'AU', false)} />
+            <MenuItem style={style.item} primaryText="Capitals: Australia" onClick={() => this.props.onButtonClick('OC', false, 'AU', true)} />
           </Menu>
         </Popover>
       </div>

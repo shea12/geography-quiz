@@ -7,7 +7,7 @@ const style = {
     position: 'absolute',
     zIndex: 2,
     marginTop: 0,
-    marginLeft: 1140,
+    marginLeft: '38%',
   },
 }
 

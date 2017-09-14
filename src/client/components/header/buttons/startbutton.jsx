@@ -11,7 +11,7 @@ export default class StartButton extends React.Component {
           position: 'absolute',
           marginTop: 8,
           zIndex: 2,
-          marginLeft: 140,
+          marginLeft: '10%',
         }}
         onClick={
           () => this.props.handleStart()

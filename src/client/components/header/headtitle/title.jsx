@@ -2,7 +2,7 @@ import React from 'react'
 
 const style = {
   title_div: {
-    paddingLeft: 1330,
+    paddingLeft: '96%',
   },
   title: {
     position: 'absolute',
@@ -15,7 +15,7 @@ function Title() {
   return (
     <div style={style.title_div} >
       <h5 style={style.title} >
-        geoQuiz
+        GQ
       </h5>
     </div>
   )
