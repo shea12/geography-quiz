@@ -6,7 +6,7 @@ const CONTINENTS = {
     countries: [
       {
         abbrv: 'US',
-        name: 'United States',
+        name: 'the United States',
         cap: 'Washington',
         lonlat: [-95.784,39.01],
         zoom: 4,
