@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import WelcomeModal from './components/popups/welcomemodal.jsx'
 import Maps from './components/basemap/map.jsx'
 import Header from './components/header/Header.jsx'
-import WinnerModal from './components/popups/winnermodal.jsx'
+import QuizModal from './components/popups/quizmodal.jsx'
 import WORLD from '../../assets/continentContents'
 /* eslint-enable */
 
@@ -24,12 +24,15 @@ export default class App extends React.Component {
       selectedCategory: '',
       selectedContinent: '',
       placesArray: [],
+      placesNumber: 0,
+      placesRemaining: 0,
       quizTitle: null,
       capitals: false,
       states: false,
       timing: false,
       namedPlace: '',
-      showWinnerModal: false,
+      showquizModal: false,
+      gaveUp: false,
       finalTime: 0,
     }
 
@@ -71,18 +74,19 @@ export default class App extends React.Component {
             states: true,
             lonlat: countryArrayCopy[i].lonlat,
             zoom: countryArrayCopy[i].zoom,
+            placesNumber: statesArrayCopy.length,
+            placesRemaining: statesArrayCopy.length,
           })
         }
       }
       if (capitals) {
         // user selected a state capitals quiz
-        quizDesc = 'capitals of ' + placeName
+        quizDesc = `capitals of ${placeName}`
         this.setState({ capitals: true, quizTitle: quizDesc })
       } else {
         // user selected states quiz
-        quizDesc = 'states of ' + placeName
+        quizDesc = `states of ${placeName}`
         this.setState({ capitals: false, quizTitle: quizDesc })
-        console.log('quizDesc: ', quizDesc)
       }
     } else if (!selCountry) {
       this.setState({
@@ -90,16 +94,17 @@ export default class App extends React.Component {
         states: false,
         lonlat: WORLD[selContinent].lonlat,
         zoom: WORLD[selContinent].zoom,
+        placesNumber: WORLD[selContinent].length,
+        placesRemaining: WORLD[selContinent].length,
       })
       placeName = WORLD[selContinent].name
       if (capitals) {
         // user selected countries capitals quiz
-        console.log('here')
-        quizDesc = 'capitals of ' + placeName
+        quizDesc = `country capitals of ${placeName}`
         this.setState({ capitals: true, quizTitle: quizDesc })
       } else {
         // user selected countries quiz
-        quizDesc = 'countries of ' + placeName
+        quizDesc = `countries of ${placeName}`
         this.setState({ capitals: false, quizTitle: quizDesc })
       }
     }
@@ -118,12 +123,13 @@ export default class App extends React.Component {
       timing: false,
       lonlat: [0.2, 20.6],
       zoom: 2,
-      showWinnerModal: false,
+      showquizModal: false,
     })
   }
 
   handleNamedPlace(place) {
-    this.setState({ namedPlace: place })
+    let remaining = this.state.placesRemaining - 1
+    this.setState({ namedPlace: place, placesRemaining: remaining })
   }
 
   handleTimer(startStop, complete) {
@@ -132,9 +138,15 @@ export default class App extends React.Component {
       this.setState({ timing: true })
     } else if (!startStop && complete) {
       // user entered all contries setState of timer to false
-      // show winnermodal, turn off timer, reset selection
+      // show quizmodal, turn off timer, reset selection
       // need to record total countries, continent name, and final time
-      this.setState({ timing: false, selectedCategory: '', selectedContinent: '', showWinnerModal: true })
+      this.setState({
+        timing: false,
+        selectedCategory: '',
+        selectedContinent: '',
+        showquizModal: true,
+        gaveUp: false,
+      })
     }
   }
 
@@ -145,23 +157,28 @@ export default class App extends React.Component {
   handleGiveUp() {
     this.setState({
       timing: false,
+      showquizModal: true,
+      gaveUp: true,
     })
   }
 
   render() {
-    let winnermodal = <div />
+    let quizmodal = <div />
 
-    if (!this.state.timing && this.state.showWinnerModal) {
-      winnermodal = <WinnerModal
+    if (!this.state.timing && this.state.showquizModal) {
+      quizmodal = <QuizModal
         onClose={this.handleBack}
         time={this.state.finalTime}
         selectedContinent={this.state.selectedContinent}
         quizTitle={this.state.quizTitle}
         capital={this.state.capitals}
         states={this.state.states}
+        gaveUp={this.state.gaveUp}
+        placesNumber={this.state.placesNumber}
+        placesRemaining={this.state.placesRemaining}
       />
     } else {
-      winnermodal = <div />
+      quizmodal = <div />
     }
 
     return (
@@ -193,7 +210,7 @@ export default class App extends React.Component {
             capitals={this.state.capitals}
             states={this.state.states}
           />
-          {winnermodal}
+          {quizmodal}
         </div>
       </MuiThemeProvider>
     )

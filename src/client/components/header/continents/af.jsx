@@ -50,7 +50,7 @@ export default class AFButton extends React.Component {
       <div style={{ display: 'inline-block' }}>
         <RaisedButton
           className="waves-effect"
-          style={{ 'border-radius': '0px', zIndex: showOrHide, marginRight: 20, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
+          style={{ zIndex: showOrHide, marginRight: 20, backgroundColor: 'rgba(35, 121, 196, 0.9)' }}
           onClick={this.handleTouchTap}
 
         >
