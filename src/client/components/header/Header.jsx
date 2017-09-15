@@ -17,7 +17,7 @@ const style = {
     position: 'absolute',
     zIndex: 2,
     display: 'inline-block',
-    marginLeft: '30%',
+    marginLeft: '24.5%',
   },
 }
 
@@ -32,6 +32,8 @@ export default class Header extends React.Component {
     let categoryWater = null
     let categoryLandformsButton = null
     let categoryLandforms = null
+    let categoryLeadersButton = null
+    let categoryLeaders = null
 
     let back = null
     let backstart = null
@@ -115,12 +117,24 @@ export default class Header extends React.Component {
           </p>
         </div>
       )
+    } else if (this.props.selectedCategory === 'LRS') {
+      // landforms are not ready yet, need to create map layers
+      back = <BackButton handleBack={this.props.handleBack} />
+      categoryLeaders = (
+        <div style={{ position: 'absolute', zIndex: 2, marginLeft: '30%'}}>
+          <p>
+            Sorry, world leader quizzes are not ready yet.
+            Hit the back button to choose another category.
+          </p>
+        </div>
+      )
     } else if (this.props.selectedCategory === '') {
       // category has NOT been selected, show category buttons
       categoryContinentButton = <CategoryButton title='Continents' code='CTN' handleCategorySelection={this.props.handleCategorySelection}/>
       categoryCityButton = <CategoryButton title='Guess the City' code='GTC' handleCategorySelection={this.props.handleCategorySelection} />
       categoryWaterButton = <CategoryButton title='Bodies of Water' code='BOW' handleCategorySelection={this.props.handleCategorySelection}/>
       categoryLandformsButton = <CategoryButton title='Landforms' code='LDF' handleCategorySelection={this.props.handleCategorySelection} />
+      categoryLeadersButton = <CategoryButton title='Leaders' code='LRS' handleCategorySelection={this.props.handleCategorySelection} />
     }
 
     return (
@@ -132,12 +146,14 @@ export default class Header extends React.Component {
           {categoryCityButton}
           {categoryWaterButton}
           {categoryLandformsButton}
+          {categoryLeadersButton}
         </div>
         {back}
         {categoryContinent}
         {categoryCity}
         {categoryWater}
         {categoryLandforms}
+        {categoryLeaders}
         {backstart}
         {inscoretime}
         {quiztitle}

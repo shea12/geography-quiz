@@ -55,14 +55,14 @@ export default class WelcomeModal extends React.Component {
               All quizzes are timed so you can keep track of your progress.
               Current quizzes include countries, capitals, and states.
               <br/><br/>
-              Quizzes coming soon: bodies of water, landforms, and cities
+              Quizzes coming soon: bodies of water, landforms, cities, and world leaders
               <br/><br/>
               Feel free to explore the map and when you're ready, 
               get started with the quiz categories above.
               <br/><br/> 
               Some categories aren't live yet but check back soon, I'm always creating more quizzes. 
               <br/><br/>
-              Please <u>leave a comment</u> if you have any suggestions; feedback is always welcome.
+              Please <u>leave a comment</u> if you have any suggestions; feedback is welcome.
             </p>
           </div>
 
