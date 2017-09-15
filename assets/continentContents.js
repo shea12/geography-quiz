@@ -490,7 +490,7 @@ const CONTINENTS = {
       },
       {
         abbrv: 'CF',
-        name: 'Central African Repulic',
+        name: 'Central African Republic',
         cap: '',
         states: [],
       },
