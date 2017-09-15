@@ -32,22 +32,23 @@ export default class Header extends React.Component {
     let categoryWater = null
     let categoryLandformsButton = null
     let categoryLandforms = null
+
     let back = null
     let backstart = null
     let inscoretime = null
     let quiztitle = null
-    let quizdescription = null
 
     if (this.props.selectedCategory === 'CTN') {
-      // category has been selected, show subcategories
-
+      // continents category has been selected, show subcategories
       if (this.props.selectedContinent !== '') {
         // user selected continent, show start & back buttons, hide continents, inscoretime
         categoryContinent = <div />
-        backstart = (<BackStart
-          handleStart={this.props.handleStart}
-          handleBack={this.props.handleBack}
-        />)
+        backstart = (
+          <BackStart
+            handleStart={this.props.handleStart}
+            handleBack={this.props.handleBack}
+          />
+        )
         inscoretime = <div />
         quiztitle = (
           <p style={{ position: 'absolute', zIndex: 2, marginLeft: '20%' }}>
@@ -82,8 +83,7 @@ export default class Header extends React.Component {
         // need to make a stop button
       }
     } else if (this.props.selectedCategory === 'GTC') {
-      // this feature is not ready yet, for now it will tell user:
-      // it isn't ready yet, what it will be, and when to expect it
+      // Guess the City feature is not ready yet
       back = <BackButton handleBack={this.props.handleBack} />
       categoryCity = (
         <div style={{ position: 'absolute', zIndex: 2, marginLeft: '24%'}}>
@@ -94,8 +94,7 @@ export default class Header extends React.Component {
         </div>
       )
     } else if (this.props.selectedCategory === 'BOW') {
-      // this feature is not ready yet, for now it will tell user:
-      // it isn't ready yet, what it will be, and when to expect it
+      // Bodies of water are not ready yet, need to create map layers
       back = <BackButton handleBack={this.props.handleBack} />
       categoryWater = (
         <div style={{ position: 'absolute', zIndex: 2, marginLeft: '26%'}}>
@@ -106,8 +105,7 @@ export default class Header extends React.Component {
         </div>
       )
     } else if (this.props.selectedCategory === 'LDF') {
-      // this feature is not ready yet, for now it will tell user:
-      // it isn't ready yet, what it will be, and when to expect it
+      // landforms are not ready yet, need to create map layers
       back = <BackButton handleBack={this.props.handleBack} />
       categoryWater = (
         <div style={{ position: 'absolute', zIndex: 2, marginLeft: '30%'}}>

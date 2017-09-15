@@ -5,12 +5,12 @@ import PropTypes from 'prop-types'
 // import Menu from 'material-ui/Menu'
 // import MenuItem from 'material-ui/MenuItem'
 /* eslint-disable */
-import NAButton from './continents/na.jsx'
-import SAButton from './continents/sa.jsx'
-import EUButton from './continents/eu.jsx'
-import AFButton from './continents/af.jsx'
-import OCButton from './continents/oc.jsx'
-import ASButton from './continents/as.jsx'
+// import NAButton from './continents/na.jsx'
+// import SAButton from './continents/sa.jsx'
+// import EUButton from './continents/eu.jsx'
+import ContinentButton from './continents/af.jsx'
+// import OCButton from './continents/oc.jsx'
+// import ASButton from './continents/as.jsx'
 /* eslint-enable */
 
 const style = {
@@ -61,24 +61,15 @@ export default class Continents extends React.Component {
     this.setState({ visible: visibility })
   }
 
-  // TODO: refactor
   render() {
-    // const showOrHide = this.state.visible ? 2 : 0
     return (
       <div style={style.buttonGrouping}>
-
-        <NAButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
-
-        <SAButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
-
-        <AFButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
-
-        <EUButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
-
-        <ASButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
-
-        <OCButton onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
-
+        <ContinentButton continent='N. America' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+        <ContinentButton continent='S. America' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+        <ContinentButton continent='Africa' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+        <ContinentButton continent='Asia' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+        <ContinentButton continent='Europe' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+        <ContinentButton continent='Oceania' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
       </div>
     )
   }

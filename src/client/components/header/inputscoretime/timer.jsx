@@ -25,7 +25,7 @@ class Timer extends React.Component {
   constructor() {
     super()
     this.state = {
-      time: null,
+      time: 0,
       timing: false,
     }
     this.ticktock = this.ticktock.bind(this)
