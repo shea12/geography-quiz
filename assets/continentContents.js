@@ -709,6 +709,7 @@ const CONTINENTS = {
   EU: {
     lonlat: [23.57, 53.38],
     zoom: 3.36,
+    name: 'Europe',
     countries: [
       {
         abbrv: 'PT',
