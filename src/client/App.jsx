@@ -8,6 +8,13 @@ import QuizModal from './components/popups/quizmodal.jsx'
 import WORLD from '../../assets/continentContents'
 /* eslint-enable */
 
+// Axios 
+const axios = require('axios'); 
+var instance = axios.create({
+  baseURL: 'localhost:8080'
+})
+
+
 const style = {
   container: {
     margin: 0,
@@ -113,6 +120,16 @@ export default class App extends React.Component {
   handleStart() {
     this.setState({
       timing: true,
+    })
+    console.log('calling axios at: ', instance.baseURL)
+    const continent = 'NA'
+
+    instance.get(`/${continent}/get-number-countries`)
+    .then((result) => {
+      console.log('result: ', result)
+    })
+    .catch((error) =>{
+      console.log('assxios error bruh')
     })
   }
 
