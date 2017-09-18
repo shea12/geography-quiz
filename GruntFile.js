@@ -19,7 +19,7 @@ module.exports = grunt => {
     browserify: {
       main: {
         src: 'src/compiled/**/*.js',
-        dest: 'src/deploy/bundle.js'
+        dest: 'src/deploy/bbundle.js'
       }
     },
     htmlmin: {
@@ -55,5 +55,5 @@ module.exports = grunt => {
     },
   })
   // for deployment will add uglify to grunt tasks , 'uglify'
-  grunt.registerTask('build', ['babel', 'browserify', 'htmlmin', 'uglify' ])
+  grunt.registerTask('build', ['babel', 'browserify', 'htmlmin' ])
 }
