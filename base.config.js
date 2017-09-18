@@ -1,31 +1,31 @@
-const webpack = require('webpack')
+// const webpack = require('webpack')
 
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+// const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: './src/client/index.html',
-  filename: 'index.html',
-  inject: 'body',
-})
+// const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+//   template: './src/client/index.html',
+//   filename: 'index.html',
+//   inject: 'body',
+// })
 
-const mongo_uri = require('./src/server/dbkey.js')
+// const mongo_uri = require(`${__dirname}/dbkey.js`)
 
-module.exports = {
-  entry: './src/deploy/bundle.js',
+// module.exports = {
+//   entry: './src/deploy/bundle.js',
 
-  module: {
-    loaders: [
-      { 
-        test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      },
-    ],
-  },
+//   module: {
+//     loaders: [
+//       { 
+//         test: /\.(js|jsx)$/,
+//         loader: 'babel-loader',
+//         exclude: /node_modules/
+//       },
+//     ],
+//   },
 
-  plugins: [
-    new webpack.EnvironmentPlugin(['NODE_ENV',]),
-    HtmlWebpackPluginConfig,
-  ],
+//   plugins: [
+//     new webpack.EnvironmentPlugin(['NODE_ENV',]),
+//     HtmlWebpackPluginConfig,
+//   ],
 
-}
+// }
