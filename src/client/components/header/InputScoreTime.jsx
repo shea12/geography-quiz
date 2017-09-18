@@ -1,13 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-/* eslint-disable */
-import Input from './inputscoretime/input.jsx'
-import ScoreKeeper from './inputscoretime/scorekeeper.jsx'
-import Timer from './inputscoretime/timer.jsx'
-import BackButton from './buttons/backbutton.jsx'
-
-import GiveUpButton from './buttons/giveupbutton.jsx'
-/* eslint-enable */
+import Input from './inputscoretime/input'
+import ScoreKeeper from './inputscoretime/scorekeeper'
+import Timer from './inputscoretime/timer'
+import BackButton from './buttons/backbutton'
+import GiveUpButton from './buttons/giveupbutton'
 
 // LINT: component should be written as a pure function
 export default class InputScoreTime extends React.Component {

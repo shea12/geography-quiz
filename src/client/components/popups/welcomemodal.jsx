@@ -1,6 +1,6 @@
 import React from 'react'
 import Dialog from 'material-ui/Dialog'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 const style = {
   modalTitle: {
@@ -11,7 +11,7 @@ const style = {
   },
   byLine: {
     fontSize: '12px',
-  }
+  },
 }
 
 export default class WelcomeModal extends React.Component {
@@ -47,29 +47,30 @@ export default class WelcomeModal extends React.Component {
           open={this.state.open}
           onRequestClose={this.close}
         >
-          <div style={style.modalInner}> 
+          <div style={style.modalInner}>
             <p>
-              <br/><br/>
+              <br /><br />
               This site is for geography nerds to test their knowledge on a wide
               array of administrative, political, and geographic features around the world.
               All quizzes are timed so you can keep track of your progress.
               Current quizzes include countries, capitals, and states.
-              <br/><br/>
+              <br /><br />
               Quizzes coming soon: bodies of water, landforms, cities, and world leaders
-              <br/><br/>
-              Feel free to explore the map and when you're ready, 
+              <br /><br />
+              Feel free to explore the map and when you are ready,
               get started with the quiz categories above.
-              <br/><br/> 
-              Some categories aren't live yet but check back soon, I'm always creating more quizzes. 
-              <br/><br/>
+              <br /><br />
+              Some categories are not live yet but check back soon,
+              I am always creating more quizzes.
+              <br /><br />
               Please <u>leave a comment</u> if you have any suggestions; feedback is welcome.
             </p>
           </div>
-
           <div>
             <p style={style.byLine}>
               This project was created by Garol. Learn more
-                <a href="https://github.com/shea12/geography-quiz" target="_blank" rel="noopener noreferrer"> here
+              <a href="https://github.com/shea12/geography-quiz" target="_blank" rel="noopener noreferrer">
+                here
               </a>.
             </p>
           </div>
@@ -79,4 +80,4 @@ export default class WelcomeModal extends React.Component {
   }
 }
 
-WelcomeModal.propTypes = {}
+// WelcomeModal.propTypes = {}

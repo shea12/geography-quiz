@@ -18,7 +18,9 @@ function convertTime(s) {
   // const denominator = 60 + (9 < sec ? ':' : ':0') + sec
   // /* eslint-enable */
   // return numerator / denominator
+  /* eslint-disable */
   return (s-(s%=60))/60+(9<s?':':':0')+s
+  /* eslint-enable */
 }
 
 class Timer extends React.Component {

@@ -103,7 +103,7 @@ export default class ContinentButton extends React.Component {
         </Menu>
       )
     } else {
-      console.log('non valid continent name sent')
+      // console.log('non valid continent name sent')
     }
     return (
       <div style={{ display: 'inline-block' }}>
@@ -122,7 +122,7 @@ export default class ContinentButton extends React.Component {
           targetOrigin={{ horizontal: 'left', vertical: 'top' }}
           onRequestClose={this.handleRequestClose}
         >
-          {menuItems} 
+          {menuItems}
         </Popover>
       </div>
     )

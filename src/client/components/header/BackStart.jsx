@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-/* eslint-disable */
-import StartButton from './buttons/startbutton.jsx'
-import BackButton from './buttons/backbutton.jsx'
-/* eslint-enable */
+import StartButton from './buttons/startbutton'
+import BackButton from './buttons/backbutton'
 
 // LINT: component should be written as a pure function
 export default class BackStart extends React.Component {

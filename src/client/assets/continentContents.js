@@ -1,3 +1,4 @@
+/* eslint-disable */
 const CONTINENTS = {
   NA: {
     name: 'North America',

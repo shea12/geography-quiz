@@ -8,10 +8,10 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body',
 })
 
-const mongo_uri = require(`${__dirname}/dbkey.js`)
+const mongo_uri = require('./src/server/dbkey.js')
 
 module.exports = {
-  entry: './src/client/index.jsx',
+  entry: './src/deploy/bundle.js',
 
   module: {
     loaders: [
