@@ -1,16 +1,13 @@
 import React from 'react'
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import PropTypes from 'prop-types'
-/* eslint-disable */
-import Title from './headtitle/title.jsx'
-import HeaderCard from './headtitle/headercard.jsx'
-import CategoryButton from './buttons/categorybutton.jsx'
-
-import Continents from './continents.jsx'
-import InputScoreTime from './InputScoreTime.jsx'
-import BackStart from './BackStart.jsx'
-import BackButton from './buttons/backbutton.jsx'
-/* eslint-enable */
+import Title from './headtitle/title'
+import HeaderCard from './headtitle/headercard'
+import CategoryButton from './buttons/categorybutton'
+import Continents from './Continents'
+import InputScoreTime from './InputScoreTime'
+import BackStart from './BackStart'
+import BackButton from './buttons/backbutton'
 
 const style = {
   buttonGrouping: {
@@ -88,9 +85,9 @@ export default class Header extends React.Component {
       // Guess the City feature is not ready yet
       back = <BackButton handleBack={this.props.handleBack} />
       categoryCity = (
-        <div style={{ position: 'absolute', zIndex: 2, marginLeft: '24%'}}>
+        <div style={{ position: 'absolute', zIndex: 2, marginLeft: '24%' }}>
           <p>
-            Sorry, this feature isn't quite ready yet.
+            Sorry, this feature is not quite ready yet.
             It was inspired by @Mapbox users #spotted tweets, so in the meantime check those out!
           </p>
         </div>
@@ -99,7 +96,7 @@ export default class Header extends React.Component {
       // Bodies of water are not ready yet, need to create map layers
       back = <BackButton handleBack={this.props.handleBack} />
       categoryWater = (
-        <div style={{ position: 'absolute', zIndex: 2, marginLeft: '26%'}}>
+        <div style={{ position: 'absolute', zIndex: 2, marginLeft: '26%' }}>
           <p>
             Sorry, quizzes about bodies of water are not ready yet.
             Hit the back button to choose another category.
@@ -109,8 +106,8 @@ export default class Header extends React.Component {
     } else if (this.props.selectedCategory === 'LDF') {
       // landforms are not ready yet, need to create map layers
       back = <BackButton handleBack={this.props.handleBack} />
-      categoryWater = (
-        <div style={{ position: 'absolute', zIndex: 2, marginLeft: '30%'}}>
+      categoryLandforms = (
+        <div style={{ position: 'absolute', zIndex: 2, marginLeft: '30%' }}>
           <p>
             Sorry, landform quizzes are not ready yet.
             Hit the back button to choose another category.
@@ -121,7 +118,7 @@ export default class Header extends React.Component {
       // landforms are not ready yet, need to create map layers
       back = <BackButton handleBack={this.props.handleBack} />
       categoryLeaders = (
-        <div style={{ position: 'absolute', zIndex: 2, marginLeft: '30%'}}>
+        <div style={{ position: 'absolute', zIndex: 2, marginLeft: '30%' }}>
           <p>
             Sorry, world leader quizzes are not ready yet.
             Hit the back button to choose another category.
@@ -130,11 +127,11 @@ export default class Header extends React.Component {
       )
     } else if (this.props.selectedCategory === '') {
       // category has NOT been selected, show category buttons
-      categoryContinentButton = <CategoryButton title='Continents' code='CTN' handleCategorySelection={this.props.handleCategorySelection}/>
-      categoryCityButton = <CategoryButton title='Guess the City' code='GTC' handleCategorySelection={this.props.handleCategorySelection} />
-      categoryWaterButton = <CategoryButton title='Bodies of Water' code='BOW' handleCategorySelection={this.props.handleCategorySelection}/>
-      categoryLandformsButton = <CategoryButton title='Landforms' code='LDF' handleCategorySelection={this.props.handleCategorySelection} />
-      categoryLeadersButton = <CategoryButton title='Leaders' code='LRS' handleCategorySelection={this.props.handleCategorySelection} />
+      categoryContinentButton = <CategoryButton title="Continents" code="CTN" handleCategorySelection={this.props.handleCategorySelection} />
+      categoryCityButton = <CategoryButton title="Guess the City" code="GTC" handleCategorySelection={this.props.handleCategorySelection} />
+      categoryWaterButton = <CategoryButton title="Bodies of Water" code="BOW" handleCategorySelection={this.props.handleCategorySelection} />
+      categoryLandformsButton = <CategoryButton title="Landforms" code="LDF" handleCategorySelection={this.props.handleCategorySelection} />
+      categoryLeadersButton = <CategoryButton title="Leaders" code="LRS" handleCategorySelection={this.props.handleCategorySelection} />
     }
 
     return (
@@ -165,7 +162,7 @@ export default class Header extends React.Component {
 Header.propTypes = {
   placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedContinent: PropTypes.string.isRequired,
-  quizTitle: PropTypes.string,
+  quizTitle: PropTypes.string.isRequired,
   capitals: PropTypes.bool.isRequired,
   timing: PropTypes.bool.isRequired,
   selectedCategory: PropTypes.string.isRequired,

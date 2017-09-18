@@ -1,9 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { form, FormControl, FormGroup } from 'react-bootstrap'
-/* eslint-disable */
-// import Timer from './timer.jsx'
-/* eslint-enable */
 
 const style = {
   inputField: {
