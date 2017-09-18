@@ -1,4 +1,4 @@
-const webpack = require('webpack');
+const webpack = require('webpack')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -7,6 +7,8 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   filename: 'index.html',
   inject: 'body',
 })
+
+const mongo_uri = require(`${__dirname}/dbkey.js`)
 
 module.exports = {
   entry: './src/client/index.jsx',
@@ -25,4 +27,5 @@ module.exports = {
     new webpack.EnvironmentPlugin(['NODE_ENV',]),
     HtmlWebpackPluginConfig,
   ],
-};
+
+}
