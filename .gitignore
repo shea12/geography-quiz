@@ -8,5 +8,5 @@ node_modules/
 /keys.js
 /dbkey.js
 /.env
-/compiled
-/deploy
+/src/compiled
+/src/deploy
