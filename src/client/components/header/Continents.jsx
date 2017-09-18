@@ -1,17 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// import RaisedButton from 'material-ui/RaisedButton'
-// import Popover from 'material-ui/Popover'
-// import Menu from 'material-ui/Menu'
-// import MenuItem from 'material-ui/MenuItem'
-/* eslint-disable */
-// import NAButton from './continents/na.jsx'
-// import SAButton from './continents/sa.jsx'
-// import EUButton from './continents/eu.jsx'
-import ContinentButton from './continents/af.jsx'
-// import OCButton from './continents/oc.jsx'
-// import ASButton from './continents/as.jsx'
-/* eslint-enable */
+import ContinentButton from './continents/af'
 
 const style = {
   buttonGrouping: {
@@ -48,7 +37,7 @@ export default class Continents extends React.Component {
       this.props.handleLocation(selContinent, selCountry, false)
     } else if (countryCaps) {
       // user selects country capitals quiz
-      console.log('country caps')
+      // console.log('country caps')
       this.props.handleLocation(selContinent, null, true)
     } else {
       // user selects countries of continent quiz
@@ -64,12 +53,12 @@ export default class Continents extends React.Component {
   render() {
     return (
       <div style={style.buttonGrouping}>
-        <ContinentButton continent='N. America' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
-        <ContinentButton continent='S. America' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
-        <ContinentButton continent='Africa' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
-        <ContinentButton continent='Asia' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
-        <ContinentButton continent='Europe' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
-        <ContinentButton continent='Oceania' onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+        <ContinentButton continent="N. America" onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+        <ContinentButton continent="S. America" onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+        <ContinentButton continent="Africa" onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+        <ContinentButton continent="Asia" onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+        <ContinentButton continent="Europe" onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
+        <ContinentButton continent="Oceania" onButtonClick={this.onButtonClick} showOrHide={this.state.visible} />
       </div>
     )
   }

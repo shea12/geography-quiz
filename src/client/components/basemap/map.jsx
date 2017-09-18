@@ -1,10 +1,8 @@
 import React from 'react'
 import MapboxGl from 'mapbox-gl'
 import PropTypes from 'prop-types'
-import KEYS from '../../../../assets/keys'
-import CODES from '../../../../assets/countryCodes'
-// import WORLD from '../../../../assets/continentContents'
-
+import KEYS from '../../assets/keys'
+import CODES from '../../assets/countryCodes'
 
 const style = {
   map: {

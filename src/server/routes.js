@@ -1,6 +1,5 @@
-let continents = require(`${__dirname}/controllers/continentsController.js`);
+const continents = require('./controllers/continentsController.js')
 
-module.exports = function(app, express) {
+module.exports = function (app) {
   app.get('/:continent/get-number-countries', continents.getNumberOfCountries)
-
 }

@@ -1,19 +1,16 @@
 import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-/* eslint-disable */
-import WelcomeModal from './components/popups/welcomemodal.jsx'
-import Maps from './components/basemap/map.jsx'
-import Header from './components/header/Header.jsx'
-import QuizModal from './components/popups/quizmodal.jsx'
-import WORLD from '../../assets/continentContents'
-/* eslint-enable */
+import WelcomeModal from './components/popups/welcomemodal'
+import Maps from './components/basemap/map'
+import Header from './components/header/Header'
+import QuizModal from './components/popups/quizmodal'
+import WORLD from './assets/continentContents'
 
 // Axios 
-const axios = require('axios'); 
-var instance = axios.create({
-  baseURL: 'localhost:8080'
-})
-
+// const axios = require('axios'); 
+// var instance = axios.create({
+//   baseURL: 'localhost:8080'
+// })
 
 const style = {
   container: {
@@ -53,11 +50,10 @@ export default class App extends React.Component {
     this.handleGiveUp = this.handleGiveUp.bind(this)
   }
 
-
-  handleCategorySelection(selCategory) {
-    this.setState({ selectedCategory: selCategory })
+  getFinalTime(time) {
+    this.setState({ finalTime: time })
   }
-
+  
   /* PARAMS: 
       selContinent: string: 2 Letter Continent Abbreviation,
       selCountry: string: 2 Letter Country Abbreviation
@@ -121,16 +117,16 @@ export default class App extends React.Component {
     this.setState({
       timing: true,
     })
-    console.log('calling axios at: ', instance.baseURL)
-    const continent = 'NA'
+    // console.log('calling axios at: ', instance.baseURL)
+    // const continent = 'NA'
 
-    instance.get(`/${continent}/get-number-countries`)
-    .then((result) => {
-      console.log('result: ', result)
-    })
-    .catch((error) =>{
-      console.log('assxios error bruh')
-    })
+    // instance.get(`/${continent}/get-number-countries`)
+    // .then((result) => {
+    //   console.log('result: ', result)
+    // })
+    // .catch((error) =>{
+    //   console.log('assxios error bruh')
+    // })
   }
 
   handleBack() {
@@ -145,7 +141,7 @@ export default class App extends React.Component {
   }
 
   handleNamedPlace(place) {
-    let remaining = this.state.placesRemaining - 1
+    const remaining = this.state.placesRemaining - 1
     this.setState({ namedPlace: place, placesRemaining: remaining })
   }
 
@@ -167,8 +163,8 @@ export default class App extends React.Component {
     }
   }
 
-  getFinalTime(time) {
-    this.setState({ finalTime: time })
+  handleCategorySelection(selCategory) {
+    this.setState({ selectedCategory: selCategory })
   }
 
   handleGiveUp() {
@@ -183,7 +179,7 @@ export default class App extends React.Component {
     let quizmodal = <div />
 
     if (!this.state.timing && this.state.showquizModal) {
-      quizmodal = <QuizModal
+      quizmodal = (<QuizModal
         onClose={this.handleBack}
         time={this.state.finalTime}
         selectedContinent={this.state.selectedContinent}
@@ -193,7 +189,7 @@ export default class App extends React.Component {
         gaveUp={this.state.gaveUp}
         placesNumber={this.state.placesNumber}
         placesRemaining={this.state.placesRemaining}
-      />
+      />)
     } else {
       quizmodal = <div />
     }
