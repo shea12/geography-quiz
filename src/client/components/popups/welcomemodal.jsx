@@ -69,8 +69,7 @@ export default class WelcomeModal extends React.Component {
           <div>
             <p style={style.byLine}>
               This project was created by Garol. Learn more
-              <a href="https://github.com/shea12/geography-quiz" target="_blank" rel="noopener noreferrer">
-                here
+              <a href="https://github.com/shea12/geography-quiz" target="_blank" rel="noopener noreferrer"> here
               </a>.
             </p>
           </div>

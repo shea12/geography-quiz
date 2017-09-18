@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 
-const mongoURI = require('./dbkey.js')
+let mongoURI = require(`${__dirname}/dbkey.js`);
 
 const app = express()
 
@@ -10,12 +10,11 @@ mongoose.connect(mongoURI, {
 })
 
 const port = process.env.PORT || 8081
-
+require('./middleware.js')(app, express);
 require('./routes.js')(app, express)
 
 app.listen(port, function () {
   /* eslint-disable */
-  console.log('Running on port: ', port)
+  console.log('App running on port: ', port)
   /* eslint-enable */
 })
-

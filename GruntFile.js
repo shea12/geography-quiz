@@ -9,7 +9,7 @@ module.exports = grunt => {
       dist: {
         files: [{
           expand: true,
-          cwd: 'src/',
+          cwd: 'src/client',
           src: ['**/*.jsx', '**/*.js'],
           dest: 'src/compiled/',
           ext :'.js'
@@ -54,6 +54,6 @@ module.exports = grunt => {
       }
     },
   })
-  // for deployment will add htmlmin and uglify to grunt tasks
-  grunt.registerTask('build', ['babel', 'browserify'])
+  // for deployment will add uglify to grunt tasks , 'uglify'
+  grunt.registerTask('build', ['babel', 'browserify', 'htmlmin' ])
 }
