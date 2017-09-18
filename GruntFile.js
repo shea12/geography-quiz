@@ -55,5 +55,5 @@ module.exports = grunt => {
     },
   })
   // for deployment will add uglify to grunt tasks , 'uglify'
-  grunt.registerTask('build', ['babel', 'browserify', 'htmlmin' ])
+  grunt.registerTask('build', ['babel', 'browserify', 'htmlmin', 'uglify' ])
 }
