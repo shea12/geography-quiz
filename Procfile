@@ -1,2 +1,2 @@
-web: node ./src/deploy/bundle.js
+web: node index.js
 worker: bin/worker
