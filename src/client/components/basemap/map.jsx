@@ -44,7 +44,7 @@ export default class Maps extends React.Component {
       hash: true,
       minZoom: 2,
     })
-
+    history.pushState(null, null, '/?')
     // map.on('click', (e) => {
     //   // using e to pass = linting error
     //   return e
