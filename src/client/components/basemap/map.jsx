@@ -87,7 +87,7 @@ export default class Maps extends React.Component {
       map.flyTo({
         center: [nextProps.lonlatzoom[0], nextProps.lonlatzoom[1]],
         zoom: nextProps.lonlatzoom[2],
-        speed: 0.4
+        speed: 0.4,
       })
     }
 
@@ -96,7 +96,7 @@ export default class Maps extends React.Component {
       map.flyTo({
         center: [nextProps.lonlatzoom[0], nextProps.lonlatzoom[1]],
         zoom: nextProps.lonlatzoom[2],
-        speed: 0.4
+        speed: 0.4,
       })
     }
   }

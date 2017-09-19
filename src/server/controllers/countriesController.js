@@ -9,45 +9,44 @@ module.exports = {
     return Countries.findOne({
       abbrv: req.params.country,
     })
-    .then(country => {
-      res.status(200).send({ numStates: country.numStates })
-    })
-    .catch(error => {
-      /* eslint-disable */
-      console.log('ERROR: ', error)
-      /* eslint-enable */
-      res.status(200).send([])
-    })
+      .then((country) => {
+        res.status(200).send({ numStates: country.numStates })
+      })
+      .catch((error) => {
+        /* eslint-disable */
+        console.log('ERROR: ', error)
+        /* eslint-enable */
+        res.status(200).send([])
+      })
   },
 
   getCountriesOfContinent: (req, res) => {
     return Countries.find({
       continent: req.params.continent,
     })
-    .then(country => {
-      res.status(200).send({ countries: country })
-    })
-    .catch(error => {
-      /* eslint-disable */
-      console.log('ERROR: ', error)
-      /* eslint-enable */
-      res.status(200).send([])
-    })
+      .then((country) => {
+        res.status(200).send({ countries: country })
+      })
+      .catch((error) => {
+        /* eslint-disable */
+        console.log('ERROR: ', error)
+        /* eslint-enable */
+        res.status(200).send([])
+      })
   },
 
   getLocation: (req, res) => {
     return Countries.find({
       abbrv: req.params.country,
     })
-    .then(country => {
-      console.log('country: ', country)
-      res.status(200).send({ lonlatzoom: country[0].lonlatzoom })
-    })
-    .catch(error => {
-      /* eslint-disable */
-      console.log('ERROR: ', error)
-      /* eslint-enable */
-      res.status(200).send([])
-    })
+      .then((country) => {
+        res.status(200).send({ lonlatzoom: country[0].lonlatzoom })
+      })
+      .catch((error) => {
+        /* eslint-disable */
+        console.log('ERROR: ', error)
+        /* eslint-enable */
+        res.status(200).send([])
+      })
   },
 }

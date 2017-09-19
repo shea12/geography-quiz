@@ -9,14 +9,14 @@ module.exports = {
     return States.find({
       country: req.params.country,
     })
-    .then(state => {
-      res.status(200).send({ states: state })
-    })
-    .catch(error => {
-      /* eslint-disable */
-      console.log('ERROR: ', error)
-      /* eslint-enable */
-      res.status(200).send([])
-    })
+      .then((state) => {
+        res.status(200).send({ states: state })
+      })
+      .catch((error) => {
+        /* eslint-disable */
+        console.log('ERROR: ', error)
+        /* eslint-enable */
+        res.status(200).send([])
+      })
   },
 }
