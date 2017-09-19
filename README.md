@@ -27,9 +27,19 @@ No tests quite yet
 
 Issues, pull requests are welcome
 
+## Things to look forward to
+
+There are many features I want to add to this project, here are a few:
+  * more quizzes, always more and more quizzes
+  * creating an account to keep track of progress, quiz counts, favorites, etc
+  * more feedback for user, shading in places as they're identified
+  * give user option to see the places they failed to identify
+  * zooming in on smaller countries, generally fiddling with labeling for better visibility
+  * testing, so much testing
+
 ## Authors
 
-* **Caroline Shea**
+* Caroline Shea
 
 ## License
 
@@ -38,4 +48,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Mapbox is a fantastic platform
-
