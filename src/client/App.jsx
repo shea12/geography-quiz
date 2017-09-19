@@ -4,11 +4,10 @@ import WelcomeModal from './components/popups/welcomemodal'
 import Maps from './components/basemap/map'
 import Header from './components/header/Header'
 import QuizModal from './components/popups/quizmodal'
+
 import WORLD from './assets/continentContents'
 
-// Axios 
 const axios = require('axios')
-// var instance = axios.create()
 
 const style = {
   container: {
@@ -17,12 +16,12 @@ const style = {
   },
 }
 
+// TODO: change from lonlat: [0,0], zoom: 0, to lonlatzoom: [0,0,0]
 export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      lonlat: [0.2, 20.6],
-      zoom: 2,
+      lonlatzoom: [0.2, 20.6, 2],
       selectedCategory: '',
       selectedContinent: '',
       placesArray: [],
@@ -39,91 +38,111 @@ export default class App extends React.Component {
     }
 
     this.handleCategorySelection = this.handleCategorySelection.bind(this)
-    this.handleLocation = this.handleLocation.bind(this)
+    this.handleQuizChoice = this.handleQuizChoice.bind(this)
+    this.handleCountryQuiz = this.handleCountryQuiz.bind(this)
+    this.handleContinentQuiz = this.handleContinentQuiz.bind(this)
     this.handleNamedPlace = this.handleNamedPlace.bind(this)
     this.handleStart = this.handleStart.bind(this)
     this.handleBack = this.handleBack.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
     this.getFinalTime = this.getFinalTime.bind(this)
     this.handleGiveUp = this.handleGiveUp.bind(this)
+    this.getLonLatZoom = this.getLonLatZoom.bind(this)
   }
 
   getFinalTime(time) {
     this.setState({ finalTime: time })
   }
   
-  /* PARAMS: 
-      selContinent: string: 2 Letter Continent Abbreviation,
-      selCountry: string: 2 Letter Country Abbreviation
-      capitals: boolean: capitals quiz
-  */
-  handleLocation(selContinent, selCountry, capitals) {
-    this.setState({
-      selectedContinent: selContinent,
+  getLonLatZoom(selPlace, func, callback) {
+    axios.get(`/${selPlace}/${func}`)
+    .then((d) => {
+      callback(d.data.lonlatzoom)
     })
-    let quizDesc = ''
-    let placeName = ''
-    const countryArrayCopy = WORLD[selContinent].countries.slice()
+    .catch((error) =>{
+      console.log('axios error', error)
+    })
+  }
 
-    if (selCountry) {
-      for (let i = 0; i < countryArrayCopy.length; i += 1) {
-        if (countryArrayCopy[i].abbrv === selCountry) {
-          const statesArrayCopy = countryArrayCopy[i].states.slice()
-          placeName = countryArrayCopy[i].name
-          this.setState({
-            placesArray: statesArrayCopy,
-            states: true,
-            lonlat: countryArrayCopy[i].lonlat,
-            zoom: countryArrayCopy[i].zoom,
-            placesNumber: statesArrayCopy.length,
-            placesRemaining: statesArrayCopy.length,
-          })
-        }
-      }
-      if (capitals) {
-        // user selected a state capitals quiz
-        quizDesc = `capitals of ${placeName}`
-        this.setState({ capitals: true, quizTitle: quizDesc })
-      } else {
-        // user selected states quiz
-        quizDesc = `states of ${placeName}`
-        this.setState({ capitals: false, quizTitle: quizDesc })
-      }
-    } else if (!selCountry) {
+  handleCountryQuiz(selCountry, capitals) {
+    let quizDesc = ''
+    let lonlatzoom = []
+    this.getLonLatZoom(selCountry, 'get-country-location', function(llz) {
+      lonlatzoom = llz
+    })
+    
+    axios.get(`/${selCountry}/get-states`)
+    .then((d) => {
       this.setState({
-        placesArray: countryArrayCopy,
-        states: false,
-        lonlat: WORLD[selContinent].lonlat,
-        zoom: WORLD[selContinent].zoom,
-        placesNumber: WORLD[selContinent].length,
-        placesRemaining: WORLD[selContinent].length,
+        placesArray: d.data.states,
+        states: true,
+        placesNumber: d.data.states.length,
+        placesRemaining: d.data.states.length,
+        lonlatzoom: lonlatzoom,
       })
-      placeName = WORLD[selContinent].name
-      if (capitals) {
-        // user selected countries capitals quiz
-        quizDesc = `country capitals of ${placeName}`
-        this.setState({ capitals: true, quizTitle: quizDesc })
-      } else {
-        // user selected countries quiz
-        quizDesc = `countries of ${placeName}`
-        this.setState({ capitals: false, quizTitle: quizDesc })
-      }
+    })
+    .catch((error) =>{
+      console.log('axios error', error)
+    })
+
+    if (capitals) {
+      // user selected a state capitals quiz
+      quizDesc = `capitals of ${selCountry}`
+      this.setState({ capitals: true, quizTitle: quizDesc })
+    } else {
+      // user selected states quiz
+      quizDesc = `states of ${selCountry}`
+      this.setState({ capitals: false, quizTitle: quizDesc })
+    }
+  }
+
+  handleContinentQuiz(selContinent, capitals) {
+    let quizDesc = ''
+    let lonlatzoom = []
+    this.getLonLatZoom(selContinent, 'get-location', function(llz) {
+      lonlatzoom = llz
+    })
+
+    axios.get(`/${selContinent}/get-countries`)
+    .then((d) => {
+      // console.log('countries: ', countries)
+      this.setState({
+        placesArray: d.data.countries,
+        states: false,
+        placesNumber: d.data.countries.length,
+        placesRemaining: d.data.countries.length,
+        lonlatzoom: lonlatzoom,
+      })
+    })
+    .catch((error) => {
+      console.log('axios error: ', error)
+    })
+
+    if (capitals) {
+      // user selected countries capitals quiz
+      quizDesc = `country capitals of ${selContinent}`
+      this.setState({ capitals: true, quizTitle: quizDesc })
+    } else {
+      // user selected countries quiz
+      quizDesc = `countries of ${selContinent}`
+      this.setState({ capitals: false, quizTitle: quizDesc })
+    }
+  }
+
+  handleQuizChoice(selContinent, selCountry, capitals) {
+    this.setState({ selectedContinent: selContinent, })
+    // user selected specific country quiz
+    if (selCountry) {
+      this.handleCountryQuiz(selCountry, capitals)
+    // user selected continent quiz
+    } else if (!selCountry) {
+      this.handleContinentQuiz(selContinent, capitals)
     }
   }
 
   handleStart() {
     this.setState({
       timing: true,
-    })
-    console.log('calling axios at: ', axios.baseURL)
-    const continent = 'NA'
-
-    axios.get(`/${continent}/get-number-countries`)
-    .then((result) => {
-      console.log('result: ', result)
-    })
-    .catch((error) =>{
-      console.log('assxios error bruh')
     })
   }
 
@@ -132,8 +151,7 @@ export default class App extends React.Component {
       selectedCategory: '',
       selectedContinent: '',
       timing: false,
-      lonlat: [0.2, 20.6],
-      zoom: 2,
+      lonlatzoom: [0.2, 20.6, 2],
       showquizModal: false,
     })
   }
@@ -205,7 +223,7 @@ export default class App extends React.Component {
             selectedCategory={this.state.selectedCategory}
             handleCategorySelection={this.handleCategorySelection}
 
-            handleLocation={this.handleLocation}
+            handleQuizChoice={this.handleQuizChoice}
             handleNamedPlace={this.handleNamedPlace}
             handleBack={this.handleBack}
             handleStart={this.handleStart}
@@ -214,8 +232,7 @@ export default class App extends React.Component {
             handleGiveUp={this.handleGiveUp}
           />
           <Maps
-            lonlat={this.state.lonlat}
-            zoom={this.state.zoom}
+            lonlatzoom={this.state.lonlatzoom}
             namedPlace={this.state.namedPlace}
             selectedContinent={this.state.selectedContinent}
             capitals={this.state.capitals}

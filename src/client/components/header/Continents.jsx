@@ -31,17 +31,17 @@ export default class Continents extends React.Component {
   onButtonClick(selContinent, countryCaps, selCountry, stateCaps) {
     if (stateCaps) {
       // user selects state capitals quiz
-      this.props.handleLocation(selContinent, selCountry, true)
+      this.props.handleQuizChoice(selContinent, selCountry, true)
     } else if (!stateCaps && !countryCaps) {
       // user selects states quiz
-      this.props.handleLocation(selContinent, selCountry, false)
+      this.props.handleQuizChoice(selContinent, selCountry, false)
     } else if (countryCaps) {
       // user selects country capitals quiz
       // console.log('country caps')
-      this.props.handleLocation(selContinent, null, true)
+      this.props.handleQuizChoice(selContinent, null, true)
     } else {
       // user selects countries of continent quiz
-      this.props.handleLocation(selContinent, null, false)
+      this.props.handleQuizChoice(selContinent, null, false)
     }
     this.setVisibilityOfButtons(false)
   }
@@ -65,5 +65,5 @@ export default class Continents extends React.Component {
 }
 
 Continents.propTypes = {
-  handleLocation: PropTypes.func.isRequired,
+  handleQuizChoice: PropTypes.func.isRequired,
 }

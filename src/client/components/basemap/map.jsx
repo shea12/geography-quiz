@@ -37,8 +37,8 @@ export default class Maps extends React.Component {
     map = new MapboxGl.Map({
       container: 'map',
       style: KEYS.style_key,
-      center: this.props.lonlat,
-      zoom: this.props.zoom,
+      center: [this.props.lonlatzoom[0], this.props.lonlatzoom[1]],
+      zoom: this.props.lonlatzoom[2],
       pitchWithRotate: false,
       dragRotate: false,
       hash: true,
@@ -81,15 +81,23 @@ export default class Maps extends React.Component {
     }
 
     // check if the map needs to pan to a new location
-    if (this.props.lonlat !== nextProps.lonlat) {
+    if (this.props.lonlatzoom !== nextProps.lonlatzoom) {
       showHideAllCountryLabels(CODES.COUNTRIES, 'none')
       showHideAllStateLabels(CODES.US_STATES, 'none')
-      map.flyTo({ center: nextProps.lonlat, zoom: nextProps.zoom, speed: 0.4 })
+      map.flyTo({
+        center: [nextProps.lonlatzoom[0], nextProps.lonlatzoom[1]],
+        zoom: nextProps.lonlatzoom[2],
+        speed: 0.4
+      })
     }
 
     // check for the selected continent
     if (this.props.selectedContinent !== nextProps.selectedContinent) {
-      map.flyTo({ center: nextProps.lonlat, zoom: nextProps.zoom, speed: 0.4 })
+      map.flyTo({
+        center: [nextProps.lonlatzoom[0], nextProps.lonlatzoom[1]],
+        zoom: nextProps.lonlatzoom[2],
+        speed: 0.4
+      })
     }
   }
 
@@ -101,8 +109,7 @@ export default class Maps extends React.Component {
 }
 
 Maps.propTypes = {
-  lonlat: PropTypes.arrayOf(PropTypes.number).isRequired,
-  zoom: PropTypes.number.isRequired,
+  lonlatzoom: PropTypes.arrayOf(PropTypes.number).isRequired,
   namedPlace: PropTypes.string.isRequired,
   selectedContinent: PropTypes.string.isRequired,
   states: PropTypes.bool.isRequired,
