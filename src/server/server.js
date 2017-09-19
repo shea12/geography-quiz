@@ -18,3 +18,11 @@ app.listen(port, function () {
   console.log('App running on port: ', port)
   /* eslint-enable */
 })
+
+/*
+deployment process:
+  git push heroku master
+  heroku open
+  heroku logs --tail
+
+*/
