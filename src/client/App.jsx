@@ -5,8 +5,6 @@ import Maps from './components/basemap/map'
 import Header from './components/header/Header'
 import QuizModal from './components/popups/quizmodal'
 
-import WORLD from './assets/continentContents'
-
 const axios = require('axios')
 
 const style = {
