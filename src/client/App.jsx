@@ -5,8 +5,6 @@ import Maps from './components/basemap/map'
 import Header from './components/header/Header'
 import QuizModal from './components/popups/quizmodal'
 
-import WORLD from './assets/continentContents'
-
 const axios = require('axios')
 
 const style = {
@@ -14,6 +12,23 @@ const style = {
     margin: 0,
     padding: 0,
   },
+}
+
+const quicklookup = {
+  NA: {name: 'North America', lonlatzoom: [-68.56, 35.7,3.16]},
+  SA: {name: 'South America', lonlatzoom: [-53.74, -22.99,2.66]},
+  AF: {name: 'Africa', lonlatzoom: [32.54, 1.52,2.79]},
+  EU: {name: 'Europe', lonlatzoom: [23.57, 53.38,3.36]},
+  AS: {name: 'Asia', lonlatzoom: [90.93, 28.19,2.87]},
+  OC: {name: 'Oceania', lonlatzoom: [169.21, -19.58,3.07]},
+  US: {name: 'the United States', lonlatzoom: [-95.784,39.01,4]},
+  MX: {name: 'Mexico', lonlatzoom: [-100.13, 25.061,4.68]},
+  CA: {name: 'Canada', lonlatzoom: [-93.84,56.75,3.61]},
+  UK: {name: 'United Kingdom', lonlatzoom: [-2.698,55.115,5.05]},
+  BR: {name: 'Brazil', lonlatzoom: [-51.46,-12.9,3.74]},
+  ZA: {name: 'South Africa', lonlatzoom: [25.612,-27.794, 5.05]},
+  IN: {name: 'India', lonlatzoom: [81.29,24.074,4.04]},
+  AU: {name: 'Australia', lonlatzoom: [136.33,-27.06,3.76]},
 }
 
 // TODO: change from lonlat: [0,0], zoom: 0, to lonlatzoom: [0,0,0]
@@ -55,13 +70,16 @@ export default class App extends React.Component {
   }
   
   getLonLatZoom(selPlace, func, callback) {
-    axios.get(`/${selPlace}/${func}`)
-    .then((d) => {
-      callback(d.data.lonlatzoom)
-    })
-    .catch((error) =>{
-      console.log('axios error', error)
-    })
+    // axios.get(`/${selPlace}/${func}`)
+    // .then((d) => {
+    //   callback(d.data.lonlatzoom)
+    // })
+    // .catch((error) =>{
+    //   console.log('axios error', error)
+    // })
+
+    // 
+    callback(quicklookup[selPlace].lonlatzoom)
   }
 
   handleCountryQuiz(selCountry, capitals) {
@@ -87,11 +105,11 @@ export default class App extends React.Component {
 
     if (capitals) {
       // user selected a state capitals quiz
-      quizDesc = `capitals of ${selCountry}`
+      quizDesc = `capitals of ${quicklookup[selCountry].name}`
       this.setState({ capitals: true, quizTitle: quizDesc })
     } else {
       // user selected states quiz
-      quizDesc = `states of ${selCountry}`
+      quizDesc = `states of ${quicklookup[selCountry].name}`
       this.setState({ capitals: false, quizTitle: quizDesc })
     }
   }
@@ -120,11 +138,11 @@ export default class App extends React.Component {
 
     if (capitals) {
       // user selected countries capitals quiz
-      quizDesc = `country capitals of ${selContinent}`
+      quizDesc = `country capitals of ${quicklookup[selContinent].name}`
       this.setState({ capitals: true, quizTitle: quizDesc })
     } else {
       // user selected countries quiz
-      quizDesc = `countries of ${selContinent}`
+      quizDesc = `countries of ${quicklookup[selContinent].name}`
       this.setState({ capitals: false, quizTitle: quizDesc })
     }
   }
