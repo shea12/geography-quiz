@@ -5,11 +5,14 @@ const states = require('./controllers/statesController.js')
 module.exports = function (app, express) {
   // Continents
   app.get('/:continent/get-number-countries', continents.getNumberOfCountries)
+  app.get('/:continent/get-location', continents.getLocation)
 
   // Countries
   app.get('/:continent/get-countries', countries.getCountriesOfContinent)
-  app.get('/:continent/:country/get-number-states', countries.getNumberOfStates)
+  app.get('/:country/get-country-location', countries.getLocation)
+  // app.get('/:country/get-number-states', countries.getNumberOfStates)
 
   // States
-  app.get('/:continent/:country/:state/get-capital', states.getStateCapitals)
+  // app.get('/:continent/:country/:state/get-capital', states.getStateCapitals)
+  app.get('/:country/get-states', states.getStates)
 }
