@@ -2,7 +2,14 @@
 
 Interactive geography quiz
 
-## Getting Started
+## Live!
+
+currently hosted here: 
+https://blooming-cliffs-46911.herokuapp.com/
+
+will likely move soon though, check back for updates
+
+## Forking and Getting Started
 
 npm install, node src/server/server.js, localhost:8081
 
