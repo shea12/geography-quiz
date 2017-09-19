@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 
-let mongoURI = require(`${__dirname}/dbkey.js`);
+const mongoURI = require(`${__dirname}/dbkey.js`)
 
 const app = express()
 
@@ -10,7 +10,7 @@ mongoose.connect(mongoURI, {
 })
 
 const port = process.env.PORT || 8081
-require('./middleware.js')(app, express);
+require('./middleware.js')(app, express)
 require('./routes.js')(app, express)
 
 app.listen(port, function () {

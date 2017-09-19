@@ -5,8 +5,6 @@ import Maps from './components/basemap/map'
 import Header from './components/header/Header'
 import QuizModal from './components/popups/quizmodal'
 
-import WORLD from './assets/continentContents'
-
 const axios = require('axios')
 
 const style = {
@@ -53,37 +51,45 @@ export default class App extends React.Component {
   getFinalTime(time) {
     this.setState({ finalTime: time })
   }
-  
+
+  // should move this to a helper function file
+  // lint says "expected 'this' to be used by class method"
   getLonLatZoom(selPlace, func, callback) {
     axios.get(`/${selPlace}/${func}`)
-    .then((d) => {
-      callback(d.data.lonlatzoom)
-    })
-    .catch((error) =>{
-      console.log('axios error', error)
-    })
+      .then((d) => {
+        callback(d.data.lonlatzoom)
+      })
+      .catch((error) => {
+        /* eslint-disable */
+        console.log('axios error', error)
+        /* eslint-enable */
+      })
   }
 
   handleCountryQuiz(selCountry, capitals) {
     let quizDesc = ''
-    let lonlatzoom = []
-    this.getLonLatZoom(selCountry, 'get-country-location', function(llz) {
-      lonlatzoom = llz
+    let lonlatzoo = []
+
+    // lint says "unexpected unnamed function, unnamed function"
+    this.getLonLatZoom(selCountry, 'get-country-location', function (llz) {
+      lonlatzoo = llz
     })
-    
+
     axios.get(`/${selCountry}/get-states`)
-    .then((d) => {
-      this.setState({
-        placesArray: d.data.states,
-        states: true,
-        placesNumber: d.data.states.length,
-        placesRemaining: d.data.states.length,
-        lonlatzoom: lonlatzoom,
+      .then((d) => {
+        this.setState({
+          placesArray: d.data.states,
+          states: true,
+          placesNumber: d.data.states.length,
+          placesRemaining: d.data.states.length,
+          lonlatzoom: lonlatzoo,
+        })
       })
-    })
-    .catch((error) =>{
-      console.log('axios error', error)
-    })
+      .catch((error) => {
+        /* eslint-disable */
+        console.log('axios error', error)
+        /* eslint-enable */
+      })
 
     if (capitals) {
       // user selected a state capitals quiz
@@ -98,25 +104,27 @@ export default class App extends React.Component {
 
   handleContinentQuiz(selContinent, capitals) {
     let quizDesc = ''
-    let lonlatzoom = []
-    this.getLonLatZoom(selContinent, 'get-location', function(llz) {
-      lonlatzoom = llz
+    let lonlatzoo = []
+    this.getLonLatZoom(selContinent, 'get-location', function (llz) {
+      lonlatzoo = llz
     })
 
     axios.get(`/${selContinent}/get-countries`)
-    .then((d) => {
-      // console.log('countries: ', countries)
-      this.setState({
-        placesArray: d.data.countries,
-        states: false,
-        placesNumber: d.data.countries.length,
-        placesRemaining: d.data.countries.length,
-        lonlatzoom: lonlatzoom,
+      .then((d) => {
+        // console.log('countries: ', countries)
+        this.setState({
+          placesArray: d.data.countries,
+          states: false,
+          placesNumber: d.data.countries.length,
+          placesRemaining: d.data.countries.length,
+          lonlatzoom: lonlatzoo,
+        })
       })
-    })
-    .catch((error) => {
-      console.log('axios error: ', error)
-    })
+      .catch((error) => {
+        /* eslint-disable */
+        console.log('axios error: ', error)
+        /* eslint-enable */
+      })
 
     if (capitals) {
       // user selected countries capitals quiz
@@ -130,7 +138,7 @@ export default class App extends React.Component {
   }
 
   handleQuizChoice(selContinent, selCountry, capitals) {
-    this.setState({ selectedContinent: selContinent, })
+    this.setState({ selectedContinent: selContinent })
     // user selected specific country quiz
     if (selCountry) {
       this.handleCountryQuiz(selCountry, capitals)
