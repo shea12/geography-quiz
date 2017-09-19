@@ -42,7 +42,7 @@ const userSchema = new Schema({
 
 module.exports = {
   continents: mongoose.model('continents', continentSchema),
-  country: mongoose.model('country', countrySchema),
+  countries: mongoose.model('country', countrySchema),
   states: mongoose.model('state', stateSchema),
   user: mongoose.model('user', userSchema),
 }
