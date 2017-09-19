@@ -1,2 +1,2 @@
-web: node ./bundle.js
+web: node src/server/server.js
 worker: bin/worker

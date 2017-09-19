@@ -19,7 +19,7 @@ module.exports = grunt => {
     browserify: {
       main: {
         src: 'src/compiled/**/*.js',
-        dest: 'src/deploy/bundle.js'
+        dest: 'src/deploy/bbundle.js'
       }
     },
     htmlmin: {
