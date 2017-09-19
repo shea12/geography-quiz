@@ -41,7 +41,6 @@ export default class Maps extends React.Component {
       zoom: this.props.lonlatzoom[2],
       pitchWithRotate: false,
       dragRotate: false,
-      hash: true,
       minZoom: 2,
     })
 
