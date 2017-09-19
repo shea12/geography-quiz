@@ -78,7 +78,6 @@ export default class App extends React.Component {
     //   console.log('axios error', error)
     // })
 
-    // 
     callback(quicklookup[selPlace].lonlatzoom)
   }
 
