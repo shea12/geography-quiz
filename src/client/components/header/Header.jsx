@@ -56,7 +56,7 @@ export default class Header extends React.Component {
         )
       } else if (this.props.selectedContinent === '') {
         // hide inscoretime, backstart buttons when no continent is selected
-        categoryContinent = <Continents handleLocation={this.props.handleLocation} />
+        categoryContinent = <Continents handleQuizChoice={this.props.handleQuizChoice} />
         back = <BackButton handleBack={this.props.handleBack} />
         backstart = <div />
         inscoretime = <div />
@@ -162,12 +162,12 @@ export default class Header extends React.Component {
 Header.propTypes = {
   placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedContinent: PropTypes.string.isRequired,
-  quizTitle: PropTypes.string.isRequired,
+  quizTitle: PropTypes.string,
   capitals: PropTypes.bool.isRequired,
   timing: PropTypes.bool.isRequired,
   selectedCategory: PropTypes.string.isRequired,
   handleCategorySelection: PropTypes.func.isRequired,
-  handleLocation: PropTypes.func.isRequired,
+  handleQuizChoice: PropTypes.func.isRequired,
   handleNamedPlace: PropTypes.func.isRequired,
   handleTimer: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
