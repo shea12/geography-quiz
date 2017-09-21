@@ -2,7 +2,7 @@ const continents = require('./controllers/continentsController.js')
 const countries = require('./controllers/countriesController.js')
 const states = require('./controllers/statesController.js')
 
-module.exports = function (app, express) {
+module.exports = function (app) {
   // Continents
   app.get('/:continent/get-number-countries', continents.getNumberOfCountries)
   app.get('/:continent/get-location', continents.getLocation)
