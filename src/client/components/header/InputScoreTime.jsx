@@ -35,8 +35,8 @@ export default class InputScoreTime extends React.Component {
 
 InputScoreTime.propTypes = {
   placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
-  continent: PropTypes.string.isRequired,
-  capitals: PropTypes.bool.isRequired,
+  continent: PropTypes.string,
+  capitals: PropTypes.bool,
   timing: PropTypes.bool.isRequired,
   handleNamedPlace: PropTypes.func.isRequired,
   handleTimer: PropTypes.func.isRequired,

@@ -54,6 +54,6 @@ export default class ScoreKeeper extends React.Component {
 }
 
 ScoreKeeper.propTypes = {
-  continent: PropTypes.string.isRequired,
+  continent: PropTypes.string,
   placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
