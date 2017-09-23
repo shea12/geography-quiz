@@ -127,5 +127,5 @@ InputForm.propTypes = {
   placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleNamedPlace: PropTypes.func.isRequired,
   handleTimer: PropTypes.func.isRequired,
-  capitals: PropTypes.bool.isRequired,
+  capitals: PropTypes.bool,
 }
