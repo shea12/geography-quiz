@@ -52,7 +52,6 @@ export default class Maps extends React.Component {
     })
     history.pushState(null, null, '/?')
     // map.on('click', (e) => {
-    //   // using e to pass = linting error
     //   return e
     //   // const features = map.queryRenderedFeatures(e.point)
     //   // console.log('features: ', features)
@@ -66,12 +65,15 @@ export default class Maps extends React.Component {
       let layerIdentifier = ''
       if (this.props.layer.charAt(0) === '_') {
         layerIdentifier = placeCode + this.props.layer
+        console.log('setting layout and paint')
+        map.setLayoutProperty(placeCode, 'visibility', 'visible')
+        map.setPaintProperty(placeCode, 'fill-opacity', 1)
+        map.setPaintProperty(placeCode, 'fill-color', 'hsla(115, 56%, 65%, 1)')
       } else {
         layerIdentifier = this.props.layer + placeCode
       }
       map.setLayoutProperty(layerIdentifier, 'visibility', 'visible')
 
-      // map.setPaintProperty(layerIdentifier, 'fill-opacity', 1)
       // map.setPaintProperty(layerIdentifier, 'fill-outline-color', 'rgb(41, 169, 45)')
     }
 

@@ -177,9 +177,10 @@ export default class App extends React.Component {
   resetState(showModal, gaveUp) {
     this.setState({
       selectedQuiz: false,
-      options: categories,
       timing: false,
       lonlatzoom: [0.2, 20.6, 2],
+      clearLabels: true,
+      options: categories,
       showquizModal: showModal,
       gaveUp: gaveUp,
     })

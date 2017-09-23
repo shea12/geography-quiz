@@ -22,7 +22,6 @@ export default class QuizDescription extends React.Component {
   render() {
     return (
       <div>
-        <div>Title: {this.props.quizTitle}</div>
         <StartButton style={style.buttons} handleStart={this.props.handleStart} />
         <BackButton style={style.buttons} handleBack={this.props.handleBack} />
       </div>

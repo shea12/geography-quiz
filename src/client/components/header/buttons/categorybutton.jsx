@@ -8,12 +8,10 @@ export default class CategoryButton extends React.Component {
     return (
       <RaisedButton
         style={{
+          marginRight: 20,
+          paddingLeft: 6,
+          paddingRight: 6,
           marginTop: 8,
-          marginBottom: 8,
-          marginRight: 10,
-          zIndex: 2,
-          paddingRight: 10,
-          paddingLeft: 10,
         }}
         onClick={
           () => this.props.handler(this.props.code)

@@ -247,6 +247,7 @@ const CODES = {
     //'VI',
     //'WF',
     'EH',
+    'XK',
     'YE',
     'ZM',
     'ZW',
