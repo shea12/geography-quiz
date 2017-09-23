@@ -8,13 +8,15 @@ export default class CategoryButton extends React.Component {
     return (
       <RaisedButton
         style={{
-          margin: 8,
-          marginRight: 20,
+          marginTop: 8,
+          marginBottom: 8,
+          marginRight: 10,
           zIndex: 2,
-          width: 180,
+          paddingRight: 10,
+          paddingLeft: 10,
         }}
         onClick={
-          () => this.props.handleCategorySelection(this.props.code)
+          () => this.props.handler(this.props.code)
         }
       >
         {this.props.title}
@@ -24,7 +26,7 @@ export default class CategoryButton extends React.Component {
 }
 
 CategoryButton.propTypes = {
-  handleCategorySelection: PropTypes.func.isRequired,
+  handler: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
 }

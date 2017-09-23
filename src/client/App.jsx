@@ -3,13 +3,15 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import WelcomeModal from './components/popups/welcomemodal'
 import Maps from './components/basemap/map'
 import Header from './components/header/Header'
-import Helpers from './helpers/waterQuizHelpers'
 import QuizModal from './components/popups/quizmodal'
 
 /*
-Notes 9/22:
+Notes:
+  9/22:
   PO_LABEL is not found, need to inc PO1, PO2
   AO_LABEL needs to reference AO1 and AO2
+  9/23:
+
 */
 
 const axios = require('axios')
@@ -18,6 +20,159 @@ const style = {
   container: {
     margin: 0,
     padding: 0,
+  },
+}
+
+const categories = {
+  // first level: category
+  // second level: subcategory
+  // thrird level: quiz array
+  CTN: {
+    title: 'Countries & Capitals',
+    categories: {
+      NA: {
+        title: 'N. America',
+        categories: {
+          NACO: {
+            title: 'Countries of N. America',
+            quiz: true,
+          },
+          NACA: {
+            title: 'Capitals of N. America',
+            quiz: true,
+          },
+          USST: {
+            title: 'States of USA',
+            quiz: true,
+          },
+          UCAP: {
+            title: 'Capitals of USA',
+            quiz: true,
+          },
+          MXST: {
+            title: 'States of Mexico',
+            quiz: true,
+          },
+          CAST: {
+            title: 'Provinces of Canada',
+            quiz: true,
+          },
+        },
+      },
+      SA: {
+        title: 'S. America',
+        categories: {
+          SACO: {
+            title: 'Countries of S. America',
+            quiz: true,
+          },
+          SACA: {
+            title: 'Capitals of S. America',
+            quiz: true,
+          },
+        },
+      },
+      AF: {
+        title: 'Africa',
+        categories: {
+          AFCO: {
+            title: 'Countries of Africa',
+            quiz: true,
+          },
+          AFCA: {
+            title: 'Capitals of Africa',
+            quiz: true,
+          },
+          ZAST: {
+            title: 'States of South Africa',
+            quiz: true,
+          },
+        },
+      },
+      EU: {
+        title: 'Europe',
+        categories: {
+          EUCO: {
+            title: 'Countries of Europe',
+            quiz: true,
+          },
+          EUCA: {
+            title: 'Capitals of Europe',
+            quiz: true,
+          },
+          GBST: {
+            title: 'States of Great Britain',
+            quiz: true,
+          },
+        },
+      },
+      AS: {
+        title: 'Asia',
+        categories: {
+          ASCO: {
+            title: 'Countries of Asia',
+            quiz: true,
+          },
+          ASCA: {
+            title: 'Capitals of Asia',
+            quiz: true,
+          },
+        },
+      },
+      OC: {
+        title: 'Oceania',
+        categories: {
+          OCCO: {
+            title: 'Countries of Oceania',
+            quiz: true,
+          },
+          OCCA: {
+            title: 'Capitals of Oceania',
+            quiz: true,
+          },
+          AUST: {
+            title: 'States of Australia',
+            quiz: true,
+          },
+        },
+      },
+    },
+  },
+  BOW: {
+    title: 'Bodies of Water',
+    categories: {
+      MW: {
+        title: '29 Major Bodies of Water',
+        quiz: true,
+      },
+    },
+  },
+  GTC: {
+    title: 'Guess the City',
+    categories: {
+      GC: {
+        title: 'City Guesser', 
+        quiz: true,
+      },
+    },
+  },
+  LDF: {
+    title: 'Landforms',
+    categories: {
+      LF: {
+        title: 'Major Landforms',
+        quiz: true,
+      },
+    },
+  },
+  LRS: {
+    title: 'World Leaders',
+    categories: {
+      LS: {
+        title: 'Leaders of the World',
+        quiz: true,
+      },
+    },
   },
 }
 
@@ -44,43 +199,69 @@ export default class App extends React.Component {
     super(props)
     this.state = {
       lonlatzoom: [0.2, 20.6, 2],
+
+      options: categories,
       selectedCategory: '',
-      selectedContinent: '',
-      selectedWaterQuiz: '',
+
       placesArray: [],
       placesNumber: 0,
-      placesRemaining: 0,
-      quizTitle: null,
-      capitals: false,
-      states: false,
-      timing: false,
       namedPlace: '',
+      placesRemaining: 0,
+
+      quizTitle: null,
+      timing: false,
       showquizModal: false,
       gaveUp: false,
       finalTime: 0,
     }
 
-    this.handleCategorySelection = this.handleCategorySelection.bind(this)
-    this.handleQuizChoice = this.handleQuizChoice.bind(this)
+    this.handleSelection = this.handleSelection.bind(this)
+
     this.handleCountryQuiz = this.handleCountryQuiz.bind(this)
     this.handleContinentQuiz = this.handleContinentQuiz.bind(this)
-    this.handleWaterQuizChoice = this.handleWaterQuizChoice.bind(this)
-    this.handleNamedPlace = this.handleNamedPlace.bind(this)
+
     this.handleStart = this.handleStart.bind(this)
-    this.handleBack = this.handleBack.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
-    this.getFinalTime = this.getFinalTime.bind(this)
+    this.handleBack = this.handleBack.bind(this)
+
+    this.handleNamedPlace = this.handleNamedPlace.bind(this)
+    
     this.handleGiveUp = this.handleGiveUp.bind(this)
-    this.getLonLatZoom = this.getLonLatZoom.bind(this)
+    this.getFinalTime = this.getFinalTime.bind(this)
+    
+    this.quickLookLonLatZoom = this.quickLookLonLatZoom.bind(this)
   }
 
+  handleSelection(selection) {
+    if (this.state.options[selection].quiz === true) {
+      console.log('QUIZ ALERT')
+      this.setState({
+        selectedQuiz: selection,
+
+      })
+    } else {
+      console.log('not quiz')
+      this.setState({
+        selectedCategory: selection,
+        options: this.state.options[selection].categories,
+      })
+    }
+  }
+
+  handleQuizSelection(selQuiz) {
+    this.setState({
+      selectedQuiz: true,
+
+    })
+  }
+  
   getFinalTime(time) {
     this.setState({ finalTime: time })
   }
 
   // should move this to a helper function file
   // lint says "expected 'this' to be used by class method"
-  getLonLatZoom(selPlace, func, callback) {
+  quickLookLonLatZoom(selPlace, callback) {
     callback(quicklookup[selPlace].lonlatzoom)
   }
 
@@ -89,7 +270,7 @@ export default class App extends React.Component {
     let lonlatzoo = []
 
     // lint says "unexpected unnamed function, unnamed function"
-    this.getLonLatZoom(selCountry, 'get-country-location', function (llz) {
+    this.getLonLatZoom(selCountry, function (llz) {
       lonlatzoo = llz
     })
 
@@ -123,7 +304,7 @@ export default class App extends React.Component {
   handleContinentQuiz(selContinent, capitals) {
     let quizDesc = ''
     let lonlatzoo = []
-    this.getLonLatZoom(selContinent, 'get-location', function (llz) {
+    this.getLonLatZoom(selContinent, function (llz) {
       lonlatzoo = llz
     })
 
@@ -155,34 +336,35 @@ export default class App extends React.Component {
     }
   }
 
-  handleQuizChoice(selContinent, selCountry, capitals) {
-    this.setState({ selectedContinent: selContinent })
-    // user selected specific country quiz
-    if (selCountry) {
-      this.handleCountryQuiz(selCountry, capitals)
-    // user selected continent quiz
-    } else if (!selCountry) {
-      this.handleContinentQuiz(selContinent, capitals)
-    }
-  }
 
-  handleWaterQuizChoice(waterquiz) {
-    this.setState({ selectedWaterQuiz: waterquiz })
-    axios.get(`/get-bodies-of-water`)
-      .then((d) => {
-        console.log('d.data: ', d.data)
-        this.setState({
-          placesArray: d.data.water,
-          placesNumber: d.data.water.length,
-          placesRemaining: d.data.water.length,
-        })
-      })
-      .catch((error) => {
-        /* eslint-disable */
-        console.log('axios error', error)
-        /* eslint-enable */
-      })
-  }
+  // handleQuizChoice(selContinent, selCountry, capitals) {
+  //   this.setState({ selectedContinent: selContinent })
+  //   // user selected specific country quiz
+  //   if (selCountry) {
+  //     this.handleCountryQuiz(selCountry, capitals)
+  //   // user selected continent quiz
+  //   } else if (!selCountry) {
+  //     this.handleContinentQuiz(selContinent, capitals)
+  //   }
+  // }
+
+  // handleWaterQuizChoice(waterquiz) {
+  //   this.setState({ selectedQuiz: waterquiz })
+  //   axios.get(`/get-bodies-of-water`)
+  //     .then((d) => {
+  //       console.log('d.data: ', d.data)
+  //       this.setState({
+  //         placesArray: d.data.water,
+  //         placesNumber: d.data.water.length,
+  //         placesRemaining: d.data.water.length,
+  //       })
+  //     })
+  //     .catch((error) => {
+  //       /* eslint-disable */
+  //       console.log('axios error', error)
+  //       /* eslint-enable */
+  //     })
+  // }
 
   handleStart() {
     this.setState({
@@ -194,7 +376,7 @@ export default class App extends React.Component {
     this.setState({
       selectedCategory: '',
       selectedContinent: '',
-      selectedWaterQuiz: '',
+      selectedQuiz: '',
       timing: false,
       lonlatzoom: [0.2, 20.6, 2],
       showquizModal: false,
@@ -217,15 +399,11 @@ export default class App extends React.Component {
       this.setState({
         timing: false,
         selectedCategory: '',
-        selectedContinent: '',
+        selectedSubcategory: '',
         showquizModal: true,
         gaveUp: false,
       })
     }
-  }
-
-  handleCategorySelection(selCategory) {
-    this.setState({ selectedCategory: selCategory })
   }
 
   handleGiveUp() {
@@ -243,7 +421,7 @@ export default class App extends React.Component {
       quizmodal = (<QuizModal
         onClose={this.handleBack}
         time={this.state.finalTime}
-        selectedContinent={this.state.selectedContinent}
+        selectedSubcategory={this.state.selectedSubcategory}
         quizTitle={this.state.quizTitle}
         capital={this.state.capitals}
         states={this.state.states}
@@ -260,17 +438,15 @@ export default class App extends React.Component {
         <div style={style.container}>
           <WelcomeModal />
           <Header
-            placesArray={this.state.placesArray}
-            selectedContinent={this.state.selectedContinent}
-            timing={this.state.timing}
-            capitals={this.state.capitals}
-            quizTitle={this.state.quizTitle}
-            selectedCategory={this.state.selectedCategory}
-            selectedWaterQuiz={this.state.selectedWaterQuiz}
+            options={this.state.options}
+            handler={this.handleSelection}
 
-            handleCategorySelection={this.handleCategorySelection}
-            handleQuizChoice={this.handleQuizChoice}
-            handleWaterQuizChoice={this.handleWaterQuizChoice}
+            selectedQuiz={this.state.selectedQuiz}
+
+            placesArray={this.state.placesArray}
+            timing={this.state.timing}
+            quizTitle={this.state.quizTitle}
+
             handleNamedPlace={this.handleNamedPlace}
             handleBack={this.handleBack}
             handleStart={this.handleStart}
@@ -281,9 +457,6 @@ export default class App extends React.Component {
           <Maps
             lonlatzoom={this.state.lonlatzoom}
             namedPlace={this.state.namedPlace}
-            selectedContinent={this.state.selectedContinent}
-            capitals={this.state.capitals}
-            states={this.state.states}
           />
           {quizmodal}
         </div>

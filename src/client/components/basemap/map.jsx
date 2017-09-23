@@ -127,7 +127,7 @@ export default class Maps extends React.Component {
 Maps.propTypes = {
   lonlatzoom: PropTypes.arrayOf(PropTypes.number).isRequired,
   namedPlace: PropTypes.string.isRequired,
-  selectedContinent: PropTypes.string.isRequired,
-  states: PropTypes.bool.isRequired,
-  capitals: PropTypes.bool.isRequired,
+  // selectedContinent: PropTypes.string.isRequired,
+  // states: PropTypes.bool.isRequired,
+  // capitals: PropTypes.bool.isRequired,
 }
