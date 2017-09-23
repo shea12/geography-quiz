@@ -39,6 +39,7 @@ export default class App extends React.Component {
       lonlatzoom: [0.2, 20.6, 2],
       selectedCategory: '',
       selectedContinent: '',
+      selectedWaterQuiz: '',
       placesArray: [],
       placesNumber: 0,
       placesRemaining: 0,
@@ -56,6 +57,7 @@ export default class App extends React.Component {
     this.handleQuizChoice = this.handleQuizChoice.bind(this)
     this.handleCountryQuiz = this.handleCountryQuiz.bind(this)
     this.handleContinentQuiz = this.handleContinentQuiz.bind(this)
+    this.handleWaterQuizChoice = this.handleWaterQuizChoice.bind(this)
     this.handleNamedPlace = this.handleNamedPlace.bind(this)
     this.handleStart = this.handleStart.bind(this)
     this.handleBack = this.handleBack.bind(this)
@@ -165,6 +167,24 @@ export default class App extends React.Component {
     }
   }
 
+  handleWaterQuizChoice(waterquiz) {
+    this.setState({ selectedWaterQuiz: waterquiz })
+    axios.get(`/get-bodies-of-water`)
+      .then((d) => {
+        console.log('d.data: ', d.data)
+        this.setState({
+          placesArray: d.data.water,
+          placesNumber: d.data.water.length,
+          placesRemaining: d.data.water.length,
+        })
+      })
+      .catch((error) => {
+        /* eslint-disable */
+        console.log('axios error', error)
+        /* eslint-enable */
+      })
+  }
+
   handleStart() {
     this.setState({
       timing: true,
@@ -175,6 +195,7 @@ export default class App extends React.Component {
     this.setState({
       selectedCategory: '',
       selectedContinent: '',
+      selectedWaterQuiz: '',
       timing: false,
       lonlatzoom: [0.2, 20.6, 2],
       showquizModal: false,
@@ -246,9 +267,11 @@ export default class App extends React.Component {
             capitals={this.state.capitals}
             quizTitle={this.state.quizTitle}
             selectedCategory={this.state.selectedCategory}
-            handleCategorySelection={this.handleCategorySelection}
+            selectedWaterQuiz={this.state.selectedWaterQuiz}
 
+            handleCategorySelection={this.handleCategorySelection}
             handleQuizChoice={this.handleQuizChoice}
+            handleWaterQuizChoice={this.handleWaterQuizChoice}
             handleNamedPlace={this.handleNamedPlace}
             handleBack={this.handleBack}
             handleStart={this.handleStart}

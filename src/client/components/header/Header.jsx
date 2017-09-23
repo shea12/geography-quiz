@@ -5,6 +5,7 @@ import Title from './headtitle/title'
 import HeaderCard from './headtitle/headercard'
 import CategoryButton from './buttons/categorybutton'
 import Continents from './Continents'
+import WaterOptions from './WaterOptions'
 import InputScoreTime from './InputScoreTime'
 import BackStart from './BackStart'
 import BackButton from './buttons/backbutton'
@@ -93,16 +94,48 @@ export default class Header extends React.Component {
         </div>
       )
     } else if (this.props.selectedCategory === 'BOW') {
-      // Bodies of water are not ready yet, need to create map layers
+      // water quizzes selected, show options
       back = <BackButton handleBack={this.props.handleBack} />
-      categoryWater = (
-        <div style={{ position: 'absolute', zIndex: 2, marginLeft: '26%' }}>
-          <p>
-            Sorry, quizzes about bodies of water are not ready yet.
-            Hit the back button to choose another category.
+      if (this.props.selectedWaterQuiz !== '') {
+        // user selected a water quiz, show start & back buttons, hide other quizzes, ist
+        categoryWater = <div />
+        backstart = (
+          <BackStart
+            handleStart={this.props.handleStart}
+            handleBack={this.props.handleBack}
+          />
+        )
+        inscoretime = <div />
+        quiztitle = (
+          <p style={{ position: 'absolute', zIndex: 2, marginLeft: '20%' }}>
+            Can you name all {this.props.placesArray.length} bodies of water?
           </p>
-        </div>
-      )
+        )
+      } else if (this.props.selectedWaterQuiz === '') {
+        // user has not selected a water quiz yet, hide ist, backstart
+        categoryWater = <WaterOptions handleWaterQuizChoice={this.props.handleWaterQuizChoice} />
+        back = <BackButton handleBack={this.props.handleBack} />
+        backstart = <div />
+        inscoretime = <div />
+      }
+      if (this.props.timing) {
+        // render timer, score, and input when start is clicked
+        inscoretime = (<InputScoreTime
+          placesArray={this.props.placesArray}
+          waterQuiz = {this.props.waterQuiz}
+          timing={this.props.timing}
+          handleBack={this.props.handleBack}
+          handleNamedPlace={this.props.handleNamedPlace}
+          handleTimer={this.props.handleTimer}
+          getFinalTime={this.props.getFinalTime}
+          handleGiveUp={this.props.handleGiveUp}
+          quizTitle={this.props.quizTitle}
+        />)
+        backstart = <div />
+        quiztitle = <div />
+      } else {
+        // need to make a stop button
+      }
     } else if (this.props.selectedCategory === 'LDF') {
       // landforms are not ready yet, need to create map layers
       back = <BackButton handleBack={this.props.handleBack} />
@@ -168,6 +201,7 @@ Header.propTypes = {
   selectedCategory: PropTypes.string.isRequired,
   handleCategorySelection: PropTypes.func.isRequired,
   handleQuizChoice: PropTypes.func.isRequired,
+  handleWaterQuizChoice: PropTypes.func.isRequired,
   handleNamedPlace: PropTypes.func.isRequired,
   handleTimer: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,

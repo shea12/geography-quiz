@@ -27,16 +27,22 @@ const stateSchema = new Schema({
   cap: String, // capital of state
 })
 
+const waterSchema = new Schema({
+  name: String,
+  abbrv: String,
+  lonlatzoom: Array,
+}, {collection: 'water' })
+
 // haven't created this functionality yet, looking forward to it though
 const userSchema = new Schema({
   username: String,
   email: String,
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  token: String,
-  gamesplayed: Number,
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now,
+  // },
+  // token: String,
+  // gamesplayed: Number,
 })
 
 
@@ -44,5 +50,6 @@ module.exports = {
   continents: mongoose.model('continents', continentSchema),
   countries: mongoose.model('country', countrySchema),
   states: mongoose.model('state', stateSchema),
-  user: mongoose.model('user', userSchema),
+  water: mongoose.model('water', waterSchema),
+  users: mongoose.model('users', userSchema),
 }
