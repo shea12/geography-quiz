@@ -6,7 +6,6 @@ module.exports = {
   getNumberOfUsers: (req, res) => {
     return Users.find()
       .then((users) => {
-        console.log('users: ', users)
         const numberUsers = users.length
         res.status(200).send({ numUsers: numberUsers })
       })

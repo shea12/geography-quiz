@@ -25,7 +25,6 @@ module.exports = {
       continent: req.params.continent,
     })
       .then((country) => {
-        console.log('countries: ', country)
         res.status(200).send({ countries: country })
       })
       .catch((error) => {
