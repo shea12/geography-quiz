@@ -1,15 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Title from './headtitle/title'
-import HeaderCard from './headtitle/headercard'
 import CategoryButton from './buttons/categorybutton'
-
-import Continents from './Continents'
-import WaterOptions from './WaterOptions'
-
-import InputScoreTime from './InputScoreTime'
-import BackStart from './BackStart'
 import BackButton from './buttons/backbutton'
 
 const style = {
@@ -17,12 +9,12 @@ const style = {
     position: 'absolute',
     zIndex: 2,
     display: 'inline-block',
-    // marginLeft: '12%',
+    marginLeft: '12%',
   },
 }
 
 function CreateOptionsButtons(props) {
-  console.log('props: ', props)
+  // console.log('props: ', props)
   const categories = props.options
   const items = []
   let i = 0
@@ -40,21 +32,20 @@ function CreateOptionsButtons(props) {
 export default class Header extends React.Component {
   constructor(props) {
     super(props)
-
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('receiving props in header')
+    // console.log('receiving props in header')
   }
 
   render() {
     return (
       <div>
-        <Title />
-        <HeaderCard />
-
-        <CreateOptionsButtons options={this.props.options} handler={this.props.handler} />
-
+        <CreateOptionsButtons 
+          options={this.props.options}
+          handler={this.props.handler}
+        />
+        <BackButton handleBack={this.props.handleBack} />
       </div>
     )
   }
@@ -63,17 +54,7 @@ export default class Header extends React.Component {
 Header.propTypes = {
   options: PropTypes.object.isRequired,
   handler: PropTypes.func.isRequired,
-
-  placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
-  timing: PropTypes.bool.isRequired,
-  quizTitle: PropTypes.string,
-
-  handleNamedPlace: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
-  handleStart: PropTypes.func.isRequired,
-  handleTimer: PropTypes.func.isRequired,
-  getFinalTime: PropTypes.func.isRequired,
-  handleGiveUp: PropTypes.func.isRequired,
 }
 
 /*
