@@ -73,12 +73,12 @@ export default class Maps extends React.Component {
         map.setLayoutProperty(`USSTCAP_${placeCode}`, 'visibility', 'visible')
       } else if (!nextProps.states && nextProps.capitals) {
         // need to add label layers for every country capital
-        // map.setLayoutProperty(`${placeCode}_LABEL`, 'visibility', 'visible')
+        map.setLayoutProperty(`CCAP_${placeCode}`, 'visibility', 'visible')
       } else if (nextProps.states && !nextProps.capitals) {
         // show state name
         map.setLayoutProperty(`USST_${placeCode}`, 'visibility', 'visible')
       } else {
-        // show country name
+        // show country name (also works for water labels)
         map.setLayoutProperty(`${placeCode}_LABEL`, 'visibility', 'visible')
       }
 
@@ -86,11 +86,20 @@ export default class Maps extends React.Component {
       // map.setPaintProperty(placeCode, 'fill-outline-color', 'rgb(41, 169, 45)')
     }
 
-    // check if the map needs to pan to a new location
-    if (this.props.lonlatzoom !== nextProps.lonlatzoom) {
+    // when a quiz ends, lonlatzoom is set back to [0.2, 20.6, 2], checking for this
+    const homeLLZ = "[0.2, 20.6, 2]"
+    if (nextProps.lonlatzoom.toString() === homeLLZ) {
       showHideAllCountryLabels(CODES.COUNTRIES, 'none')
       showHideAllStateLabels(CODES.US_STATES, 'none')
       showHideAllWaterLabels(CODES.WATER, 'none')
+      map.flyTo({
+        center: [nextProps.lonlatzoom[0], nextProps.lonlatzoom[1]],
+        zoom: nextProps.lonlatzoom[2],
+        speed: 0.4,
+      })
+    }
+
+    if (nextProps.lonlatzoom !== this.props.lonlatzoom) {
       map.flyTo({
         center: [nextProps.lonlatzoom[0], nextProps.lonlatzoom[1]],
         zoom: nextProps.lonlatzoom[2],

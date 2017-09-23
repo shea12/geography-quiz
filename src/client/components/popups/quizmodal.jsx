@@ -55,7 +55,7 @@ export default class QuizModal extends React.Component {
 
 QuizModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  time: PropTypes.number.isRequired,
+  time: PropTypes.string.isRequired,
   quizTitle: PropTypes.string.isRequired,
   gaveUp: PropTypes.bool.isRequired,
   placesNumber: PropTypes.number.isRequired,

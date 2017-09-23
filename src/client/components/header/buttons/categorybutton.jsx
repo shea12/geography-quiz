@@ -11,7 +11,7 @@ export default class CategoryButton extends React.Component {
           margin: 8,
           marginRight: 20,
           zIndex: 2,
-          width: 120,
+          width: 180,
         }}
         onClick={
           () => this.props.handleCategorySelection(this.props.code)

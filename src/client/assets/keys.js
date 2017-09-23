@@ -1,7 +1,7 @@
 /* eslint-disable */
 const KEYS = {
   access_token: 'pk.eyJ1IjoiY2FzaGVhIiwiYSI6ImNqNnd3dm9uZTE5Y2wzM3RiaXJxYng1NHAifQ.nEu0dapbPoEPUe4bEYaq7Q',
-  style_key: 'mapbox://styles/cashea/cj7wkpxo9438h2sqp05z0a4rg',
+  style_key: 'mapbox://styles/cashea/cj7wt95zd4azr2rpc41t3oici',
 }
 
 module.exports = KEYS;
@@ -15,4 +15,5 @@ tabula_rasa2: 'mapbox://styles/cashea/cj755orba44m42smfr9o1ze2i'
 outdoors: 'mapbox://styles/cashea/cj76hgeil5cz72sqfmglle126'
 // as of 9/22
 currentoutdoors: 'mapbox://styles/cashea/cj7wkpxo9438h2sqp05z0a4rg'
+trialoutdoors: 'mapbox://styles/cashea/cj7wt95zd4azr2rpc41t3oici'
 */

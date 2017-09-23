@@ -3,7 +3,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import WelcomeModal from './components/popups/welcomemodal'
 import Maps from './components/basemap/map'
 import Header from './components/header/Header'
+import Helpers from './helpers/waterQuizHelpers'
 import QuizModal from './components/popups/quizmodal'
+
+/*
+Notes 9/22:
+  PO_LABEL is not found, need to inc PO1, PO2
+  AO_LABEL needs to reference AO1 and AO2
+*/
 
 const axios = require('axios')
 
@@ -74,14 +81,6 @@ export default class App extends React.Component {
   // should move this to a helper function file
   // lint says "expected 'this' to be used by class method"
   getLonLatZoom(selPlace, func, callback) {
-    // axios.get(`/${selPlace}/${func}`)
-    // .then((d) => {
-    //   callback(d.data.lonlatzoom)
-    // })
-    // .catch((error) =>{
-    //   console.log('axios error', error)
-    // })
-
     callback(quicklookup[selPlace].lonlatzoom)
   }
 

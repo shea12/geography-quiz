@@ -6,7 +6,7 @@ const style = {
   button: {
     position: 'absolute',
     padding: 0,
-    marginLeft: '46%',
+    marginLeft: '40%',
     marginTop: 8,
     display: 'inline-block',
     zIndex: 2,
@@ -14,8 +14,8 @@ const style = {
     paddingRight: '10px',
   },
   innerbutton: {
-    paddingLeft: '10px',
-    paddingRight: '10px',
+    paddingLeft: '20px',
+    paddingRight: '20px',
   },
 }
 
