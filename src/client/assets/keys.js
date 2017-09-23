@@ -4,7 +4,7 @@ const KEYS = {
   style_key: 'mapbox://styles/cashea/cj7wt95zd4azr2rpc41t3oici',
 }
 
-module.exports = KEYS;
+module.exports = KEYS
 
 /*
 standard :  'mapbox://styles/cashea/cj6y6xtdyao4p2rrqaj5qymad'
