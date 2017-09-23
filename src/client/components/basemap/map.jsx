@@ -30,6 +30,12 @@ const showHideAllStateLabels = (stateCodeArray, status) => {
   }
 }
 
+const showHideAllWaterLabels = (waterCodeArray, status) => {
+  for (let i = 0; i < waterCodeArray.length; i += 1) {
+    map.setLayoutProperty(`${waterCodeArray[i]}_LABEL`, 'visibility', status)
+  }
+}
+
 export default class Maps extends React.Component {
   componentDidMount() {
     MapboxGl.accessToken = KEYS.access_token
@@ -84,6 +90,7 @@ export default class Maps extends React.Component {
     if (this.props.lonlatzoom !== nextProps.lonlatzoom) {
       showHideAllCountryLabels(CODES.COUNTRIES, 'none')
       showHideAllStateLabels(CODES.US_STATES, 'none')
+      showHideAllWaterLabels(CODES.WATER, 'none')
       map.flyTo({
         center: [nextProps.lonlatzoom[0], nextProps.lonlatzoom[1]],
         zoom: nextProps.lonlatzoom[2],
