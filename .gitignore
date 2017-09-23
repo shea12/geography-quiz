@@ -9,4 +9,3 @@ node_modules/
 /dbkey.js
 /.env
 src/compiled/
-src/client/assets/continentContents.js
