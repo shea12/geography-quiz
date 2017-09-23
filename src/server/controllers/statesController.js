@@ -10,7 +10,7 @@ module.exports = {
       country: req.params.country,
     })
       .then((state) => {
-        res.status(200).send({ states: state })
+        res.status(200).send({ places: state })
       })
       .catch((error) => {
         /* eslint-disable */
