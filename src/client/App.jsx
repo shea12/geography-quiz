@@ -10,9 +10,15 @@ import InputScoreTime from './components/header/InputScoreTime'
 import QuizModal from './components/popups/quizmodal'
 import categories from './assets/quizcategories'
 import quicklookup from './assets/quicklookup'
-import helpers from './components/helpers'
 
-// console.log('helpers: ', helpers)
+import {
+  NTPgetRandomPlace,
+  NTPhandleInput,
+  NTPcheckUserInput,
+  FFAhandleInput,
+  FFAcheckUserInput
+} from './components/helpers'
+
 /*
 Notes:
   9/22:
@@ -21,16 +27,11 @@ Notes:
   9/23:
   HUGE refactor
   Buttons could be condensed into 1 or 2 components rather than 4
+  9/24:
+  Morning: fix water quiz, import helper functions
 */
 
 const axios = require('axios')
-
-const style = {
-  container: {
-    margin: 0,
-    padding: 0,
-  },
-}
 
 export default class App extends React.Component {
   constructor(props) {
@@ -39,9 +40,8 @@ export default class App extends React.Component {
       lonlatzoom: [0.2, 20.6, 2],
       options: categories,
       selectedQuiz: false,
-
       timing: false,
-      layer: '',
+      // layer: '',
       placesArray: [],
       placesNumber: 0,
       modifier: 'name',
@@ -69,21 +69,6 @@ export default class App extends React.Component {
 
   quickLookLonLatZoom(selPlace, callback) {
     callback(quicklookup[selPlace].lonlatzoom)
-  }
-
-  getRandomPlace() {
-    const randomIndex = function(max) {
-      let min = Math.ceil(0)
-      max = Math.floor(max)
-      return Math.floor(Math.random() * (max - min)) + min 
-    }
-    const index = randomIndex(this.state.placesRemaining)
-    console.log('index: ', index)
-    this.setState({
-      currentLocation: this.state.placesArray[index],
-      currentIndex: index,
-      lonlatzoom: this.state.placesArray[index].lonlatzoom,
-    })
   }
 
   getQuizData(path, selection) {
@@ -149,7 +134,7 @@ export default class App extends React.Component {
       timing: true,
     })
     if (this.state.quizType === 'NTP') {
-      this.getRandomPlace()
+      NTPgetRandomPlace.call(this)
     }
   }
 
@@ -158,64 +143,12 @@ export default class App extends React.Component {
     this.setState({ namedPlace: place, placesRemaining: remaining })
   }
 
-  checkUserInput(value, modifier) {
-    if (this.state.quizType === 'FFA') {
-      return helpers[this.state.quizType].checkUserInput(value, modifier).bind(this)
-    } else if (this.state.quizType === 'NTP') {
-      // return helpers[this.state.quizType].checkUserInput(value).bind(this)
-      if (value.toLowerCase() === this.state.currentLocation.name.toLowerCase()) {
-        console.log('correct')
-        return true
-      } else {
-        console.log('incorrect')
-        return false
-      }
-    }
-
-    // for (let p = 0; p < this.state.placesArray.length; p += 1) {
-    //   if (value.toLowerCase() === this.state.placesArray[p][modifier].toLowerCase()) {
-    //     return p
-    //   }
-    // }
-    // return -1
-  }
-
   handleInput(value) {
     if (this.state.quizType === 'FFA') {
-      return helpers[this.state.quizType].handleInput(value).bind(this)
+      return FFAhandleInput.call(this, value)
     } else if (this.state.quizType === 'NTP') {
-      // return helpers[this.state.quizType].handleInput(value).bind(this)
-      const identified = this.checkUserInput(value)
-      if (identified) {
-        // remove currentLocation from placesArray, get next location
-        this.handleNamedPlace(this.state.currentLocation.abbrv)
-        this.state.placesArray.splice(this.state.index, 1)
-        this.setState({ placesArray: this.state.placesArray })
-        if (this.state.placesArray.length === 0) {
-          this.handleTimer(false, true)
-          return true
-        }
-        this.getRandomPlace()
-        return true
-      } else {
-        return false
-      }
+      return NTPhandleInput.call(this, value)
     }
-
-
-    // const foundIndex = this.checkUserInput(value, this.state.modifier)
-    // if (foundIndex >= 0) {
-    //   this.handleNamedPlace(this.state.placesArray[foundIndex].abbrv)
-    //   this.state.placesArray.splice(foundIndex, 1)
-    //   this.setState({ placesArray: this.state.placesArray })
-    //   if (this.state.placesArray.length === 0) {
-    //     this.handleTimer(false, true)
-    //     return true
-    //   }
-    //   return true
-    // } else {
-    //   return false
-    // }
   }
 
   resetState(showModal, gaveUp) {
@@ -289,7 +222,7 @@ export default class App extends React.Component {
 
     return (
       <MuiThemeProvider>
-        <div style={style.container}>
+        <div style={{ margin: 0, padding: 0 }}>
           <Title />
           <HeaderCard />
           <WelcomeModal />
