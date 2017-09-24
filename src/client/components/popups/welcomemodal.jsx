@@ -50,12 +50,12 @@ export default class WelcomeModal extends React.Component {
           <div style={style.modalInner}>
             <p>
               <br /><br />
-              This site is for geography nerds to test their knowledge on a wide
+              Test your knowledge on a wide
               array of administrative, political, and geographic features around the world.
               All quizzes are timed so you can keep track of your progress.
-              Current quizzes include countries, capitals, and states.
+              Current quizzes include countries, capitals, states, and bodies of water.
               <br /><br />
-              Quizzes coming soon: bodies of water, landforms, cities, and world leaders
+              Quizzes coming soon: landforms, cities, and world leaders
               <br /><br />
               Feel free to explore the map and when you are ready,
               get started with the quiz categories above.
@@ -68,7 +68,7 @@ export default class WelcomeModal extends React.Component {
           </div>
           <div>
             <p style={style.byLine}>
-              This project was created by Garol. Learn more
+              This project was created by Caroline. Learn more
               <a href="https://github.com/shea12/geography-quiz" target="_blank" rel="noopener noreferrer"> here
               </a>.
             </p>
@@ -78,5 +78,3 @@ export default class WelcomeModal extends React.Component {
     )
   }
 }
-
-// WelcomeModal.propTypes = {}
