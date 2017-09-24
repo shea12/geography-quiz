@@ -106,5 +106,5 @@ Maps.propTypes = {
   namedPlace: PropTypes.string.isRequired,
   layer: PropTypes.string.isRequired,
   clearLabels: PropTypes.bool,
-  quizType: PropTypes.string.isRequired,
+  quizType: PropTypes.string,
 }
