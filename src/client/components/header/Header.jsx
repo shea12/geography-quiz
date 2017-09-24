@@ -13,7 +13,6 @@ const style = {
 }
 
 function CreateOptionsButtons(props) {
-  // console.log('props: ', props)
   const categories = props.options
   const items = []
   let i = 0

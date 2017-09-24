@@ -63,12 +63,14 @@ export default class Maps extends React.Component {
     if (this.props.namedPlace !== nextProps.namedPlace) {
       const placeCode = nextProps.namedPlace
       let layerIdentifier = ''
-      if (this.props.layer.charAt(0) === '_') {
+      if (this.props.layer.charAt(0) === '_' && this.props.quizType === 'FFA') {
         layerIdentifier = placeCode + this.props.layer
         console.log('setting layout and paint')
         map.setLayoutProperty(placeCode, 'visibility', 'visible')
         map.setPaintProperty(placeCode, 'fill-opacity', 1)
         map.setPaintProperty(placeCode, 'fill-color', 'hsla(115, 56%, 65%, 1)')
+      } else if (this.props.layer.charAt(0) === '_' && this.props.quizType === 'NTP') {
+        layerIdentifier = placeCode + this.props.layer
       } else {
         layerIdentifier = this.props.layer + placeCode
       }
@@ -104,4 +106,5 @@ Maps.propTypes = {
   namedPlace: PropTypes.string.isRequired,
   layer: PropTypes.string.isRequired,
   clearLabels: PropTypes.bool,
+  quizType: PropTypes.string.isRequired,
 }

@@ -10,6 +10,9 @@ import InputScoreTime from './components/header/InputScoreTime'
 import QuizModal from './components/popups/quizmodal'
 import categories from './assets/quizcategories'
 import quicklookup from './assets/quicklookup'
+import helpers from './components/helpers'
+
+// console.log('helpers: ', helpers)
 /*
 Notes:
   9/22:
@@ -17,6 +20,7 @@ Notes:
   AO_LABEL needs to reference AO1 and AO2
   9/23:
   HUGE refactor
+  Buttons could be condensed into 1 or 2 components rather than 4
 */
 
 const axios = require('axios')
@@ -28,7 +32,6 @@ const style = {
   },
 }
 
-// TODO: change from lonlat: [0,0], zoom: 0, to lonlatzoom: [0,0,0]
 export default class App extends React.Component {
   constructor(props) {
     super(props)
@@ -51,20 +54,16 @@ export default class App extends React.Component {
       finalTime: 0,
     }
 
-    this.handleSelection = this.handleSelection.bind(this)
+    this.handleBack = this.handleBack.bind(this)
+    this.resetState = this.resetState.bind(this)
     this.getQuizData = this.getQuizData.bind(this)
-
     this.handleStart = this.handleStart.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
-    this.handleBack = this.handleBack.bind(this)
-
     this.handleInput = this.handleInput.bind(this)
-    this.handleNamedPlace = this.handleNamedPlace.bind(this)
-    
-    this.handleGiveUp = this.handleGiveUp.bind(this)
     this.getFinalTime = this.getFinalTime.bind(this)
-
-    this.resetState = this.resetState.bind(this)
+    this.handleGiveUp = this.handleGiveUp.bind(this)
+    this.handleSelection = this.handleSelection.bind(this)
+    this.handleNamedPlace = this.handleNamedPlace.bind(this)
     this.quickLookLonLatZoom = this.quickLookLonLatZoom.bind(this)
   }
 
@@ -72,19 +71,34 @@ export default class App extends React.Component {
     callback(quicklookup[selPlace].lonlatzoom)
   }
 
+  getRandomPlace() {
+    const randomIndex = function(max) {
+      let min = Math.ceil(0)
+      max = Math.floor(max)
+      return Math.floor(Math.random() * (max - min)) + min 
+    }
+    const index = randomIndex(this.state.placesRemaining)
+    console.log('index: ', index)
+    this.setState({
+      currentLocation: this.state.placesArray[index],
+      currentIndex: index,
+      lonlatzoom: this.state.placesArray[index].lonlatzoom,
+    })
+  }
+
   getQuizData(path, selection) {
-    // lint says "unexpected unnamed function, unnamed function"
     let lonlatzoo = ''
+    let quiztype = ''
     if (selection !== 'BW') {
       const abbrv = selection.charAt(0) + selection.charAt(1)
       this.quickLookLonLatZoom(abbrv, function (llz) {
         lonlatzoo = llz
       })
+      quiztype = 'FFA'
     } else {
-      // handle water quiz
-      console.log('special case water quiz')
+      lonlatzoo = [0.2, 20.6, 2]
+      quiztype = 'NTP'
     }
-
     axios.get(path)
       .then((d) => {
         this.setState({
@@ -92,6 +106,7 @@ export default class App extends React.Component {
           placesNumber: d.data.places.length,
           placesRemaining: d.data.places.length,
           lonlatzoom: lonlatzoo,
+          quizType: quiztype,
         })
       })
       .catch((error) => {
@@ -133,15 +148,9 @@ export default class App extends React.Component {
     this.setState({
       timing: true,
     })
-  }
-
-  checkUserInput(value, modifier) {
-    for (let p = 0; p < this.state.placesArray.length; p += 1) {
-      if (value.toLowerCase() === this.state.placesArray[p][modifier].toLowerCase()) {
-        return p
-      }
+    if (this.state.quizType === 'NTP') {
+      this.getRandomPlace()
     }
-    return -1
   }
 
   handleNamedPlace(place) {
@@ -149,29 +158,64 @@ export default class App extends React.Component {
     this.setState({ namedPlace: place, placesRemaining: remaining })
   }
 
-  handleInput(value) {
-    const foundIndex = this.checkUserInput(value, this.state.modifier)
-    // foundIndex will be the index in the array where the match was found
-    // or false if not found
-    if (foundIndex >= 0) {
-      this.setState({ inputCheck: 'success', value: '' })
-      // call handleNamedPlace function with place abbrv to shade in area
-      this.handleNamedPlace(this.state.placesArray[foundIndex].abbrv)
-      // remove named palce from list
-      this.state.placesArray.splice(foundIndex, 1)
-      this.setState({ placesArray: this.state.placesArray })
-      
-      // check if user has places left to name
-      if (this.state.placesArray.length === 0) {
-        // parameters (endtimer, gotallcountries?)
-        this.handleTimer(false, true)
+  checkUserInput(value, modifier) {
+    if (this.state.quizType === 'FFA') {
+      return helpers[this.state.quizType].checkUserInput(value, modifier).bind(this)
+    } else if (this.state.quizType === 'NTP') {
+      // return helpers[this.state.quizType].checkUserInput(value).bind(this)
+      if (value.toLowerCase() === this.state.currentLocation.name.toLowerCase()) {
+        console.log('correct')
         return true
+      } else {
+        console.log('incorrect')
+        return false
       }
-      return true
-    } else {
-      // user input does not match any place
-      return false
     }
+
+    // for (let p = 0; p < this.state.placesArray.length; p += 1) {
+    //   if (value.toLowerCase() === this.state.placesArray[p][modifier].toLowerCase()) {
+    //     return p
+    //   }
+    // }
+    // return -1
+  }
+
+  handleInput(value) {
+    if (this.state.quizType === 'FFA') {
+      return helpers[this.state.quizType].handleInput(value).bind(this)
+    } else if (this.state.quizType === 'NTP') {
+      // return helpers[this.state.quizType].handleInput(value).bind(this)
+      const identified = this.checkUserInput(value)
+      if (identified) {
+        // remove currentLocation from placesArray, get next location
+        this.handleNamedPlace(this.state.currentLocation.abbrv)
+        this.state.placesArray.splice(this.state.index, 1)
+        this.setState({ placesArray: this.state.placesArray })
+        if (this.state.placesArray.length === 0) {
+          this.handleTimer(false, true)
+          return true
+        }
+        this.getRandomPlace()
+        return true
+      } else {
+        return false
+      }
+    }
+
+
+    // const foundIndex = this.checkUserInput(value, this.state.modifier)
+    // if (foundIndex >= 0) {
+    //   this.handleNamedPlace(this.state.placesArray[foundIndex].abbrv)
+    //   this.state.placesArray.splice(foundIndex, 1)
+    //   this.setState({ placesArray: this.state.placesArray })
+    //   if (this.state.placesArray.length === 0) {
+    //     this.handleTimer(false, true)
+    //     return true
+    //   }
+    //   return true
+    // } else {
+    //   return false
+    // }
   }
 
   resetState(showModal, gaveUp) {
@@ -257,6 +301,7 @@ export default class App extends React.Component {
             namedPlace={this.state.namedPlace}
             layer={this.state.layer}
             clearLabels={this.state.clearLabels}
+            quizType={this.state.quizType}
           />
 
           {quizmodal}
