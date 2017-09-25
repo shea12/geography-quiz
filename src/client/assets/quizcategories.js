@@ -13,48 +13,70 @@ const categories = {
         title: 'North America',
         categories: {
           NACO: {
-            title: 'Countries of N. America',
+            title: 'Countries',
             desc: 'Can you name all 23 countries of North America? Hint: there are a lot of tiny Caribbean islands',
             quiz: true,
             path: '/NA/get-countries',
             layer: '_LABEL',
           },
           NACA: {
-            title: 'Capitals of N. America',
+            title: 'Capitals',
             desc: 'Can you name all the capitals?',
             quiz: true,
             path: '/NA/get-countries',
             cap: true,
             layer: 'CCAP_',
           },
-          USST: {
-            title: 'States of USA',
-            desc: 'Can you name all 50 states?',
-            quiz: true,
-            path: '/US/get-states',
-            layer: 'USST_',
+          US: {
+            title: 'United States',
+            categories: {
+              USST: {
+                title: 'US States',
+                desc: 'Can you name all 50 states?',
+                quiz: true,
+                path: '/US/get-states',
+                layer: 'ST_US_',
+              },
+              USTE: {
+                title: 'US Territories',
+                desc: 'Can you name the 5 populated US territories?',
+                quiz: true,
+                path: '/US/get-territories',
+                layer: 'USTE_',
+              },
+              USCP: {
+                title: 'US Capitals',
+                desc: 'Do you know all the US state capitals?',
+                quiz: true,
+                path: '/US/get-states',
+                cap: true,
+                layer: 'STCAP_US',
+              },
+            },
           },
-          USCP: {
-            title: 'Capitals of USA',
-            desc: 'Do you know all the US state capitals?',
-            quiz: true,
-            path: '/US/get-states',
-            cap: true,
-            layer: 'USSTCAP_',
+          MX: {
+            title: 'Mexico',
+            categories: {
+              MXST: {
+                title: 'States of Mexico',
+                desc: 'Can you name all the states of Mexico?',
+                quiz: true,
+                path: '/MX/get-states',
+                layer: 'ST_CA_',
+              },
+            },
           },
-          MXST: {
-            title: 'States of Mexico',
-            desc: 'Can you name all the states of Mexico?',
-            quiz: true,
-            path: '/MX/get-states',
-            layer: 'MXST_',
-          },
-          CAST: {
-            title: 'Provinces of Canada',
-            desc: 'Can you name all provinces of Canada?',
-            quiz: true,
-            path: '/CA/get-states',
-            layer: 'CAST_',
+          CA: {
+            title: 'Canada',
+            categories: {
+              CAST: {
+                title: 'Provinces of Canada',
+                desc: 'Can you name all provinces of Canada?',
+                quiz: true,
+                path: '/CA/get-states',
+                layer: 'ST_CA_',
+              },
+            },
           },
         },
       },
@@ -63,14 +85,14 @@ const categories = {
         title: 'South America',
         categories: {
           SACO: {
-            title: 'Countries of S. America',
+            title: 'Countries',
             desc: 'Can you name 12 countries of South America?',
             quiz: true,
             path: '/SA/get-countries',
             layer: '_LABEL',
           },
           SACA: {
-            title: 'Capitals of S. America',
+            title: 'Capitals',
             desc: 'Can you name all the capitals of the 12 South American countries?',
             quiz: true,
             path: '/SA/get-countries',
@@ -84,14 +106,14 @@ const categories = {
         title: 'Africa',
         categories: {
           AFCO: {
-            title: 'Countries of Africa',
+            title: 'Countries',
             desc: 'Can you name all 55 countries of Africa? Hint: spelling counts',
             quiz: true,
             path: '/AF/get-countries',
             layer: '_LABEL',
           },
           AFCA: {
-            title: 'Capitals of Africa',
+            title: 'Capitals',
             desc: 'Can you name each country capital?',
             quiz: true,
             path: '/AF/get-countries',
@@ -99,11 +121,11 @@ const categories = {
             layer: 'CCAP_',
           },
           ZAST: {
-            title: 'States of South Africa',
+            title: 'South Africa',
             desc: 'Can you name each state of South Africa?',
             quiz: true,
             path: '/ZA/get-states',
-            layer: 'ZAST_',
+            layer: 'ST_ZA_',
           },
         },
       },
@@ -112,14 +134,14 @@ const categories = {
         title: 'Europe',
         categories: {
           EUCO: {
-            title: 'Countries of Europe',
+            title: 'Countries',
             desc: 'Can you name all 46 countries of Europe? Hint: there are 5 micro-states',
             quiz: true,
             path: '/EU/get-countries',
             layer: '_LABEL',
           },
           EUCA: {
-            title: 'Capitals of Europe',
+            title: 'Capitals',
             desc: 'Can you name every european capital?',
             quiz: true,
             path: '/EU/get-countries',
@@ -131,7 +153,7 @@ const categories = {
             desc: 'Can you name all 4 countries of the United Kingdom?',
             quiz: true,
             path: '/GB/get-countries',
-            layer: 'GBST_',
+            layer: 'ST_GB_',
           },
         },
       },
@@ -140,14 +162,14 @@ const categories = {
         title: 'Asia',
         categories: {
           ASCO: {
-            title: 'Countries of Asia',
+            title: 'Countries',
             desc: 'Can you name all countries of Asia?',
             quiz: true,
             path: '/AS/get-countries',
             layer: '_LABEL',
           },
           ASCA: {
-            title: 'Capitals of Asia',
+            title: 'Capitals',
             desc: 'Can you name all the capitals?',
             quiz: true,
             path: '/AS/get-countries',
@@ -161,14 +183,14 @@ const categories = {
         title: 'Oceania',
         categories: {
           OCCO: {
-            title: 'Countries of Oceania',
+            title: 'Countries',
             desc: 'Can you name all countries of Oceania? Hint: lots of tiny islands',
             quiz: true,
             path: '/OC/get-countries',
             layer: '_LABEL',
           },
           OCCA: {
-            title: 'Capitals of Oceania',
+            title: 'Capitals',
             desc: 'Can you name all the capitals?',
             quiz: true,
             path: '/OC/get-countries',
@@ -219,11 +241,12 @@ const categories = {
   },
   LDF: {
     buttoncolor: '#e5d55b', // yellow
-    title: 'Landforms',
+    title: 'Landmarks',
     disabled: false,
-    desc: 'Can you name each of these notable landforms?',
+    desc: 'Can you name each of these world landmarks?',
     quiz: true,
-    path:'/not-available',
+    path:'/get-landmarks',
+    layer: 'LM_',
     // categories: {
     //   LF: {
     //     title: 'Major Landforms',
