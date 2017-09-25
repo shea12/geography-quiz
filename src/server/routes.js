@@ -1,8 +1,10 @@
 const continents = require('./controllers/continentsController.js')
 const countries = require('./controllers/countriesController.js')
 const states = require('./controllers/statesController.js')
+const territories = require('./controllers/territoriesController.js')
 const users = require('./controllers/usersController.js')
 const water = require('./controllers/waterController.js')
+const landmarks = require('./controllers/landmarksController.js')
 
 module.exports = function (app) {
   // Continents
@@ -18,8 +20,14 @@ module.exports = function (app) {
   // app.get('/:continent/:country/:state/get-capital', states.getStateCapitals)
   app.get('/:country/get-states', states.getStates)
 
+  // Territories
+  app.get('/:country/get-territories', territories.getTerritories)
+
   // Water
   app.get('/get-bodies-of-water', water.getBodiesOfWater)
+
+  // Landmarks
+  app.get('/get-landmarks', landmarks.getLandmarks)
 
   // Users
   app.get('/get-number-users', users.getNumberOfUsers)
