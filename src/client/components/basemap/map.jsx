@@ -16,6 +16,7 @@ const style = {
 
 let map = {}
 
+// TODO: all of these can be condensed to 1 or 2 functions.
 const showHideAllCountryLabels = (countryCodeArray, status) => {
   for (let i = 0; i < countryCodeArray.length; i += 1) {
     map.setLayoutProperty(`${countryCodeArray[i]}_LABEL`, 'visibility', status)
@@ -25,8 +26,22 @@ const showHideAllCountryLabels = (countryCodeArray, status) => {
 
 const showHideAllStateLabels = (stateCodeArray, status) => {
   for (let i = 0; i < stateCodeArray.length; i += 1) {
-    map.setLayoutProperty(`USST_${stateCodeArray[i]}`, 'visibility', status)
-    map.setLayoutProperty(`USSTCAP_${stateCodeArray[i]}`, 'visibility', status)
+    // format ST_{country abbrv}_{state abbrv}
+    map.setLayoutProperty(`ST_${stateCodeArray[i]}`, 'visibility', status)
+  }
+}
+
+const showHideAllStateCapLabels = (stateCodeArray, status) => {
+  for (let i = 0; i < stateCodeArray.length; i += 1) {
+    // ST_CAP_{country abbrv}_{state abbrv}
+    map.setLayoutProperty(`ST_${stateCodeArray[i]}`, 'visibility', status)
+    map.setLayoutProperty(`STCAP_${stateCodeArray[i]}`, 'visibility', status)
+  }
+}
+
+const showHideAllTerritoryLabels = (territoryCodeArray, status) => {
+  for (let i = 0; i < territoryCodeArray.length; i += 1) {
+    map.setLayoutProperty(`${territoryCodeArray[i]}`, 'visibility', status)
   }
 }
 
@@ -64,18 +79,20 @@ export default class Maps extends React.Component {
       const placeCode = nextProps.namedPlace
       let layerIdentifier = ''
       if (this.props.layer.charAt(0) === '_' && this.props.quizType === 'FFA') {
+        console.log('HERE')
         layerIdentifier = placeCode + this.props.layer
-        console.log('setting layout and paint')
         map.setLayoutProperty(placeCode, 'visibility', 'visible')
         map.setPaintProperty(placeCode, 'fill-opacity', 1)
         map.setPaintProperty(placeCode, 'fill-color', 'hsla(115, 56%, 65%, 1)')
       } else if (this.props.layer.charAt(0) === '_' && this.props.quizType === 'NTP') {
+        // specifically for water quizzes
         layerIdentifier = placeCode + this.props.layer
       } else {
+        // for layers that don't have '_LABEL' in them, will normalize soon
         layerIdentifier = this.props.layer + placeCode
       }
+      console.log('DOING IT')
       map.setLayoutProperty(layerIdentifier, 'visibility', 'visible')
-
       // map.setPaintProperty(layerIdentifier, 'fill-outline-color', 'rgb(41, 169, 45)')
     }
 
@@ -88,7 +105,9 @@ export default class Maps extends React.Component {
 
       if (nextProps.clearLabels === true) {
         showHideAllCountryLabels(CODES.COUNTRIES, 'none')
-        showHideAllStateLabels(CODES.STATES, 'none')
+        showHideAllStateLabels(CODES.ST, 'none')
+        showHideAllStateCapLabels(CODES.ST_CAP, 'none')
+        showHideAllTerritoryLabels(CODES.TER, 'none')
         showHideAllWaterLabels(CODES.WATER, 'none')
       }
     }
