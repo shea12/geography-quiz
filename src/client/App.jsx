@@ -35,6 +35,11 @@ Notes:
   add lonlatzoom for country close ups
   on give up, show all unnamed places in red before zooming back out
   incorporate custom mapbox style
+  9/25
+  add landmark layers to map, add 5 US territories layers to map
+  add territories, landmarks quiz buttons
+  add landmark schema, route, controller to server
+  add landmarks to db.landmarks
 */
 
 const axios = require('axios')
