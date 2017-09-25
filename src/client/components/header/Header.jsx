@@ -12,12 +12,29 @@ const style = {
   },
 }
 
+function sizeButton(title) {
+  let len = title.length
+  let size = len * 9
+  return size > 110 ? size : 110
+}
+
 function CreateOptionsButtons(props) {
   const categories = props.options
   const items = []
   let i = 0
   Object.keys(categories).forEach(function(item) {
-    items.push(<CategoryButton key={i} title={categories[item].title} code={item} handler={props.handler} />)
+    let width = sizeButton(categories[item].title)
+    items.push(
+      <CategoryButton 
+        key={i}
+        title={categories[item].title}
+        code={item}
+        handler={props.handler}
+        disabled={categories[item].disabled}
+        buttoncolor={categories[item].buttoncolor}
+        width={width}
+      />
+    )
     i += 1
   })
   return (
@@ -28,14 +45,6 @@ function CreateOptionsButtons(props) {
 }
 
 export default class Header extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // console.log('receiving props in header')
-  }
-
   render() {
     let backbutton = <div />
     if (!this.props.options.CTN) {

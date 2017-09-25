@@ -7,6 +7,7 @@ export default class StartButton extends React.Component {
   render() {
     return (
       <RaisedButton
+        backgroundColor='#77d868'
         style={{
           position: 'absolute',
           marginTop: 8,

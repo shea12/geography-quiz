@@ -29,6 +29,11 @@ Notes:
   Buttons could be condensed into 1 or 2 components rather than 4
   9/24:
   Morning: fix water quiz, import helper functions
+  Afternoon: spruce up styling (fix hover, add colors, buttons)
+  need to make a skip button for NTP style quizzes
+  add lonlatzoom for country close ups
+  on give up, show all unnamed places in red before zooming back out
+  incorporate custom mapbox style
 */
 
 const axios = require('axios')
@@ -109,12 +114,14 @@ export default class App extends React.Component {
           selectedQuiz: true,
           layer: this.state.options[selection].layer,
           quizTitle: this.state.options[selection].title,
+          quizDescription: this.state.options[selection].desc,
         })
       } else {
         this.setState({
           selectedQuiz: true,
           layer: this.state.options[selection].layer,
           quizTitle: this.state.options[selection].title,
+          quizDescription: this.state.options[selection].desc,
         })
       }
       this.getQuizData(this.state.options[selection].path, selection)
@@ -192,6 +199,7 @@ export default class App extends React.Component {
     } else if (this.state.selectedQuiz && !this.state.timing) {
       header = <QuizDescription
         quizTitle={this.state.quizTitle}
+        quizDescription={this.state.quizDescription}
         handleBack={this.handleBack}
         handleStart={this.handleStart}
       />
