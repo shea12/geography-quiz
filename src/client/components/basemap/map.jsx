@@ -83,12 +83,12 @@ export default class Maps extends React.Component {
       map.flyTo({
         center: [nextProps.lonlatzoom[0], nextProps.lonlatzoom[1]],
         zoom: nextProps.lonlatzoom[2],
-        speed: 0.4,
+        speed: 1,
       })
 
       if (nextProps.clearLabels === true) {
         showHideAllCountryLabels(CODES.COUNTRIES, 'none')
-        showHideAllStateLabels(CODES.US_STATES, 'none')
+        showHideAllStateLabels(CODES.STATES, 'none')
         showHideAllWaterLabels(CODES.WATER, 'none')
       }
     }
