@@ -7,6 +7,7 @@ import Maps from './components/basemap/map'
 import Header from './components/header/Header'
 import QuizDescription from './components/header/QuizDescription'
 import InputScoreTime from './components/header/InputScoreTime'
+import NextButton from './components/header/buttons/nextbutton'
 import QuizModal from './components/popups/quizmodal'
 import categories from './assets/quizcategories'
 import quicklookup from './assets/quicklookup'
@@ -30,7 +31,7 @@ Notes:
   9/24:
   Morning: fix water quiz, import helper functions
   Afternoon: spruce up styling (fix hover, add colors, buttons)
-  need to make a skip button for NTP style quizzes
+  /// done /// need to make a next button for NTP style quizzes
   add lonlatzoom for country close ups
   on give up, show all unnamed places in red before zooming back out
   incorporate custom mapbox style
@@ -68,6 +69,7 @@ export default class App extends React.Component {
     this.getFinalTime = this.getFinalTime.bind(this)
     this.handleGiveUp = this.handleGiveUp.bind(this)
     this.handleSelection = this.handleSelection.bind(this)
+    this.handleNextButton= this.handleNextButton.bind(this)
     this.handleNamedPlace = this.handleNamedPlace.bind(this)
     this.quickLookLonLatZoom = this.quickLookLonLatZoom.bind(this)
   }
@@ -158,6 +160,10 @@ export default class App extends React.Component {
     }
   }
 
+  handleNextButton() {
+    NTPgetRandomPlace.call(this)
+  }
+
   resetState(showModal, gaveUp) {
     this.setState({
       selectedQuiz: false,
@@ -189,6 +195,12 @@ export default class App extends React.Component {
   render() {
     let header = <div />
     let quizmodal = <div />
+    let nextbutton = <div />
+    if (this.state.quizType === 'NTP') {
+      nextbutton = <NextButton handleNextButton={this.handleNextButton} />
+    } else {
+      nextbutton = <div />
+    }
 
     if (!this.state.selectedQuiz) {
       header = <Header
@@ -204,15 +216,20 @@ export default class App extends React.Component {
         handleStart={this.handleStart}
       />
     } else if (this.state.selectedQuiz && this.state.timing) {
-      header = <InputScoreTime 
-        timing={this.state.timing}
-        remaining={this.state.placesRemaining}
-        handleTimer={this.handleTimer}
-        handleInput={this.handleInput}
-        handleBack={this.handleBack}
-        getFinalTime={this.getFinalTime}
-        handleGiveUp={this.handleGiveUp}
-      />
+      header = (
+        <div>
+          <InputScoreTime 
+          timing={this.state.timing}
+          remaining={this.state.placesRemaining}
+          handleTimer={this.handleTimer}
+          handleInput={this.handleInput}
+          handleBack={this.handleBack}
+          getFinalTime={this.getFinalTime}
+          handleGiveUp={this.handleGiveUp}
+          />
+          {nextbutton}
+        </div>
+      )
     }
     
     if (!this.state.timing && this.state.showquizModal) {
