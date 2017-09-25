@@ -49,13 +49,14 @@ export default class WelcomeModal extends React.Component {
         >
           <div style={style.modalInner}>
             <p>
-              <br /><br />
+              <br />
               Test your knowledge on a wide
-              array of administrative, political, and geographic features around the world.
-              All quizzes are timed so you can keep track of your progress.
-              Current quizzes include countries, capitals, states, and bodies of water.
+              array of geographic and administrative features around the world.
               <br /><br />
-              Quizzes coming soon: landforms, cities, and world leaders
+              All quizzes are timed so you can keep track of your progress.
+              Current quizzes include countries, capitals, states, territories, bodies of water and landmarks.
+              <br /><br />
+              Quizzes coming soon: cities and world leaders
               <br /><br />
               Feel free to explore the map and when you are ready,
               get started with the quiz categories above.
