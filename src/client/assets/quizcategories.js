@@ -186,7 +186,7 @@ const categories = {
       },
     },
   },
-  BOW: {
+  BW: {
     buttoncolor: '#c2e59e', // light green
     title: 'Bodies of Water',
     disabled: false,
