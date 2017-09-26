@@ -33,14 +33,15 @@ Notes:
   Afternoon: spruce up styling (fix hover, add colors, buttons)
   /// done /// need to make a next button for NTP style quizzes
   add lonlatzoom for country close ups
-  on give up, show all unnamed places in red before zooming back out
+  *** on give up, zoom to quiz begin level, show modal with button
+    to see all unnamed places in red ***
   incorporate custom mapbox style
   9/25
   add landmark layers to map, add 5 US territories layers to map
   add territories, landmarks quiz buttons
   add landmark schema, route, controller to server
   add landmarks to db.landmarks
-  NTP need to pause for a moment after correct answer is entered 
+  /// done /// NTP need to pause for a moment after correct answer is entered 
 */
 
 const axios = require('axios')
@@ -74,10 +75,12 @@ export default class App extends React.Component {
     this.handleInput = this.handleInput.bind(this)
     this.getFinalTime = this.getFinalTime.bind(this)
     this.handleGiveUp = this.handleGiveUp.bind(this)
+    this.handleClearMap = this.handleClearMap.bind(this)
     this.handleSelection = this.handleSelection.bind(this)
     this.handleNextButton= this.handleNextButton.bind(this)
     this.handleNamedPlace = this.handleNamedPlace.bind(this)
     this.quickLookLonLatZoom = this.quickLookLonLatZoom.bind(this)
+    this.handleShowUnnamedPlaces = this.handleShowUnnamedPlaces.bind(this)
   }
 
   quickLookLonLatZoom(selPlace, callback) {
@@ -170,32 +173,61 @@ export default class App extends React.Component {
     NTPgetRandomPlace.call(this)
   }
 
-  resetState(showModal, gaveUp) {
+  resetState() {
     this.setState({
       selectedQuiz: false,
       timing: false,
       lonlatzoom: [0.2, 20.6, 2],
-      clearLabels: true,
       options: categories,
-      showquizModal: showModal,
-      gaveUp: gaveUp,
+      clearLabels: false,
     })
   }
 
   handleBack() {
-    this.resetState(false)
+    this.resetState()
+  }
+
+  handleClearMap() {
+    this.setState({
+      clearLabels: true,
+      unnamedPlaces: false,
+    })
+  }
+
+  handleCompleteQuiz() {
+    this.setState({
+      timing: false,
+      showquizModal: true,
+      gaveUp: false,
+    })
+    this.resetState()
   }
 
   handleTimer(startStop, complete) {
     if (startStop && !complete) {
       this.setState({ timing: true })
     } else if (!startStop && complete) {
-      this.resetState(true, false)
+      this.handleCompleteQuiz()
     }
   }
 
   handleGiveUp() {
-    this.resetState(true, true)
+    this.setState({
+      timing: false,
+      showquizModal: true,
+      gaveUp: true,
+    })
+  }
+
+  handleShowUnnamedPlaces() {
+    console.log('handling show unnamed places')
+    // zoom to original quiz llz OR world view
+
+    // send all places remaining in placesArray to map
+    let remainingPlaces = this.state.placesArray.slice()
+    this.setState({
+      unnamedPlaces: remainingPlaces
+    })
   }
 
   render() {
@@ -213,6 +245,7 @@ export default class App extends React.Component {
         options={this.state.options}
         handler={this.handleSelection}
         handleBack={this.handleBack}
+        handleClearMap={this.handleClearMap}
       />
     } else if (this.state.selectedQuiz && !this.state.timing) {
       header = <QuizDescription
@@ -220,6 +253,7 @@ export default class App extends React.Component {
         quizDescription={this.state.quizDescription}
         handleBack={this.handleBack}
         handleStart={this.handleStart}
+        handleClearMap={this.handleClearMap}
       />
     } else if (this.state.selectedQuiz && this.state.timing) {
       header = (
@@ -246,6 +280,7 @@ export default class App extends React.Component {
         gaveUp={this.state.gaveUp}
         placesNumber={this.state.placesNumber}
         placesRemaining={this.state.placesRemaining}
+        handleShowUnnamedPlaces={this.handleShowUnnamedPlaces}
       />)
     } else {
       quizmodal = <div />
@@ -259,13 +294,13 @@ export default class App extends React.Component {
           <WelcomeModal />
           
           {header}
-          
           <Maps
             lonlatzoom={this.state.lonlatzoom}
             namedPlace={this.state.namedPlace}
             layer={this.state.layer}
             clearLabels={this.state.clearLabels}
             quizType={this.state.quizType}
+            unnamedPlaces={this.state.unnamedPlaces}
           />
 
           {quizmodal}
