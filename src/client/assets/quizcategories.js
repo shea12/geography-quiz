@@ -17,7 +17,7 @@ const categories = {
             desc: 'Can you name all 23 countries of North America? Hint: there are a lot of tiny Caribbean islands',
             quiz: true,
             path: '/NA/get-countries',
-            layer: '_LABEL',
+            layer: 'C_',
           },
           NACA: {
             title: 'Capitals',
@@ -89,7 +89,7 @@ const categories = {
             desc: 'Can you name 12 countries of South America?',
             quiz: true,
             path: '/SA/get-countries',
-            layer: '_LABEL',
+            layer: 'C_',
           },
           SACA: {
             title: 'Capitals',
@@ -110,7 +110,7 @@ const categories = {
             desc: 'Can you name all 55 countries of Africa? Hint: spelling counts',
             quiz: true,
             path: '/AF/get-countries',
-            layer: '_LABEL',
+            layer: 'C_',
           },
           AFCA: {
             title: 'Capitals',
@@ -138,7 +138,7 @@ const categories = {
             desc: 'Can you name all 46 countries of Europe? Hint: there are 5 micro-states',
             quiz: true,
             path: '/EU/get-countries',
-            layer: '_LABEL',
+            layer: 'C_',
           },
           EUCA: {
             title: 'Capitals',
@@ -166,7 +166,7 @@ const categories = {
             desc: 'Can you name all countries of Asia?',
             quiz: true,
             path: '/AS/get-countries',
-            layer: '_LABEL',
+            layer: 'C_',
           },
           ASCA: {
             title: 'Capitals',
@@ -187,7 +187,7 @@ const categories = {
             desc: 'Can you name all countries of Oceania? Hint: lots of tiny islands',
             quiz: true,
             path: '/OC/get-countries',
-            layer: '_LABEL',
+            layer: 'C_',
           },
           OCCA: {
             title: 'Capitals',
@@ -215,7 +215,7 @@ const categories = {
     desc: 'Can you name these 29 major bodies of water around the world?',
     quiz: true,
     path: '/get-bodies-of-water',
-    layer: '_LABEL',
+    layer: 'BW_',
     // categories: {
     //   BW: {
     //     buttoncolor: '#87e079', // change this
