@@ -6,7 +6,7 @@ module.exports = {
   getBodiesOfWater: (req, res) => {
     return Water.find()
       .then((bow) => {
-        res.status(200).send({water: bow})
+        res.status(200).send({ places: bow })
       })
       .catch((error) => {
         /* eslint-disable */

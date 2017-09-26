@@ -15,31 +15,20 @@ export default class ScoreKeeper extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      continent: null,
       remain: null,
     }
   }
 
   componentWillMount() {
     this.setState({
-      continent: this.props.continent,
-      remain: this.props.placesArray.length,
+      remain: this.props.remaining,
     })
   }
 
   componentWillReceiveProps(nextProps) {
-    const remaining = nextProps.placesArray.length
-    if (this.state.continent === nextProps.continent) {
-      // the continent has not changed
-      // check for updates to found and remaining
+    if (this.props.remaining !== nextProps.remaining) {
       this.setState({
-        remain: remaining,
-      })
-    } else {
-      // the continent has changed, must reset state
-      this.setState({
-        continent: nextProps.continent,
-        remain: remaining,
+        remain: nextProps.remaining,
       })
     }
   }
@@ -54,6 +43,5 @@ export default class ScoreKeeper extends React.Component {
 }
 
 ScoreKeeper.propTypes = {
-  continent: PropTypes.string,
-  placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
+  remaining: PropTypes.number.isRequired
 }

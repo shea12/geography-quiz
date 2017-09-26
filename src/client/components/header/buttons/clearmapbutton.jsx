@@ -3,26 +3,26 @@ import RaisedButton from 'material-ui/RaisedButton'
 import PropTypes from 'prop-types'
 
 // LINT: component should be written as a pure function
-export default class BackButton extends React.Component {
+export default class ClearMapButton extends React.Component {
   render() {
     return (
       <RaisedButton
         style={{
-          position: 'absolute',
-          marginTop: 8,
+          position: 'relative',
+          marginTop: '48%',
           zIndex: 2,
-          marginLeft: 20,
+          marginLeft: '3%',
         }}
         onClick={
-          () => this.props.handleBackButton()
+          () => this.props.handleClearMap()
         }
       >
-        Back
+        Clear Map
       </RaisedButton>
     )
   }
 }
 
-BackButton.propTypes = {
-  handleBackButton: PropTypes.func.isRequired,
+ClearMapButton.propTypes = {
+  handleClearMap: PropTypes.func.isRequired,
 }

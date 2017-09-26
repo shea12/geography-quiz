@@ -25,7 +25,7 @@ module.exports = {
       continent: req.params.continent,
     })
       .then((country) => {
-        res.status(200).send({ countries: country })
+        res.status(200).send({ places: country })
       })
       .catch((error) => {
         /* eslint-disable */
