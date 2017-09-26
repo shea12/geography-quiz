@@ -16,41 +16,6 @@ const style = {
 
 let map = {}
 
-// TODO: all of these can be condensed to 1 or 2 functions.
-const showHideAllCountryLabels = (countryCodeArray, status) => {
-  for (let i = 0; i < countryCodeArray.length; i += 1) {
-    map.setLayoutProperty(`${countryCodeArray[i]}_LABEL`, 'visibility', status)
-    map.setPaintProperty(countryCodeArray[i], 'fill-opacity', 0)
-  }
-}
-
-const showHideAllStateLabels = (stateCodeArray, status) => {
-  for (let i = 0; i < stateCodeArray.length; i += 1) {
-    // format ST_{country abbrv}_{state abbrv}
-    map.setLayoutProperty(`ST_${stateCodeArray[i]}`, 'visibility', status)
-  }
-}
-
-const showHideAllStateCapLabels = (stateCodeArray, status) => {
-  for (let i = 0; i < stateCodeArray.length; i += 1) {
-    // ST_CAP_{country abbrv}_{state abbrv}
-    map.setLayoutProperty(`ST_${stateCodeArray[i]}`, 'visibility', status)
-    map.setLayoutProperty(`STCAP_${stateCodeArray[i]}`, 'visibility', status)
-  }
-}
-
-const showHideAllTerritoryLabels = (territoryCodeArray, status) => {
-  for (let i = 0; i < territoryCodeArray.length; i += 1) {
-    map.setLayoutProperty(`${territoryCodeArray[i]}`, 'visibility', status)
-  }
-}
-
-const showHideAllWaterLabels = (waterCodeArray, status) => {
-  for (let i = 0; i < waterCodeArray.length; i += 1) {
-    map.setLayoutProperty(`${waterCodeArray[i]}_LABEL`, 'visibility', status)
-  }
-}
-
 export default class Maps extends React.Component {
   componentDidMount() {
     MapboxGl.accessToken = KEYS.access_token
@@ -66,14 +31,13 @@ export default class Maps extends React.Component {
       minZoom: 2,
     })
     history.pushState(null, null, '/?')
-    // map.on('click', (e) => {
-    //   return e
-    //   // const features = map.queryRenderedFeatures(e.point)
-    //   // console.log('features: ', features)
-    // })
-    this.flyToLocation = this.flyToLocation.bind(this)
-  }
 
+    this.flyToLocation = this.flyToLocation.bind(this)
+    this.shadeInCountry = this.shadeInCountry.bind(this)
+    this.toggleLabels = this.toggleLabels.bind(this)
+    this.showLabel = this.showLabel.bind(this)
+  }
+  
   flyToLocation(lonlatzoom) {
     map.flyTo({
       center: [lonlatzoom[0], lonlatzoom[1]],
@@ -81,60 +45,82 @@ export default class Maps extends React.Component {
       speed: .5,
     })
   }
-  
+
+  shadeInCountry(abbrv, color) {
+    // make country shape visible, filled in, {color}, grey outline
+    map.setLayoutProperty(abbrv, 'visibility', 'visible')
+    map.setPaintProperty(abbrv, 'fill-opacity', 1)
+    map.setPaintProperty(abbrv, 'fill-color', color)
+    map.setPaintProperty(abbrv, 'fill-outline-color', 'rgba(255, 255, 255, 0)')
+  }
+
+  removeShading(abbrvs) {
+    for (let i = 0; i < abbrvs.length; i+=1) {
+      map.setPaintProperty(abbrvs[i], 'fill-opacity', 0)
+    }
+  }
+
+  toggleLabels(prefix, abbrvs, visibility) {
+    for (let i = 0; i < abbrvs.length; i+=1) {
+      let label = prefix + abbrvs[i]
+      map.setLayoutProperty(label, 'visibility', visibility)
+    }
+  }
+
+  showLabel(abbrv) {
+    let label = this.props.layer + abbrv
+    map.setLayoutProperty(label, 'visibility', 'visible')
+  }
 
   componentWillReceiveProps(nextProps) {
-    // display country label, shade in country area after it is found
-    if (this.props.namedPlace !== nextProps.namedPlace) {
-      const placeCode = nextProps.namedPlace
-      let layerIdentifier = ''
-      if (this.props.layer.charAt(0) === '_' && this.props.quizType === 'FFA') {
-        layerIdentifier = placeCode + this.props.layer
-        map.setLayoutProperty(placeCode, 'visibility', 'visible')
-        map.setPaintProperty(placeCode, 'fill-opacity', 1)
-        map.setPaintProperty(placeCode, 'fill-color', 'hsla(115, 56%, 65%, 1)')
-      } else if (this.props.layer.charAt(0) === '_' && this.props.quizType === 'NTP') {
-        // specifically for water quizzes
-        layerIdentifier = placeCode + this.props.layer
-        console.log('layerIdentifier: ', layerIdentifier)
-        map.setLayoutProperty(layerIdentifier, 'visibility', 'visible')
-      } else {
-        // for layers that don't have '_LABEL' in them, will normalize soon
-        layerIdentifier = this.props.layer + placeCode
-        map.setLayoutProperty(layerIdentifier, 'visibility', 'visible')
-      }
-      map.setLayoutProperty(layerIdentifier, 'visibility', 'visible')
-      // map.setPaintProperty(layerIdentifier, 'fill-outline-color', 'rgb(41, 169, 45)')
-    }
-
     if (nextProps.lonlatzoom !== this.props.lonlatzoom) {
       // need to set different timeout intervals depending on props
-      setTimeout(() => { this.flyToLocation(nextProps.lonlatzoom)}, 1000)
+      setTimeout(() => { this.flyToLocation(nextProps.lonlatzoom)}, 750)
     }
 
-    if (nextProps.clearLabels === true) {
-      console.log('hiding all labels')
-      showHideAllCountryLabels(CODES.COUNTRIES, 'none')
-      showHideAllStateLabels(CODES.ST, 'none')
-      showHideAllStateCapLabels(CODES.ST_CAP, 'none')
-      showHideAllTerritoryLabels(CODES.TER, 'none')
-      showHideAllWaterLabels(CODES.WATER, 'none')
-    }
+    if (this.props.namedPlace !== nextProps.namedPlace) {
+      let abbrv = nextProps.namedPlace
+      this.showLabel(abbrv)
+      // if country or country capital quiz, shade country green
+      if (this.props.layer === 'C_' || this.props.layer === 'CCAP_') {
+        this.shadeInCountry(abbrv, 'rgba(34, 176, 27, 0.26)')
+      }
 
-    if (nextProps.unnamedPlaces) {
-      console.log('Showing unnamed places')
-      // this is being called several times, need to consolidate setState functions
-      // let layer = nextProps.unnamedPlaces[i].abbrv +
-      for (var i = 0; i < nextProps.unnamedPlaces.length; i++) {
-        let label = nextProps.unnamedPlaces[i].abbrv + '_LABEL'
-        let shape = nextProps.unnamedPlaces[i].abbrv
-        map.setLayoutProperty(label, 'visibility', 'visible')
-        map.setLayoutProperty(shape, 'visibility', 'visible')
-        map.setPaintProperty(shape, 'fill-opacity', 1)
-        map.setPaintProperty(shape, 'fill-color', 'rgb(193, 38, 27)')
-        map.setPaintProperty(shape, 'fill-outline-color', 'rgb(168, 23, 13)')
+      if (this.props.layer === 'BW_') {
+        let waterLabel = this.props.layer + abbrv
+        map.setPaintProperty(waterLabel, 'text-color', 'hsla(212, 3%, 39%, 0.85)')
       }
     }
+
+    if (nextProps.showUnnamedPlaces && nextProps.placesArray.length !== 0) {
+      console.log('Showing unnamed places')
+      for (var i = 0; i < nextProps.placesArray.length; i++) {
+        let abbrv = nextProps.placesArray[i].abbrv
+        this.showLabel(abbrv)
+        // if country or country capital quiz, shade unnamed countries red
+        if (this.props.layer === 'C_' || this.props.layer === 'CCAP_') {
+          this.shadeInCountry(abbrv, 'rgba(220, 57, 24, 0.26)')
+        }
+        if (this.props.layer === 'BW_') {
+          let waterLabel = this.props.layer + abbrv
+          map.setPaintProperty(waterLabel, 'text-color', 'hsla(12, 82%, 49%, 0.8)')
+        }
+      }
+    }
+
+    // if (nextProps.clearLabels === true) {
+    //   console.log('hiding all labels and shading')
+    //   this.toggleLabels('C_', CODES.C, 'none')
+    //   this.toggleLabels('BW_', CODES.BW, 'none')
+    //   this.toggleLabels('TE_', CODES.TE, 'none')
+    //   this.toggleLabels('ST_', CODES.ST, 'none')
+    //   this.toggleLabels('CCAP_', CODES.C, 'none')
+    //   this.toggleLabels('STCAP_', CODES.STCAP, 'none')
+    //   // this.toggleLabels('LM_', CODES.LM, 'none')
+    //   // this.toggleLabels('TECAP_', CODES.TECAP, 'none')
+    //   this.removeShading(CODES.C)
+    //   this.props.resetClearMap()
+    // }
   }
 
   render() {
@@ -145,10 +131,18 @@ export default class Maps extends React.Component {
 }
 
 Maps.propTypes = {
-  lonlatzoom: PropTypes.arrayOf(PropTypes.number).isRequired,
-  namedPlace: PropTypes.string.isRequired,
   layer: PropTypes.string,
-  clearLabels: PropTypes.bool,
   quizType: PropTypes.string,
-  unnamedPlaces: PropTypes.arrayOf(PropTypes.object),
+  clearLabels: PropTypes.bool,
+  showUnnamedPlaces: PropTypes.bool,
+  namedPlace: PropTypes.string.isRequired,
+  resetClearMap: PropTypes.func.isRequired,
+  placesArray: PropTypes.arrayOf(PropTypes.object),
+  lonlatzoom: PropTypes.arrayOf(PropTypes.number).isRequired,
 }
+
+// map.on('click', (e) => {
+//   return e
+//   // const features = map.queryRenderedFeatures(e.point)
+//   // console.log('features: ', features)
+// })
