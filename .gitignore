@@ -9,4 +9,4 @@ node_modules/
 /dbkey.js
 /.env
 src/compiled/
-src/deploy/
+
