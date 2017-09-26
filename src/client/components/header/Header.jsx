@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import CategoryButton from './buttons/categorybutton'
 import BackButton from './buttons/backbutton'
+import ClearMapButton from './buttons/clearmapbutton'
 
 const style = {
   buttonGrouping: {
@@ -61,6 +62,7 @@ export default class Header extends React.Component {
             handler={this.props.handler}
           />
         </div>
+        <ClearMapButton handleClearMap={this.props.handleClearMap} />
       </div>
     )
   }
@@ -70,4 +72,5 @@ Header.propTypes = {
   options: PropTypes.object.isRequired,
   handler: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
+  handleClearMap: PropTypes.func,
 }
