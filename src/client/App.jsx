@@ -40,6 +40,7 @@ Notes:
   add territories, landmarks quiz buttons
   add landmark schema, route, controller to server
   add landmarks to db.landmarks
+  NTP need to pause for a moment after correct answer is entered 
 */
 
 const axios = require('axios')
@@ -86,7 +87,7 @@ export default class App extends React.Component {
   getQuizData(path, selection) {
     let lonlatzoo = ''
     let quiztype = ''
-    if (selection !== 'BW') {
+    if (selection !== 'BW' && selection !== 'LF') {
       const abbrv = selection.charAt(0) + selection.charAt(1)
       this.quickLookLonLatZoom(abbrv, function (llz) {
         lonlatzoo = llz
