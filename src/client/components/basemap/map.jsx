@@ -113,11 +113,27 @@ export default class Maps extends React.Component {
     }
 
     if (nextProps.clearLabels === true) {
+      console.log('hiding all labels')
       showHideAllCountryLabels(CODES.COUNTRIES, 'none')
       showHideAllStateLabels(CODES.ST, 'none')
       showHideAllStateCapLabels(CODES.ST_CAP, 'none')
       showHideAllTerritoryLabels(CODES.TER, 'none')
       showHideAllWaterLabels(CODES.WATER, 'none')
+    }
+
+    if (nextProps.unnamedPlaces) {
+      console.log('Showing unnamed places')
+      // this is being called several times, need to consolidate setState functions
+      // let layer = nextProps.unnamedPlaces[i].abbrv +
+      for (var i = 0; i < nextProps.unnamedPlaces.length; i++) {
+        let label = nextProps.unnamedPlaces[i].abbrv + '_LABEL'
+        let shape = nextProps.unnamedPlaces[i].abbrv
+        map.setLayoutProperty(label, 'visibility', 'visible')
+        map.setLayoutProperty(shape, 'visibility', 'visible')
+        map.setPaintProperty(shape, 'fill-opacity', 1)
+        map.setPaintProperty(shape, 'fill-color', 'rgb(193, 38, 27)')
+        map.setPaintProperty(shape, 'fill-outline-color', 'rgb(168, 23, 13)')
+      }
     }
   }
 
@@ -134,4 +150,5 @@ Maps.propTypes = {
   layer: PropTypes.string,
   clearLabels: PropTypes.bool,
   quizType: PropTypes.string,
+  unnamedPlaces: PropTypes.arrayOf(PropTypes.object),
 }
