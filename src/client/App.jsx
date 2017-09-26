@@ -11,6 +11,7 @@ import NextButton from './components/header/buttons/nextbutton'
 import QuizModal from './components/popups/quizmodal'
 import categories from './assets/quizcategories'
 import quicklookup from './assets/quicklookup'
+import ClearMapButton from './components/header/buttons/clearmapbutton'
 
 import {
   NTPgetRandomPlace,
@@ -44,6 +45,13 @@ Notes:
   /// done /// add clear map button
   /// done /// add show unnamed places button
   *** TODO *** ^^ both need tweaking
+
+  9/26:
+  *** TODO *** security basics, esp input box XSS
+  *** TODO *** smooth out show/hide/giveup/clearmap
+  *** TODO *** make clearMap button only appear if map is not clear
+  *** TODO *** make water labels darker / more easily visible
+  *** TODO *** shade in coutries of capitals
 */
 
 const axios = require('axios')
@@ -69,7 +77,6 @@ export default class App extends React.Component {
       finalTime: 0,
     }
 
-    this.handleBack = this.handleBack.bind(this)
     this.resetState = this.resetState.bind(this)
     this.getQuizData = this.getQuizData.bind(this)
     this.handleStart = this.handleStart.bind(this)
@@ -77,10 +84,12 @@ export default class App extends React.Component {
     this.handleInput = this.handleInput.bind(this)
     this.getFinalTime = this.getFinalTime.bind(this)
     this.handleGiveUp = this.handleGiveUp.bind(this)
+    this.resetClearMap = this.resetClearMap.bind(this)
     this.handleClearMap = this.handleClearMap.bind(this)
     this.handleSelection = this.handleSelection.bind(this)
     this.handleNextButton= this.handleNextButton.bind(this)
     this.handleNamedPlace = this.handleNamedPlace.bind(this)
+    this.handleBackButton = this.handleBackButton.bind(this)
     this.quickLookLonLatZoom = this.quickLookLonLatZoom.bind(this)
     this.handleShowUnnamedPlaces = this.handleShowUnnamedPlaces.bind(this)
   }
@@ -152,6 +161,7 @@ export default class App extends React.Component {
   handleStart() {
     this.setState({
       timing: true,
+      clearLabels: true,
     })
     if (this.state.quizType === 'NTP') {
       NTPgetRandomPlace.call(this)
@@ -179,38 +189,24 @@ export default class App extends React.Component {
     this.setState({
       selectedQuiz: false,
       timing: false,
-      lonlatzoom: [0.2, 20.6, 2],
+      finalTime: '',
+      // lonlatzoom: [0.2, 20.6, 2],
       options: categories,
       clearLabels: false,
-    })
-  }
-
-  handleBack() {
-    this.resetState()
-  }
-
-  handleClearMap() {
-    this.setState({
-      clearLabels: true,
-      unnamedPlaces: false,
-    })
-  }
-
-  handleCompleteQuiz() {
-    this.setState({
-      timing: false,
-      showquizModal: true,
       gaveUp: false,
+      placesArray: [],
+      placesNumber: 0,
+      placesRemaining: 0,
+      quizDescription: '',
+      quizType: '',
+      quizTitle: '',
+      showquizModal: false,
+      showUnnamedPlaces: false,
     })
-    this.resetState()
   }
 
-  handleTimer(startStop, complete) {
-    if (startStop && !complete) {
-      this.setState({ timing: true })
-    } else if (!startStop && complete) {
-      this.handleCompleteQuiz()
-    }
+  handleBackButton() {
+    this.resetState()
   }
 
   handleGiveUp() {
@@ -224,12 +220,38 @@ export default class App extends React.Component {
   handleShowUnnamedPlaces() {
     console.log('handling show unnamed places')
     // zoom to original quiz llz OR world view
-
-    // send all places remaining in placesArray to map
-    let remainingPlaces = this.state.placesArray.slice()
     this.setState({
-      unnamedPlaces: remainingPlaces
+      lonlatzoom: this.state.lonlatzoom,
+      showUnnamedPlaces: true,
     })
+  }
+
+  handleClearMap() {
+    this.setState({
+      showUnnamedPlaces: false,
+      clearLabels: true,
+    })
+  }
+
+  resetClearMap() {
+    this.setState({
+      clearLabels: false,
+    })
+  }
+
+  handleTimer(startStop, complete) {
+    if (startStop && !complete) {
+      // quiz is neither complete nor given up, continuing
+      this.setState({ timing: true })
+    } else if (!startStop && complete) {
+      // user completed quiz 100%
+      this.setState({
+        timing: false,
+        showquizModal: true,
+        gaveUp: false,
+      })
+      // when user clicks outside modal, resetState is called
+    }
   }
 
   render() {
@@ -246,14 +268,14 @@ export default class App extends React.Component {
       header = <Header
         options={this.state.options}
         handler={this.handleSelection}
-        handleBack={this.handleBack}
+        handleBackButton={this.handleBackButton}
         handleClearMap={this.handleClearMap}
       />
     } else if (this.state.selectedQuiz && !this.state.timing) {
       header = <QuizDescription
         quizTitle={this.state.quizTitle}
         quizDescription={this.state.quizDescription}
-        handleBack={this.handleBack}
+        handleBackButton={this.handleBackButton}
         handleStart={this.handleStart}
         handleClearMap={this.handleClearMap}
       />
@@ -265,7 +287,7 @@ export default class App extends React.Component {
           remaining={this.state.placesRemaining}
           handleTimer={this.handleTimer}
           handleInput={this.handleInput}
-          handleBack={this.handleBack}
+          handleBackButton={this.handleBackButton}
           getFinalTime={this.getFinalTime}
           handleGiveUp={this.handleGiveUp}
           />
@@ -276,7 +298,7 @@ export default class App extends React.Component {
     
     if (!this.state.timing && this.state.showquizModal) {
       quizmodal = (<QuizModal
-        onClose={this.handleBack}
+        handleBackButton={this.handleBackButton}
         time={this.state.finalTime}
         quizTitle={this.state.quizTitle}
         gaveUp={this.state.gaveUp}
@@ -301,11 +323,14 @@ export default class App extends React.Component {
             namedPlace={this.state.namedPlace}
             layer={this.state.layer}
             clearLabels={this.state.clearLabels}
+            resetClearMap={this.resetClearMap}
             quizType={this.state.quizType}
-            unnamedPlaces={this.state.unnamedPlaces}
+            placesArray={this.state.placesArray}
+            showUnnamedPlaces={this.state.showUnnamedPlaces}
           />
 
           {quizmodal}
+          <ClearMapButton handleClearMap={this.handleClearMap} />
         </div>
       </MuiThemeProvider>
     )
