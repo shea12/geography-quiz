@@ -26,7 +26,7 @@ export default class QuizModal extends React.Component {
 
   close() {
     this.setState({ open: false })
-    this.props.onClose()
+    this.props.handleBackButton()
   }
 
   render() {
@@ -58,7 +58,7 @@ export default class QuizModal extends React.Component {
 }
 
 QuizModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  handleBackButton: PropTypes.func.isRequired,
   time: PropTypes.string.isRequired,
   quizTitle: PropTypes.string.isRequired,
   gaveUp: PropTypes.bool.isRequired,
