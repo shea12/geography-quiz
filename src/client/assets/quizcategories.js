@@ -223,23 +223,7 @@ const categories = {
     //   },
     // },
   },
-  GTC: {
-    buttoncolor: '#c7b6ed', // light purple
-    title: 'Guess the City',
-    disabled: false,
-    desc: 'Can you identify the city?',
-    quiz: true,
-    path:'/not-available',
-    // categories: {
-    //   GC: {
-    //     title: 'City Guesser',
-    //     desc: 'Can you identify the city?',
-    //     quiz: true,
-    //     path:'/not-available',
-    //   },
-    // },
-  },
-  LDF: {
+  LF: {
     buttoncolor: '#e5d55b', // yellow
     title: 'Landmarks',
     disabled: false,
@@ -251,6 +235,22 @@ const categories = {
     //   LF: {
     //     title: 'Major Landforms',
     //     desc: 'Can you name each of these notable landforms?',
+    //     quiz: true,
+    //     path:'/not-available',
+    //   },
+    // },
+  },
+  GTC: {
+    buttoncolor: '#c7b6ed', // light purple
+    title: 'Guess the City',
+    disabled: false,
+    desc: 'Can you identify the city?',
+    quiz: true,
+    path:'/not-available',
+    // categories: {
+    //   GC: {
+    //     title: 'City Guesser',
+    //     desc: 'Can you identify the city?',
     //     quiz: true,
     //     path:'/not-available',
     //   },
