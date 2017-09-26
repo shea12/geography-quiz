@@ -14,7 +14,7 @@ export default class BackButton extends React.Component {
           marginLeft: 20,
         }}
         onClick={
-          () => this.props.handleBack()
+          () => this.props.handleBackButton()
         }
       >
         Back
@@ -24,5 +24,5 @@ export default class BackButton extends React.Component {
 }
 
 BackButton.propTypes = {
-  handleBack: PropTypes.func.isRequired,
+  handleBackButton: PropTypes.func.isRequired,
 }

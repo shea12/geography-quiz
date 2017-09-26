@@ -13,7 +13,7 @@ export default class InputScoreTime extends React.Component {
       <div>
         <Input handleInput={this.props.handleInput} />
         <ScoreKeeper remaining={this.props.remaining} />
-        <BackButton handleBack={this.props.handleBack} />
+        <BackButton handleBackButton={this.props.handleBackButton} />
         <GiveUpButton handleGiveUp={this.props.handleGiveUp} />
         <Timer
           timing={this.props.timing}
@@ -30,7 +30,7 @@ InputScoreTime.propTypes = {
   remaining: PropTypes.number.isRequired,
   handleTimer: PropTypes.func.isRequired,
   handleInput: PropTypes.func.isRequired,
-  handleBack: PropTypes.func.isRequired,
+  handleBackButton: PropTypes.func.isRequired,
   getFinalTime: PropTypes.func.isRequired,
   handleGiveUp: PropTypes.func.isRequired,
 }

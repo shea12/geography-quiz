@@ -8,10 +8,10 @@ export default class ClearMapButton extends React.Component {
     return (
       <RaisedButton
         style={{
-          position: 'absolute',
-          marginTop: 8,
+          position: 'relative',
+          marginTop: '48%',
           zIndex: 2,
-          marginLeft: '88%',
+          marginLeft: '3%',
         }}
         onClick={
           () => this.props.handleClearMap()

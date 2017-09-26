@@ -8,9 +8,11 @@ export default class ShowUnnamedPlacesButton extends React.Component {
     return (
       <RaisedButton
         style={{
+          background: 'rgb(149, 150, 148)',
           position: 'relative',
           zIndex: 2,
-          marginLeft: '10%',
+          marginLeft: '22%',
+          width: 200,
         }}
         onClick={
           () => this.props.handleShowUnnamedPlaces()

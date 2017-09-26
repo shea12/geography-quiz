@@ -25,7 +25,7 @@ export default class QuizDescription extends React.Component {
     return (
       <div>
         <StartButton style={style.buttons} handleStart={this.props.handleStart} />
-        <BackButton style={style.buttons} handleBack={this.props.handleBack} />
+        <BackButton style={style.buttons} handleBackButton={this.props.handleBackButton} />
         <div style={style.desc}>
           <p>{this.props.quizDescription}</p>
         </div>
@@ -38,5 +38,5 @@ QuizDescription.propTypes = {
   quizTitle: PropTypes.string.isRequired,
   quizDescription: PropTypes.string.isRequired,
   handleStart: PropTypes.func.isRequired,
-  handleBack: PropTypes.func.isRequired,
+  handleBackButton: PropTypes.func.isRequired,
 }
