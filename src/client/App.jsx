@@ -23,25 +23,27 @@ import {
 /*
 Notes:
   9/22:
-  PO_LABEL is not found, need to inc PO1, PO2
-  AO_LABEL needs to reference AO1 and AO2
+  *** TODO *** PO_LABEL AO_LABEL -> PO1, PO2, AO1, AO2
+
   9/23:
-  HUGE refactor
-  Buttons could be condensed into 1 or 2 components rather than 4
+  /// done /// HUGE refactor
+  *** TODO *** Buttons to be condensed into 1 or 2 components
+
   9/24:
-  Morning: fix water quiz, import helper functions
-  Afternoon: spruce up styling (fix hover, add colors, buttons)
+  /// done /// fix water quiz, import helper functions
+  /// done /// spruce up styling (fix hover, add colors, buttons)
   /// done /// need to make a next button for NTP style quizzes
-  add lonlatzoom for country close ups
-  *** on give up, zoom to quiz begin level, show modal with button
-    to see all unnamed places in red ***
-  incorporate custom mapbox style
-  9/25
-  add landmark layers to map, add 5 US territories layers to map
-  add territories, landmarks quiz buttons
-  add landmark schema, route, controller to server
-  add landmarks to db.landmarks
-  /// done /// NTP need to pause for a moment after correct answer is entered 
+  *** TODO *** add lonlatzoom for country close ups
+  *** TODO *** incorporate custom mapbox style
+
+  9/25:
+  /// done /// add landmark layers to map, add 5 US territories layers, buttons
+  /// done /// add landmark schema, route, controller to server, landmarks to db
+  /// done /// NTP need to pause for a moment after correct answer is entered
+
+  /// done /// add clear map button
+  /// done /// add show unnamed places button
+  *** TODO *** ^^ both need tweaking
 */
 
 const axios = require('axios')
