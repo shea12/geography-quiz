@@ -46,11 +46,11 @@ Notes:
   /// done /// add show unnamed places button
 
   9/26:
-  *** done *** security basics, validation on input box XSS
-  *** done *** smooth out show/hide/giveup
+  /// done /// security basics, validation on input box XSS
+  /// done /// smooth out show/hide/giveup
   *** TODO *** make clearMap button only appear if map is not clear
-  *** done *** make water labels darker / more easily visible
-  *** done *** shade in coutries of capitals
+  /// done /// make water labels darker / more easily visible
+  /// done /// shade in coutries of capitals
 
   9/27: 
   *** TODO *** custom mapbox style
@@ -58,6 +58,9 @@ Notes:
   *** TODO *** clearmap function bug fixes
   *** TODO *** remove leaders?
   *** TODO *** city (remember: need to hide movement from user)
+  *** TODO *** move quizcategories to mongodb, set up req routes
+  *** TODO *** move countryCodes to mongodb, set up req routes
+  *** TODO *** remove keys from repo
 
 
 */
