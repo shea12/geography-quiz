@@ -21,6 +21,7 @@ app.listen(port, function () {
 
 /*
 deployment process:
+  remember! <script> window.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function () {} </script>
   git push heroku master
   heroku open
   heroku logs --tail
