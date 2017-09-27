@@ -47,6 +47,15 @@ const landmarksSchema = new Schema({
   lonlatzoom: Array,
 }, { collection: 'landmarks' })
 
+const leadersSchema = new Schema({
+  name: String,
+  abbrv: String,
+  country: String,
+  title: String,
+  continent: String,
+  lonlatzoom: Array,
+}, { collection: 'leaders' })
+
 // haven't created this functionality yet, looking forward to it though
 const userSchema = new Schema({
   username: String,
@@ -67,5 +76,6 @@ module.exports = {
   territories: mongoose.model('territories', territorySchema),
   water: mongoose.model('water', waterSchema),
   landmarks: mongoose.model('landmarks', landmarksSchema),
+  leaders: mongoose.model('leaders', leadersSchema),
   users: mongoose.model('users', userSchema),
 }
