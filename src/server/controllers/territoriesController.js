@@ -1,16 +1,14 @@
 const db = require('../schemas.js')
 
-const States = db.states
+const Territories = db.territories
 
 module.exports = {
-  // description: Returns the capital of a state
-  // params: { state: abbrv of state ex: 'FL' }
-  getStates: (req, res) => {
-    return States.find({
+  getTerritories: (req, res) => {
+    return Territories.find({
       country: req.params.country,
     })
-      .then((state) => {
-        res.status(200).send({ places: state })
+      .then((territory) => {
+        res.status(200).send({ places: territory })
       })
       .catch((error) => {
         /* eslint-disable */

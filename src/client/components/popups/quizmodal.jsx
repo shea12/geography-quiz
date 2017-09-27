@@ -1,6 +1,7 @@
 import React from 'react'
 import Dialog from 'material-ui/Dialog'
 import PropTypes from 'prop-types'
+import ShowUnnamedPlacesButton from '../header/buttons/showunnamedplacesbutton'
 
 export default class QuizModal extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ export default class QuizModal extends React.Component {
 
   close() {
     this.setState({ open: false })
-    this.props.onClose()
+    this.props.handleBackButton()
   }
 
   render() {
@@ -33,9 +34,11 @@ export default class QuizModal extends React.Component {
     const time = this.props.time
     let title = 'Great Job!'
     let dialogue = `You completed ${this.props.quizTitle} quiz in ${time}`
+    let showunnamedplacesbutton = <div />
     if (this.props.gaveUp) {
       title = 'Keep Studying'
       dialogue = `Nice try, you identified ${(this.props.placesNumber - this.props.placesRemaining)} out of ${this.props.placesNumber} places in ${time}`
+      showunnamedplacesbutton = <ShowUnnamedPlacesButton handleShowUnnamedPlaces={this.props.handleShowUnnamedPlaces} />
     }
     return (
       <div>
@@ -47,6 +50,7 @@ export default class QuizModal extends React.Component {
           onRequestClose={this.close}
         >
           {dialogue}
+          {showunnamedplacesbutton}
         </Dialog>
       </div>
     )
@@ -54,10 +58,11 @@ export default class QuizModal extends React.Component {
 }
 
 QuizModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  time: PropTypes.number.isRequired,
+  handleBackButton: PropTypes.func.isRequired,
+  time: PropTypes.string.isRequired,
   quizTitle: PropTypes.string.isRequired,
   gaveUp: PropTypes.bool.isRequired,
   placesNumber: PropTypes.number.isRequired,
   placesRemaining: PropTypes.number.isRequired,
+  handleShowUnnamedPlaces: PropTypes.func.isRequired,
 }

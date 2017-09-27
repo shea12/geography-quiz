@@ -13,6 +13,23 @@ const style = {
   },
   input: {
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderBottom: '2px solid rgb(99, 99, 99)',
+    paddingLeft: 10,
+    width: 240,
+    fontColor: 'black',
+    height: 36,
+  },
+  correctInput: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderBottom: '4px solid rgb(27, 135, 13)',
+    paddingLeft: 10,
+    width: 240,
+    fontColor: 'black',
+    height: 36,
+  },
+  badInput: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderBottom: '4px solid rgb(204, 48, 48)',
     paddingLeft: 10,
     width: 240,
     fontColor: 'black',
@@ -24,92 +41,68 @@ export default class InputForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: '',
-      placesArray: [],
-      inputCheck: null,
-      modifier: null,
+      value: ''
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.validateInput = this.validateInput.bind(this)
   }
 
-  componentWillMount() {
-    let mod = null
-    if (this.props.capitals) {
-      mod = 'cap'
+  validateInput(value) {
+    const regex = /^[\w ]+$/
+    // const regex = (?:\s*[a-zA-Z0-9]{2,}\s*)*
+    if(!regex.test(value)) {
+      console.log('invalid input 1')
+      return false
     } else {
-      mod = 'name'
+      return true
     }
-    this.setState({
-      placesArray: this.props.placesArray,
-      modifier: mod,
-    })
   }
 
-  componentWillReceiveProps(nextProps) {
-    let mod = null
-    if (this.props.capitals) {
-      mod = 'cap'
-    } else {
-      mod = 'name'
-    }
-    this.setState({
-      placesArray: nextProps.placesArray,
-      modifier: mod,
-    })
-  }
-
-  checkUserInput(modifier) {
-    for (let p = 0; p < this.state.placesArray.length; p += 1) {
-      if (this.state.value.toLowerCase() === this.state.placesArray[p][modifier].toLowerCase()) {
-        return p
-      }
-    }
-    return -1
-  }
-
-  // TODO: this method is doing a lot, will refactor logic 
   handleKeyPress(target) {
     if (target.charCode === 13) {
-      const foundIndex = this.checkUserInput(this.state.modifier)
-      // foundIndex will be the index in the array where the match was found
-      // or false if not found
-      if (foundIndex >= 0) {
-        this.setState({ inputCheck: 'success', value: '' })
-        // call App's handleNamedPlace function with place abbrv to shade in area
-        this.props.handleNamedPlace(this.state.placesArray[foundIndex].abbrv)
-        // remove named palce from list
-        this.state.placesArray.splice(foundIndex, 1)
-        this.setState({ placesArray: this.state.placesArray })
-
-        // check if user has places left to name
-        if (this.state.placesArray.length === 0) {
-          // parameters (endtimer, gotallcountries?)
-          this.props.handleTimer(false, true)
+      this.setState({ boxStyle: 'neutral' })
+      let valid = this.validateInput(this.state.value)
+      if (valid) {
+        // send current value of input box to App
+        if (this.props.handleInput(this.state.value)) {
+          // make input box flash green
+          this.setState({ invalid: false, value: '', boxStyle: 'valid' })
         } else {
-          // user still has names/capitals left to name, keep going
+          // make input box red
+          this.setState({ invalid: true, boxStyle: 'invalid' })
         }
-      } else {
-        // user input does not match any modifier (name/capital) in placesArray
-        this.setState({ inputCheck: 'error' })
+      } else if (!valid) {
+        // invalid input, make box red, remind user of rules
+        console.log('invalid input 2')
+        this.setState({ invalid: true, boxStyle: 'invalid' })
       }
-    } else {
-      // user hasn't pressed enter
     }
   }
 
   handleChange(e) {
-    this.setState({ value: e.target.value })
+    this.setState({ 
+      value: e.target.value
+    })
   }
 
   render() {
+    let boxstyle = style.input
+    if (this.state.boxStyle === 'invalid') {
+      boxstyle = style.badInput
+    } else if (this.state.boxStyle === 'valid') {
+      boxstyle = style.correctInput
+    } else {
+      boxstyle = style.input
+    }
+
     return (
       <form autoComplete="off" style={style.inputField}>
         <FormGroup validationState={this.state.inputCheck}>
           <div>
             <FormControl
-              style={style.input}
+              style={boxstyle}
               type="text"
               value={this.state.value}
               placeholder="Enter name of place"
@@ -124,8 +117,5 @@ export default class InputForm extends React.Component {
 }
 
 InputForm.propTypes = {
-  placesArray: PropTypes.arrayOf(PropTypes.object).isRequired,
-  handleNamedPlace: PropTypes.func.isRequired,
-  handleTimer: PropTypes.func.isRequired,
-  capitals: PropTypes.bool.isRequired,
+  handleInput: PropTypes.func.isRequired,
 }

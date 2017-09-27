@@ -16,20 +16,6 @@ const style = {
 
 let map = {}
 
-const showHideAllCountryLabels = (countryCodeArray, status) => {
-  for (let i = 0; i < countryCodeArray.length; i += 1) {
-    map.setLayoutProperty(`${countryCodeArray[i]}_LABEL`, 'visibility', status)
-    map.setPaintProperty(countryCodeArray[i], 'fill-opacity', 0)
-  }
-}
-
-const showHideAllStateLabels = (stateCodeArray, status) => {
-  for (let i = 0; i < stateCodeArray.length; i += 1) {
-    map.setLayoutProperty(`USST_${stateCodeArray[i]}`, 'visibility', status)
-    map.setLayoutProperty(`USSTCAP_${stateCodeArray[i]}`, 'visibility', status)
-  }
-}
-
 export default class Maps extends React.Component {
   componentDidMount() {
     MapboxGl.accessToken = KEYS.access_token
@@ -45,60 +31,96 @@ export default class Maps extends React.Component {
       minZoom: 2,
     })
     history.pushState(null, null, '/?')
-    // map.on('click', (e) => {
-    //   // using e to pass = linting error
-    //   return e
-    //   // const features = map.queryRenderedFeatures(e.point)
-    //   // console.log('features: ', features)
-    // })
+
+    this.flyToLocation = this.flyToLocation.bind(this)
+    this.shadeInCountry = this.shadeInCountry.bind(this)
+    this.toggleLabels = this.toggleLabels.bind(this)
+    this.showLabel = this.showLabel.bind(this)
+  }
+  
+  flyToLocation(lonlatzoom) {
+    map.flyTo({
+      center: [lonlatzoom[0], lonlatzoom[1]],
+      zoom: lonlatzoom[2],
+      speed: .5,
+    })
+  }
+
+  shadeInCountry(abbrv, color) {
+    // make country shape visible, filled in, {color}, grey outline
+    map.setLayoutProperty(abbrv, 'visibility', 'visible')
+    map.setPaintProperty(abbrv, 'fill-opacity', 1)
+    map.setPaintProperty(abbrv, 'fill-color', color)
+    map.setPaintProperty(abbrv, 'fill-outline-color', 'rgba(255, 255, 255, 0)')
+  }
+
+  removeShading(abbrvs) {
+    for (let i = 0; i < abbrvs.length; i+=1) {
+      map.setPaintProperty(abbrvs[i], 'fill-opacity', 0)
+    }
+  }
+
+  toggleLabels(prefix, abbrvs, visibility) {
+    for (let i = 0; i < abbrvs.length; i+=1) {
+      let label = prefix + abbrvs[i]
+      map.setLayoutProperty(label, 'visibility', visibility)
+    }
+  }
+
+  showLabel(abbrv) {
+    let label = this.props.layer + abbrv
+    map.setLayoutProperty(label, 'visibility', 'visible')
   }
 
   componentWillReceiveProps(nextProps) {
-    // will be checking previous props against nextProps in order
-    // to determine what action needs to be performed on the map
+    if (nextProps.lonlatzoom !== this.props.lonlatzoom) {
+      // need to set different timeout intervals depending on props
+      setTimeout(() => { this.flyToLocation(nextProps.lonlatzoom)}, 750)
+    }
 
-    // display country label, shade in country area after it is found
     if (this.props.namedPlace !== nextProps.namedPlace) {
-      const placeCode = nextProps.namedPlace
-
-      if (nextProps.states && nextProps.capitals) {
-        // show state and state capital name
-        map.setLayoutProperty(`USST_${placeCode}`, 'visibility', 'visible')
-        map.setLayoutProperty(`USSTCAP_${placeCode}`, 'visibility', 'visible')
-      } else if (!nextProps.states && nextProps.capitals) {
-        // need to add label layers for every country capital
-        // map.setLayoutProperty(`${placeCode}_LABEL`, 'visibility', 'visible')
-      } else if (nextProps.states && !nextProps.capitals) {
-        // show state name
-        map.setLayoutProperty(`USST_${placeCode}`, 'visibility', 'visible')
-      } else {
-        // show country name
-        map.setLayoutProperty(`${placeCode}_LABEL`, 'visibility', 'visible')
+      let abbrv = nextProps.namedPlace
+      this.showLabel(abbrv)
+      // if country or country capital quiz, shade country green
+      if (this.props.layer === 'C_' || this.props.layer === 'CCAP_') {
+        this.shadeInCountry(abbrv, 'rgba(34, 176, 27, 0.26)')
       }
 
-      // map.setPaintProperty(placeCode, 'fill-opacity', 1)
-      // map.setPaintProperty(placeCode, 'fill-outline-color', 'rgb(41, 169, 45)')
+      if (this.props.layer === 'BW_') {
+        let waterLabel = this.props.layer + abbrv
+        map.setPaintProperty(waterLabel, 'text-color', 'hsla(212, 3%, 39%, 0.85)')
+      }
     }
 
-    // check if the map needs to pan to a new location
-    if (this.props.lonlatzoom !== nextProps.lonlatzoom) {
-      showHideAllCountryLabels(CODES.COUNTRIES, 'none')
-      showHideAllStateLabels(CODES.US_STATES, 'none')
-      map.flyTo({
-        center: [nextProps.lonlatzoom[0], nextProps.lonlatzoom[1]],
-        zoom: nextProps.lonlatzoom[2],
-        speed: 0.4,
-      })
+    if (nextProps.showUnnamedPlaces && nextProps.placesArray.length !== 0) {
+      console.log('Showing unnamed places')
+      for (var i = 0; i < nextProps.placesArray.length; i++) {
+        let abbrv = nextProps.placesArray[i].abbrv
+        this.showLabel(abbrv)
+        // if country or country capital quiz, shade unnamed countries red
+        if (this.props.layer === 'C_' || this.props.layer === 'CCAP_') {
+          this.shadeInCountry(abbrv, 'rgba(220, 57, 24, 0.26)')
+        }
+        if (this.props.layer === 'BW_') {
+          let waterLabel = this.props.layer + abbrv
+          map.setPaintProperty(waterLabel, 'text-color', 'hsla(12, 82%, 49%, 0.8)')
+        }
+      }
     }
 
-    // check for the selected continent
-    if (this.props.selectedContinent !== nextProps.selectedContinent) {
-      map.flyTo({
-        center: [nextProps.lonlatzoom[0], nextProps.lonlatzoom[1]],
-        zoom: nextProps.lonlatzoom[2],
-        speed: 0.4,
-      })
-    }
+    // if (nextProps.clearLabels === true) {
+    //   console.log('hiding all labels and shading')
+    //   this.toggleLabels('C_', CODES.C, 'none')
+    //   this.toggleLabels('BW_', CODES.BW, 'none')
+    //   this.toggleLabels('TE_', CODES.TE, 'none')
+    //   this.toggleLabels('ST_', CODES.ST, 'none')
+    //   this.toggleLabels('CCAP_', CODES.C, 'none')
+    //   this.toggleLabels('STCAP_', CODES.STCAP, 'none')
+    //   // this.toggleLabels('LM_', CODES.LM, 'none')
+    //   // this.toggleLabels('TECAP_', CODES.TECAP, 'none')
+    //   this.removeShading(CODES.C)
+    //   this.props.resetClearMap()
+    // }
   }
 
   render() {
@@ -109,9 +131,18 @@ export default class Maps extends React.Component {
 }
 
 Maps.propTypes = {
-  lonlatzoom: PropTypes.arrayOf(PropTypes.number).isRequired,
+  layer: PropTypes.string,
+  quizType: PropTypes.string,
+  clearLabels: PropTypes.bool,
+  showUnnamedPlaces: PropTypes.bool,
   namedPlace: PropTypes.string.isRequired,
-  selectedContinent: PropTypes.string.isRequired,
-  states: PropTypes.bool.isRequired,
-  capitals: PropTypes.bool.isRequired,
+  resetClearMap: PropTypes.func.isRequired,
+  placesArray: PropTypes.arrayOf(PropTypes.object),
+  lonlatzoom: PropTypes.arrayOf(PropTypes.number).isRequired,
 }
+
+// map.on('click', (e) => {
+//   return e
+//   // const features = map.queryRenderedFeatures(e.point)
+//   // console.log('features: ', features)
+// })

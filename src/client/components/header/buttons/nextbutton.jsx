@@ -3,7 +3,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import PropTypes from 'prop-types'
 
 // LINT: component should be written as a pure function
-export default class BackButton extends React.Component {
+export default class NextButton extends React.Component {
   render() {
     return (
       <RaisedButton
@@ -11,18 +11,18 @@ export default class BackButton extends React.Component {
           position: 'absolute',
           marginTop: 8,
           zIndex: 2,
-          marginLeft: 20,
+          marginLeft: 710,
         }}
         onClick={
-          () => this.props.handleBackButton()
+          () => this.props.handleNextButton()
         }
       >
-        Back
+        Next
       </RaisedButton>
     )
   }
 }
 
-BackButton.propTypes = {
-  handleBackButton: PropTypes.func.isRequired,
+NextButton.propTypes = {
+  handleNextButton: PropTypes.func.isRequired,
 }

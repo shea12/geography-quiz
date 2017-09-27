@@ -1,167 +1,171 @@
 import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import WelcomeModal from './components/popups/welcomemodal'
+import Title from './components/header/headtitle/title'
+import HeaderCard from './components/header/headtitle/headercard'
 import Maps from './components/basemap/map'
 import Header from './components/header/Header'
+import QuizDescription from './components/header/QuizDescription'
+import InputScoreTime from './components/header/InputScoreTime'
+import NextButton from './components/header/buttons/nextbutton'
 import QuizModal from './components/popups/quizmodal'
+import categories from './assets/quizcategories'
+import quicklookup from './assets/quicklookup'
+import ClearMapButton from './components/header/buttons/clearmapbutton'
+
+import {
+  NTPgetRandomPlace,
+  NTPhandleInput,
+  NTPcheckUserInput,
+  FFAhandleInput,
+  FFAcheckUserInput
+} from './components/helpers'
+
+/*
+Notes:
+  9/22:
+  *** TODO *** PO_LABEL AO_LABEL -> PO1, PO2, AO1, AO2
+
+  9/23:
+  /// done /// HUGE refactor
+  *** TODO *** Buttons to be condensed into 1 or 2 components
+
+  9/24:
+  /// done /// fix water quiz, import helper functions
+  /// done /// spruce up styling (fix hover, add colors, buttons)
+  /// done /// need to make a next button for NTP style quizzes
+  *** TODO *** add lonlatzoom for country close ups
+  *** TODO *** incorporate custom mapbox style
+
+  9/25:
+  /// done /// add landmark layers to map, add 5 US territories layers, buttons
+  /// done /// add landmark schema, route, controller to server, landmarks to db
+  /// done /// NTP need to pause for a moment after correct answer is entered
+
+  /// done /// add clear map button
+  /// done /// add show unnamed places button
+  *** TODO *** ^^ both need tweaking
+
+  9/26:
+  *** TODO *** security basics, esp input box XSS
+  *** TODO *** smooth out show/hide/giveup/clearmap
+  *** TODO *** make clearMap button only appear if map is not clear
+  *** TODO *** make water labels darker / more easily visible
+  *** TODO *** shade in coutries of capitals
+*/
 
 const axios = require('axios')
 
-const style = {
-  container: {
-    margin: 0,
-    padding: 0,
-  },
-}
-
-// TODO: change from lonlat: [0,0], zoom: 0, to lonlatzoom: [0,0,0]
 export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       lonlatzoom: [0.2, 20.6, 2],
-      selectedCategory: '',
-      selectedContinent: '',
+      options: categories,
+      selectedQuiz: false,
+      timing: false,
+      // layer: '',
       placesArray: [],
       placesNumber: 0,
-      placesRemaining: 0,
-      quizTitle: null,
-      capitals: false,
-      states: false,
-      timing: false,
+      modifier: 'name',
       namedPlace: '',
+      placesRemaining: 0,
+
+      quizTitle: '',
       showquizModal: false,
       gaveUp: false,
       finalTime: 0,
     }
 
-    this.handleCategorySelection = this.handleCategorySelection.bind(this)
-    this.handleQuizChoice = this.handleQuizChoice.bind(this)
-    this.handleCountryQuiz = this.handleCountryQuiz.bind(this)
-    this.handleContinentQuiz = this.handleContinentQuiz.bind(this)
-    this.handleNamedPlace = this.handleNamedPlace.bind(this)
+    this.resetState = this.resetState.bind(this)
+    this.getQuizData = this.getQuizData.bind(this)
     this.handleStart = this.handleStart.bind(this)
-    this.handleBack = this.handleBack.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
+    this.handleInput = this.handleInput.bind(this)
     this.getFinalTime = this.getFinalTime.bind(this)
     this.handleGiveUp = this.handleGiveUp.bind(this)
-    this.getLonLatZoom = this.getLonLatZoom.bind(this)
+    this.resetClearMap = this.resetClearMap.bind(this)
+    this.handleClearMap = this.handleClearMap.bind(this)
+    this.handleSelection = this.handleSelection.bind(this)
+    this.handleNextButton= this.handleNextButton.bind(this)
+    this.handleNamedPlace = this.handleNamedPlace.bind(this)
+    this.handleBackButton = this.handleBackButton.bind(this)
+    this.quickLookLonLatZoom = this.quickLookLonLatZoom.bind(this)
+    this.handleShowUnnamedPlaces = this.handleShowUnnamedPlaces.bind(this)
   }
 
+  quickLookLonLatZoom(selPlace, callback) {
+    callback(quicklookup[selPlace].lonlatzoom)
+  }
+
+  getQuizData(path, selection) {
+    let lonlatzoo = ''
+    let quiztype = ''
+    if (selection !== 'BW' && selection !== 'LF') {
+      const abbrv = selection.charAt(0) + selection.charAt(1)
+      this.quickLookLonLatZoom(abbrv, function (llz) {
+        lonlatzoo = llz
+      })
+      quiztype = 'FFA'
+    } else {
+      lonlatzoo = [0.2, 20.6, 2]
+      quiztype = 'NTP'
+    }
+    axios.get(path)
+      .then((d) => {
+        this.setState({
+          placesArray: d.data.places,
+          placesNumber: d.data.places.length,
+          placesRemaining: d.data.places.length,
+          lonlatzoom: lonlatzoo,
+          quizType: quiztype,
+        })
+      })
+      .catch((error) => {
+        /* eslint-disable */
+        console.log('axios error', error)
+        /* eslint-enable */
+      })
+  }
+
+  handleSelection(selection) {
+    if (this.state.options[selection].quiz === true) {
+      if (this.state.options[selection].cap) {
+        this.setState({
+          modifier: 'cap',
+          selectedQuiz: true,
+          layer: this.state.options[selection].layer,
+          quizTitle: this.state.options[selection].title,
+          quizDescription: this.state.options[selection].desc,
+        })
+      } else {
+        this.setState({
+          selectedQuiz: true,
+          layer: this.state.options[selection].layer,
+          quizTitle: this.state.options[selection].title,
+          quizDescription: this.state.options[selection].desc,
+        })
+      }
+      this.getQuizData(this.state.options[selection].path, selection)
+    } else {
+      this.setState({
+        options: this.state.options[selection].categories,
+      })
+    }
+  }
+  
   getFinalTime(time) {
     this.setState({ finalTime: time })
-  }
-
-  // should move this to a helper function file
-  // lint says "expected 'this' to be used by class method"
-  getLonLatZoom(selPlace, func, callback) {
-    axios.get(`/${selPlace}/${func}`)
-      .then((d) => {
-        callback(d.data.lonlatzoom)
-      })
-      .catch((error) => {
-        /* eslint-disable */
-        console.log('axios error', error)
-        /* eslint-enable */
-      })
-  }
-
-  handleCountryQuiz(selCountry, capitals) {
-    let quizDesc = ''
-    let lonlatzoo = []
-
-    // lint says "unexpected unnamed function, unnamed function"
-    this.getLonLatZoom(selCountry, 'get-country-location', function (llz) {
-      lonlatzoo = llz
-    })
-
-    axios.get(`/${selCountry}/get-states`)
-      .then((d) => {
-        this.setState({
-          placesArray: d.data.states,
-          states: true,
-          placesNumber: d.data.states.length,
-          placesRemaining: d.data.states.length,
-          lonlatzoom: lonlatzoo,
-        })
-      })
-      .catch((error) => {
-        /* eslint-disable */
-        console.log('axios error', error)
-        /* eslint-enable */
-      })
-
-    if (capitals) {
-      // user selected a state capitals quiz
-      quizDesc = `capitals of ${selCountry}`
-      this.setState({ capitals: true, quizTitle: quizDesc })
-    } else {
-      // user selected states quiz
-      quizDesc = `states of ${selCountry}`
-      this.setState({ capitals: false, quizTitle: quizDesc })
-    }
-  }
-
-  handleContinentQuiz(selContinent, capitals) {
-    let quizDesc = ''
-    let lonlatzoo = []
-    this.getLonLatZoom(selContinent, 'get-location', function (llz) {
-      lonlatzoo = llz
-    })
-
-    axios.get(`/${selContinent}/get-countries`)
-      .then((d) => {
-        // console.log('countries: ', countries)
-        this.setState({
-          placesArray: d.data.countries,
-          states: false,
-          placesNumber: d.data.countries.length,
-          placesRemaining: d.data.countries.length,
-          lonlatzoom: lonlatzoo,
-        })
-      })
-      .catch((error) => {
-        /* eslint-disable */
-        console.log('axios error: ', error)
-        /* eslint-enable */
-      })
-
-    if (capitals) {
-      // user selected countries capitals quiz
-      quizDesc = `country capitals of ${selContinent}`
-      this.setState({ capitals: true, quizTitle: quizDesc })
-    } else {
-      // user selected countries quiz
-      quizDesc = `countries of ${selContinent}`
-      this.setState({ capitals: false, quizTitle: quizDesc })
-    }
-  }
-
-  handleQuizChoice(selContinent, selCountry, capitals) {
-    this.setState({ selectedContinent: selContinent })
-    // user selected specific country quiz
-    if (selCountry) {
-      this.handleCountryQuiz(selCountry, capitals)
-    // user selected continent quiz
-    } else if (!selCountry) {
-      this.handleContinentQuiz(selContinent, capitals)
-    }
   }
 
   handleStart() {
     this.setState({
       timing: true,
+      clearLabels: true,
     })
-  }
-
-  handleBack() {
-    this.setState({
-      selectedCategory: '',
-      selectedContinent: '',
-      timing: false,
-      lonlatzoom: [0.2, 20.6, 2],
-      showquizModal: false,
-    })
+    if (this.state.quizType === 'NTP') {
+      NTPgetRandomPlace.call(this)
+    }
   }
 
   handleNamedPlace(place) {
@@ -169,26 +173,40 @@ export default class App extends React.Component {
     this.setState({ namedPlace: place, placesRemaining: remaining })
   }
 
-  handleTimer(startStop, complete) {
-    if (startStop && !complete) {
-      // setState of timer to true
-      this.setState({ timing: true })
-    } else if (!startStop && complete) {
-      // user entered all contries setState of timer to false
-      // show quizmodal, turn off timer, reset selection
-      // need to record total countries, continent name, and final time
-      this.setState({
-        timing: false,
-        selectedCategory: '',
-        selectedContinent: '',
-        showquizModal: true,
-        gaveUp: false,
-      })
+  handleInput(value) {
+    if (this.state.quizType === 'FFA') {
+      return FFAhandleInput.call(this, value)
+    } else if (this.state.quizType === 'NTP') {
+      return NTPhandleInput.call(this, value)
     }
   }
 
-  handleCategorySelection(selCategory) {
-    this.setState({ selectedCategory: selCategory })
+  handleNextButton() {
+    NTPgetRandomPlace.call(this)
+  }
+
+  resetState() {
+    this.setState({
+      selectedQuiz: false,
+      timing: false,
+      finalTime: '',
+      // lonlatzoom: [0.2, 20.6, 2],
+      options: categories,
+      clearLabels: false,
+      gaveUp: false,
+      placesArray: [],
+      placesNumber: 0,
+      placesRemaining: 0,
+      quizDescription: '',
+      quizType: '',
+      quizTitle: '',
+      showquizModal: false,
+      showUnnamedPlaces: false,
+    })
+  }
+
+  handleBackButton() {
+    this.resetState()
   }
 
   handleGiveUp() {
@@ -199,20 +217,94 @@ export default class App extends React.Component {
     })
   }
 
-  render() {
-    let quizmodal = <div />
+  handleShowUnnamedPlaces() {
+    console.log('handling show unnamed places')
+    // zoom to original quiz llz OR world view
+    this.setState({
+      lonlatzoom: this.state.lonlatzoom,
+      showUnnamedPlaces: true,
+    })
+  }
 
+  handleClearMap() {
+    this.setState({
+      showUnnamedPlaces: false,
+      clearLabels: true,
+    })
+  }
+
+  resetClearMap() {
+    this.setState({
+      clearLabels: false,
+    })
+  }
+
+  handleTimer(startStop, complete) {
+    if (startStop && !complete) {
+      // quiz is neither complete nor given up, continuing
+      this.setState({ timing: true })
+    } else if (!startStop && complete) {
+      // user completed quiz 100%
+      this.setState({
+        timing: false,
+        showquizModal: true,
+        gaveUp: false,
+      })
+      // when user clicks outside modal, resetState is called
+    }
+  }
+
+  render() {
+    let header = <div />
+    let quizmodal = <div />
+    let nextbutton = <div />
+    if (this.state.quizType === 'NTP') {
+      nextbutton = <NextButton handleNextButton={this.handleNextButton} />
+    } else {
+      nextbutton = <div />
+    }
+
+    if (!this.state.selectedQuiz) {
+      header = <Header
+        options={this.state.options}
+        handler={this.handleSelection}
+        handleBackButton={this.handleBackButton}
+        handleClearMap={this.handleClearMap}
+      />
+    } else if (this.state.selectedQuiz && !this.state.timing) {
+      header = <QuizDescription
+        quizTitle={this.state.quizTitle}
+        quizDescription={this.state.quizDescription}
+        handleBackButton={this.handleBackButton}
+        handleStart={this.handleStart}
+        handleClearMap={this.handleClearMap}
+      />
+    } else if (this.state.selectedQuiz && this.state.timing) {
+      header = (
+        <div>
+          <InputScoreTime 
+          timing={this.state.timing}
+          remaining={this.state.placesRemaining}
+          handleTimer={this.handleTimer}
+          handleInput={this.handleInput}
+          handleBackButton={this.handleBackButton}
+          getFinalTime={this.getFinalTime}
+          handleGiveUp={this.handleGiveUp}
+          />
+          {nextbutton}
+        </div>
+      )
+    }
+    
     if (!this.state.timing && this.state.showquizModal) {
       quizmodal = (<QuizModal
-        onClose={this.handleBack}
+        handleBackButton={this.handleBackButton}
         time={this.state.finalTime}
-        selectedContinent={this.state.selectedContinent}
         quizTitle={this.state.quizTitle}
-        capital={this.state.capitals}
-        states={this.state.states}
         gaveUp={this.state.gaveUp}
         placesNumber={this.state.placesNumber}
         placesRemaining={this.state.placesRemaining}
+        handleShowUnnamedPlaces={this.handleShowUnnamedPlaces}
       />)
     } else {
       quizmodal = <div />
@@ -220,33 +312,25 @@ export default class App extends React.Component {
 
     return (
       <MuiThemeProvider>
-        <div style={style.container}>
+        <div style={{ margin: 0, padding: 0 }}>
+          <Title />
+          <HeaderCard />
           <WelcomeModal />
-          <Header
-            placesArray={this.state.placesArray}
-            selectedContinent={this.state.selectedContinent}
-            timing={this.state.timing}
-            capitals={this.state.capitals}
-            quizTitle={this.state.quizTitle}
-            selectedCategory={this.state.selectedCategory}
-            handleCategorySelection={this.handleCategorySelection}
-
-            handleQuizChoice={this.handleQuizChoice}
-            handleNamedPlace={this.handleNamedPlace}
-            handleBack={this.handleBack}
-            handleStart={this.handleStart}
-            handleTimer={this.handleTimer}
-            getFinalTime={this.getFinalTime}
-            handleGiveUp={this.handleGiveUp}
-          />
+          
+          {header}
           <Maps
             lonlatzoom={this.state.lonlatzoom}
             namedPlace={this.state.namedPlace}
-            selectedContinent={this.state.selectedContinent}
-            capitals={this.state.capitals}
-            states={this.state.states}
+            layer={this.state.layer}
+            clearLabels={this.state.clearLabels}
+            resetClearMap={this.resetClearMap}
+            quizType={this.state.quizType}
+            placesArray={this.state.placesArray}
+            showUnnamedPlaces={this.state.showUnnamedPlaces}
           />
+
           {quizmodal}
+          <ClearMapButton handleClearMap={this.handleClearMap} />
         </div>
       </MuiThemeProvider>
     )
