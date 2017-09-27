@@ -39,11 +39,13 @@ export default class Maps extends React.Component {
   }
   
   flyToLocation(lonlatzoom) {
-    map.flyTo({
-      center: [lonlatzoom[0], lonlatzoom[1]],
-      zoom: lonlatzoom[2],
-      speed: .5,
-    })
+    if (lonlatzoom) {
+      map.flyTo({
+        center: [lonlatzoom[0], lonlatzoom[1]],
+        zoom: lonlatzoom[2],
+        speed: .5,
+      })
+    }
   }
 
   shadeInCountry(abbrv, color) {
@@ -75,7 +77,9 @@ export default class Maps extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.lonlatzoom !== this.props.lonlatzoom) {
       // need to set different timeout intervals depending on props
-      setTimeout(() => { this.flyToLocation(nextProps.lonlatzoom)}, 750)
+      let wait = 250
+      if (this.props.quizType === 'NTP') { wait = 750 }
+      setTimeout(() => { this.flyToLocation(nextProps.lonlatzoom)}, wait)
     }
 
     if (this.props.namedPlace !== nextProps.namedPlace) {
@@ -108,19 +112,19 @@ export default class Maps extends React.Component {
       }
     }
 
-    // if (nextProps.clearLabels === true) {
-    //   console.log('hiding all labels and shading')
-    //   this.toggleLabels('C_', CODES.C, 'none')
-    //   this.toggleLabels('BW_', CODES.BW, 'none')
-    //   this.toggleLabels('TE_', CODES.TE, 'none')
-    //   this.toggleLabels('ST_', CODES.ST, 'none')
-    //   this.toggleLabels('CCAP_', CODES.C, 'none')
-    //   this.toggleLabels('STCAP_', CODES.STCAP, 'none')
-    //   // this.toggleLabels('LM_', CODES.LM, 'none')
-    //   // this.toggleLabels('TECAP_', CODES.TECAP, 'none')
-    //   this.removeShading(CODES.C)
-    //   this.props.resetClearMap()
-    // }
+    if (nextProps.clearLabels === true) {
+      console.log('in map, clearing map')
+      this.toggleLabels('C_', CODES.C, 'none')
+      this.toggleLabels('BW_', CODES.BW, 'none')
+      this.toggleLabels('TE_', CODES.TE, 'none')
+      this.toggleLabels('ST_', CODES.ST, 'none')
+      this.toggleLabels('CCAP_', CODES.C, 'none')
+      this.toggleLabels('STCAP_', CODES.STCAP, 'none')
+      // this.toggleLabels('LM_', CODES.LM, 'none')
+      // this.toggleLabels('TECAP_', CODES.TECAP, 'none')
+      this.removeShading(CODES.C)
+      this.props.resetClearMap()
+    }
   }
 
   render() {
@@ -138,7 +142,7 @@ Maps.propTypes = {
   namedPlace: PropTypes.string.isRequired,
   resetClearMap: PropTypes.func.isRequired,
   placesArray: PropTypes.arrayOf(PropTypes.object),
-  lonlatzoom: PropTypes.arrayOf(PropTypes.number).isRequired,
+  lonlatzoom: PropTypes.arrayOf(PropTypes.number),
 }
 
 // map.on('click', (e) => {

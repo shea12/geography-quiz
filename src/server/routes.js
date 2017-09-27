@@ -5,6 +5,7 @@ const territories = require('./controllers/territoriesController.js')
 const users = require('./controllers/usersController.js')
 const water = require('./controllers/waterController.js')
 const landmarks = require('./controllers/landmarksController.js')
+const leaders = require('./controllers/leadersController.js')
 
 module.exports = function (app) {
   // Continents
@@ -28,6 +29,9 @@ module.exports = function (app) {
 
   // Landmarks
   app.get('/get-landmarks', landmarks.getLandmarks)
+
+  // Leaders
+  app.get('/get-g20-leaders', leaders.getLeaders)
 
   // Users
   app.get('/get-number-users', users.getNumberOfUsers)

@@ -240,6 +240,23 @@ const categories = {
     //   },
     // },
   },
+  LR: {
+    buttoncolor: '#eda553', // orange
+    title: 'World Leaders',
+    disabled: false,
+    desc: 'Can you identify the leader of each G20 country? Note: there are 19 countries in this quiz, the EU is the 20th of the G20',
+    quiz: true,
+    path:'/get-g20-leaders',
+    layer: 'C_',
+    // categories: {
+    //   LS: {
+    //     title: 'Leaders of the World',
+    //     desc: 'Can you identify the leader of each of these countries?',
+    //     quiz: true,
+    //     path:'/not-available',
+    //   },
+    // },
+  },
   GTC: {
     buttoncolor: '#c7b6ed', // light purple
     title: 'Guess the City',
@@ -251,22 +268,6 @@ const categories = {
     //   GC: {
     //     title: 'City Guesser',
     //     desc: 'Can you identify the city?',
-    //     quiz: true,
-    //     path:'/not-available',
-    //   },
-    // },
-  },
-  LRS: {
-    buttoncolor: '#eda553', // orange
-    title: 'World Leaders',
-    disabled: false,
-    desc: 'Can you identify the leader of each of these countries?',
-    quiz: true,
-    path:'/not-available',
-    // categories: {
-    //   LS: {
-    //     title: 'Leaders of the World',
-    //     desc: 'Can you identify the leader of each of these countries?',
     //     quiz: true,
     //     path:'/not-available',
     //   },

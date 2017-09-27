@@ -1,7 +1,7 @@
 import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import WelcomeModal from './components/popups/welcomemodal'
-import Title from './components/header/headtitle/title'
+import Menu from './components/header/headtitle/menu'
 import HeaderCard from './components/header/headtitle/headercard'
 import Maps from './components/basemap/map'
 import Header from './components/header/Header'
@@ -11,7 +11,7 @@ import NextButton from './components/header/buttons/nextbutton'
 import QuizModal from './components/popups/quizmodal'
 import categories from './assets/quizcategories'
 import quicklookup from './assets/quicklookup'
-import ClearMapButton from './components/header/buttons/clearmapbutton'
+
 
 import {
   NTPgetRandomPlace,
@@ -44,14 +44,31 @@ Notes:
 
   /// done /// add clear map button
   /// done /// add show unnamed places button
-  *** TODO *** ^^ both need tweaking
 
   9/26:
-  *** TODO *** security basics, esp input box XSS
-  *** TODO *** smooth out show/hide/giveup/clearmap
+  /// done /// security basics, validation on input box XSS
+  /// done /// smooth out show/hide/giveup
   *** TODO *** make clearMap button only appear if map is not clear
-  *** TODO *** make water labels darker / more easily visible
-  *** TODO *** shade in coutries of capitals
+  /// done /// make water labels darker / more easily visible
+  /// done /// shade in coutries of capitals
+
+  9/27: 
+  *** done *** make hamburger menu top right corner
+  *** done *** clearmap function bug fixes
+  *** done *** fix pacific and atlantic labels
+  *** done *** add G20 countries to db, quizcat, server
+  *** TODO *** special exceptions for leaders, 
+                allow user to enter last name or full name
+                on "show unnamed places" figure out way to show leaders names,
+                  either on the map or in a list?
+  *** TODO *** move quizcategories to mongodb, set up req routes
+  *** TODO *** move countryCodes to mongodb, set up req routes
+  *** TODO *** remove keys from repo
+  *** TODO *** custom mapbox style
+  *** TODO *** city (remember: need to hide movement from user)
+  *** TODO *** add progress widget for loading
+  *** TODO *** linting
+
 */
 
 const axios = require('axios')
@@ -101,7 +118,7 @@ export default class App extends React.Component {
   getQuizData(path, selection) {
     let lonlatzoo = ''
     let quiztype = ''
-    if (selection !== 'BW' && selection !== 'LF') {
+    if (selection !== 'BW' && selection !== 'LF' && selection !== 'LR') {
       const abbrv = selection.charAt(0) + selection.charAt(1)
       this.quickLookLonLatZoom(abbrv, function (llz) {
         lonlatzoo = llz
@@ -185,12 +202,13 @@ export default class App extends React.Component {
     NTPgetRandomPlace.call(this)
   }
 
-  resetState() {
+  resetState(loc) {
+    loc ? loc : [0.2, 20.6, 2]
     this.setState({
       selectedQuiz: false,
       timing: false,
       finalTime: '',
-      // lonlatzoom: [0.2, 20.6, 2],
+      lonlatzoom: loc,
       options: categories,
       clearLabels: false,
       gaveUp: false,
@@ -205,8 +223,8 @@ export default class App extends React.Component {
     })
   }
 
-  handleBackButton() {
-    this.resetState()
+  handleBackButton(loc) {
+    this.resetState(loc)
   }
 
   handleGiveUp() {
@@ -227,6 +245,7 @@ export default class App extends React.Component {
   }
 
   handleClearMap() {
+    console.log('clearing map')
     this.setState({
       showUnnamedPlaces: false,
       clearLabels: true,
@@ -234,6 +253,7 @@ export default class App extends React.Component {
   }
 
   resetClearMap() {
+    console.log('resetting clearLabels')
     this.setState({
       clearLabels: false,
     })
@@ -313,7 +333,10 @@ export default class App extends React.Component {
     return (
       <MuiThemeProvider>
         <div style={{ margin: 0, padding: 0 }}>
-          <Title />
+          <Menu 
+            handleClearMap={this.handleClearMap}
+            handleBackButton={this.handleBackButton}
+          />
           <HeaderCard />
           <WelcomeModal />
           
@@ -330,7 +353,7 @@ export default class App extends React.Component {
           />
 
           {quizmodal}
-          <ClearMapButton handleClearMap={this.handleClearMap} />
+          
         </div>
       </MuiThemeProvider>
     )
