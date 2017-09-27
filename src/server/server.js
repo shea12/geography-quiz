@@ -26,4 +26,6 @@ deployment process:
   heroku open
   heroku logs --tail
 
+CL mLab: 
+  mongo ds139984.mlab.com:39984/geo-quiz -u {username} -p {password}
 */
