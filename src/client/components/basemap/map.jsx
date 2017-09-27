@@ -114,15 +114,24 @@ export default class Maps extends React.Component {
 
     if (nextProps.clearLabels === true) {
       console.log('in map, clearing map')
-      this.toggleLabels('C_', CODES.C, 'none')
-      this.toggleLabels('BW_', CODES.BW, 'none')
-      this.toggleLabels('TE_', CODES.TE, 'none')
-      this.toggleLabels('ST_', CODES.ST, 'none')
-      this.toggleLabels('CCAP_', CODES.C, 'none')
-      this.toggleLabels('STCAP_', CODES.STCAP, 'none')
-      // this.toggleLabels('LM_', CODES.LM, 'none')
+      // should really make this so toggleLabels can take the whole CODES array
+
+      let C = this.props.CODES.C
+      let ST = this.props.CODES.ST
+      let TE = this.props.CODES.TE
+      let BW = this.props.CODES.BW
+      let LM = this.props.CODES.LM
+      let STCAP = this.props.CODES.STCAP
+
+      this.toggleLabels('C_', C, 'none')
+      this.toggleLabels('ST_', ST, 'none')
+      this.toggleLabels('TE_', TE, 'none')
+      this.toggleLabels('BW_', BW, 'none')
+      this.toggleLabels('LM_', LM, 'none')
+      this.toggleLabels('CCAP_', C, 'none')
+      this.toggleLabels('STCAP_', STCAP, 'none')
       // this.toggleLabels('TECAP_', CODES.TECAP, 'none')
-      this.removeShading(CODES.C)
+      this.removeShading(C)
       this.props.resetClearMap()
     }
   }
