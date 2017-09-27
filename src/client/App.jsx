@@ -12,7 +12,6 @@ import QuizModal from './components/popups/quizmodal'
 import categories from './assets/quizcategories'
 import quicklookup from './assets/quicklookup'
 
-
 import {
   NTPgetRandomPlace,
   NTPhandleInput,
@@ -53,17 +52,20 @@ Notes:
   /// done /// shade in coutries of capitals
 
   9/27: 
-  *** done *** make hamburger menu top right corner
-  *** done *** clearmap function bug fixes
-  *** done *** fix pacific and atlantic labels
-  *** done *** add G20 countries to db, quizcat, server
+  /// done /// make hamburger menu top right corner
+  /// done /// clearmap function bug fixes
+  /// done /// fix pacific and atlantic labels
+  /// done /// add G20 countries to db, quizcat, server
+  /// done /// move countryCodes to mongodb, set up req routes
+  
+  *** TODO *** fix buggy layerCodes, consolidate mlab collection
+  *** TODO *** move quizcategories to mongodb, set up req routes
+  *** TODO *** remove keys from repo
   *** TODO *** special exceptions for leaders, 
                 allow user to enter last name or full name
                 on "show unnamed places" figure out way to show leaders names,
                   either on the map or in a list?
-  *** TODO *** move quizcategories to mongodb, set up req routes
-  *** TODO *** move countryCodes to mongodb, set up req routes
-  *** TODO *** remove keys from repo
+
   *** TODO *** custom mapbox style
   *** TODO *** city (remember: need to hide movement from user)
   *** TODO *** add progress widget for loading
@@ -77,21 +79,20 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      lonlatzoom: [0.2, 20.6, 2],
-      options: categories,
-      selectedQuiz: false,
+      finalTime: 0,
       timing: false,
-      // layer: '',
+      gaveUp: false,
+      quizTitle: '',
+      namedPlace: '',
       placesArray: [],
       placesNumber: 0,
       modifier: 'name',
-      namedPlace: '',
+      mapIsClear: true,
       placesRemaining: 0,
-
-      quizTitle: '',
+      selectedQuiz: false,
+      options: categories,
       showquizModal: false,
-      gaveUp: false,
-      finalTime: 0,
+      lonlatzoom: [0.2, 20.6, 2],
     }
 
     this.resetState = this.resetState.bind(this)
@@ -131,11 +132,11 @@ export default class App extends React.Component {
     axios.get(path)
       .then((d) => {
         this.setState({
+          quizType: quiztype,
+          lonlatzoom: lonlatzoo,
           placesArray: d.data.places,
           placesNumber: d.data.places.length,
           placesRemaining: d.data.places.length,
-          lonlatzoom: lonlatzoo,
-          quizType: quiztype,
         })
       })
       .catch((error) => {
@@ -144,6 +145,7 @@ export default class App extends React.Component {
         /* eslint-enable */
       })
   }
+
 
   handleSelection(selection) {
     if (this.state.options[selection].quiz === true) {
@@ -175,11 +177,39 @@ export default class App extends React.Component {
     this.setState({ finalTime: time })
   }
 
+  getLayerCodes(path, layer, callback) {
+    axios.get(path)
+      .then((d) => {
+        console.log('d.codes: ', d.codes)
+        callback(d)
+      })
+      .catch((error) => {
+        /* eslint-disable */
+        console.log('axios error', error)
+        /* eslint-enable */
+      })
+  }
+
   handleStart() {
-    this.setState({
-      timing: true,
-      clearLabels: true,
-    })
+    // if map is clear, start quiz
+    if (this.state.mapIsClear === true) {
+      this.setState({
+        timing: true,
+      })
+    // if map is not clear, get layercodes, clear map, start quiz
+    } else if (this.state.mapIsClear === false) {
+      let path = '/get-all-layer-codes'
+      let layer = ''
+      this.getLayerCodes(path, layer, (layercodes) => {
+        this.setState({
+          CODES: layercodes,
+          clearLabels: true,
+          showUnnamedPlaces: false,
+          timing: true,
+        })
+      })
+    }
+
     if (this.state.quizType === 'NTP') {
       NTPgetRandomPlace.call(this)
     }
@@ -205,19 +235,19 @@ export default class App extends React.Component {
   resetState(loc) {
     loc ? loc : [0.2, 20.6, 2]
     this.setState({
-      selectedQuiz: false,
-      timing: false,
-      finalTime: '',
-      lonlatzoom: loc,
-      options: categories,
-      clearLabels: false,
-      gaveUp: false,
-      placesArray: [],
-      placesNumber: 0,
-      placesRemaining: 0,
-      quizDescription: '',
       quizType: '',
       quizTitle: '',
+      finalTime: '',
+      timing: false,
+      gaveUp: false,
+      lonlatzoom: loc,
+      placesArray: [],
+      placesNumber: 0,
+      clearLabels: false,
+      placesRemaining: 0,
+      quizDescription: '',
+      options: categories,
+      selectedQuiz: false,
       showquizModal: false,
       showUnnamedPlaces: false,
     })
@@ -229,9 +259,10 @@ export default class App extends React.Component {
 
   handleGiveUp() {
     this.setState({
-      timing: false,
-      showquizModal: true,
       gaveUp: true,
+      timing: false,
+      mapIsClear: false,
+      showquizModal: true,
     })
   }
 
@@ -239,22 +270,31 @@ export default class App extends React.Component {
     console.log('handling show unnamed places')
     // zoom to original quiz llz OR world view
     this.setState({
-      lonlatzoom: this.state.lonlatzoom,
+      mapIsClear: false,
       showUnnamedPlaces: true,
+      lonlatzoom: this.state.lonlatzoom,
     })
   }
 
   handleClearMap() {
     console.log('clearing map')
-    this.setState({
-      showUnnamedPlaces: false,
-      clearLabels: true,
+    // call for all layer codes
+    let path = '/get-all-layer-codes'
+    let layer = ''
+    this.getLayerCodes(path, layer, (layercodes) => {
+      this.setState({
+        CODES: layercodes,
+        clearLabels: true,
+        showUnnamedPlaces: false,
+      })
     })
   }
 
   resetClearMap() {
-    console.log('resetting clearLabels')
+    console.log('resetting clear Labels')
+    // start ? let startTimer = true : let startTimer = false
     this.setState({
+      mapIsClear: true,
       clearLabels: false,
     })
   }
@@ -267,8 +307,9 @@ export default class App extends React.Component {
       // user completed quiz 100%
       this.setState({
         timing: false,
-        showquizModal: true,
         gaveUp: false,
+        mapIsClear: false,
+        showquizModal: true,
       })
       // when user clicks outside modal, resetState is called
     }
@@ -288,28 +329,28 @@ export default class App extends React.Component {
       header = <Header
         options={this.state.options}
         handler={this.handleSelection}
-        handleBackButton={this.handleBackButton}
         handleClearMap={this.handleClearMap}
+        handleBackButton={this.handleBackButton}
       />
     } else if (this.state.selectedQuiz && !this.state.timing) {
       header = <QuizDescription
-        quizTitle={this.state.quizTitle}
-        quizDescription={this.state.quizDescription}
-        handleBackButton={this.handleBackButton}
         handleStart={this.handleStart}
+        quizTitle={this.state.quizTitle}
         handleClearMap={this.handleClearMap}
+        handleBackButton={this.handleBackButton}
+        quizDescription={this.state.quizDescription}
       />
     } else if (this.state.selectedQuiz && this.state.timing) {
       header = (
         <div>
           <InputScoreTime 
           timing={this.state.timing}
-          remaining={this.state.placesRemaining}
           handleTimer={this.handleTimer}
           handleInput={this.handleInput}
-          handleBackButton={this.handleBackButton}
           getFinalTime={this.getFinalTime}
           handleGiveUp={this.handleGiveUp}
+          remaining={this.state.placesRemaining}
+          handleBackButton={this.handleBackButton}
           />
           {nextbutton}
         </div>
@@ -318,11 +359,11 @@ export default class App extends React.Component {
     
     if (!this.state.timing && this.state.showquizModal) {
       quizmodal = (<QuizModal
-        handleBackButton={this.handleBackButton}
+        gaveUp={this.state.gaveUp}
         time={this.state.finalTime}
         quizTitle={this.state.quizTitle}
-        gaveUp={this.state.gaveUp}
         placesNumber={this.state.placesNumber}
+        handleBackButton={this.handleBackButton}
         placesRemaining={this.state.placesRemaining}
         handleShowUnnamedPlaces={this.handleShowUnnamedPlaces}
       />)
@@ -342,12 +383,13 @@ export default class App extends React.Component {
           
           {header}
           <Maps
-            lonlatzoom={this.state.lonlatzoom}
-            namedPlace={this.state.namedPlace}
             layer={this.state.layer}
-            clearLabels={this.state.clearLabels}
-            resetClearMap={this.resetClearMap}
+            CODES={this.state.CODES}
             quizType={this.state.quizType}
+            lonlatzoom={this.state.lonlatzoom}
+            resetClearMap={this.resetClearMap}
+            namedPlace={this.state.namedPlace}
+            clearLabels={this.state.clearLabels}
             placesArray={this.state.placesArray}
             showUnnamedPlaces={this.state.showUnnamedPlaces}
           />
