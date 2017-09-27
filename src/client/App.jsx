@@ -44,14 +44,22 @@ Notes:
 
   /// done /// add clear map button
   /// done /// add show unnamed places button
-  *** TODO *** ^^ both need tweaking
 
   9/26:
-  *** TODO *** security basics, esp input box XSS
-  *** TODO *** smooth out show/hide/giveup/clearmap
+  *** done *** security basics, validation on input box XSS
+  *** done *** smooth out show/hide/giveup
   *** TODO *** make clearMap button only appear if map is not clear
-  *** TODO *** make water labels darker / more easily visible
-  *** TODO *** shade in coutries of capitals
+  *** done *** make water labels darker / more easily visible
+  *** done *** shade in coutries of capitals
+
+  9/27: 
+  *** TODO *** custom mapbox style
+  *** TODO *** make hamburger menu top right corner
+  *** TODO *** clearmap function bug fixes
+  *** TODO *** remove leaders?
+  *** TODO *** city (remember: need to hide movement from user)
+
+
 */
 
 const axios = require('axios')
