@@ -36,6 +36,7 @@ module.exports = function (app) {
 
   // layerCodes
   app.get('/get-all-layer-codes', layerCodes.getAllLayerCodes)
+  app.get('/:layer/get-layer-codes', layerCodes.getLayerCodes)
 
   // Users
   app.get('/get-number-users', users.getNumberOfUsers)

@@ -57,12 +57,8 @@ const leadersSchema = new Schema({
 }, { collection: 'leaders' })
 
 const layerCodesSchema = new Schema({
-  C: Array, // country
-  ST: Array, 
-  BW: Array,
-  TE: Array,
-  LM: Array,
-  STCAP: Array,
+  layer: String,
+  codes: Array,
 }, { collection: 'layerCodes'})
 
 // haven't created this functionality yet
