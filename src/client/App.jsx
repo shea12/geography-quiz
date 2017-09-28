@@ -22,25 +22,6 @@ import {
 
 /*
 Notes:
-  9/24:
-  /// done /// fix water quiz, import helper functions
-  /// done /// spruce up styling (fix hover, add colors, buttons)
-  /// done /// need to make a next button for NTP style quizzes
-
-  9/25:
-  /// done /// add landmark layers to map, add 5 US territories layers, buttons
-  /// done /// add landmark schema, route, controller to server, landmarks to db
-  /// done /// NTP need to pause for a moment after correct answer is entered
-  /// done /// add clear map button
-  /// done /// add show unnamed places button
-
-  9/26:
-  /// done /// security basics, validation on input box XSS
-  /// done /// smooth out show/hide/giveup
-  /// done /// make water labels darker / more easily visible
-  /// done /// shade in coutries of capitals
-  /// done /// make clearMap button only appear if map is not clear
-
   9/27: 
   /// done /// make hamburger menu top right corner
   /// done /// clearmap function bug fixes
@@ -49,16 +30,21 @@ Notes:
   /// done /// move countryCodes to mongodb, set up req routes
   /// done /// fix buggy layerCodes, consolidate mlab collection
 
-  *** TODO *** move quizcategories to mongodb, set up req routes
+  9/28:
+  /// done /// add BR & JP layers, db
+  /// done /// globe emoji for tab icon (not working but is there?)
+  /// done /// update welcome modal, add call to email 
   *** TODO *** remove keys from repo
+  *** TODO *** make upper right menu prettier
   *** TODO *** special exceptions for leaders, last name OR full name
   *** TODO *** on "show unnamed places" show leaders names
-  *** TODO *** custom mapbox style
-  *** TODO *** city category (remember: need to hide movement from user)
-  *** TODO *** add progress widget for loading
+  *** TODO *** add lonlatzoom for country close ups (esp small countries)
   *** TODO *** linting
+  *** TODO *** city category (remember: need to hide movement from user)
+  *** TODO *** custom mapbox style
+  *** TODO *** add progress widget for loading?
   *** TODO *** Buttons to be condensed into 1 or 2 components
-  *** TODO *** add lonlatzoom for country close ups
+  *** TODO *** move quizcategories to mongodb, set up req routes
 
 */
 
