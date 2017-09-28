@@ -22,34 +22,24 @@ import {
 
 /*
 Notes:
-  9/22:
-  *** TODO *** PO_LABEL AO_LABEL -> PO1, PO2, AO1, AO2
-
-  9/23:
-  /// done /// HUGE refactor
-  *** TODO *** Buttons to be condensed into 1 or 2 components
-
   9/24:
   /// done /// fix water quiz, import helper functions
   /// done /// spruce up styling (fix hover, add colors, buttons)
   /// done /// need to make a next button for NTP style quizzes
-  *** TODO *** add lonlatzoom for country close ups
-  *** TODO *** incorporate custom mapbox style
 
   9/25:
   /// done /// add landmark layers to map, add 5 US territories layers, buttons
   /// done /// add landmark schema, route, controller to server, landmarks to db
   /// done /// NTP need to pause for a moment after correct answer is entered
-
   /// done /// add clear map button
   /// done /// add show unnamed places button
 
   9/26:
   /// done /// security basics, validation on input box XSS
   /// done /// smooth out show/hide/giveup
-  *** TODO *** make clearMap button only appear if map is not clear
   /// done /// make water labels darker / more easily visible
   /// done /// shade in coutries of capitals
+  /// done /// make clearMap button only appear if map is not clear
 
   9/27: 
   /// done /// make hamburger menu top right corner
@@ -57,19 +47,18 @@ Notes:
   /// done /// fix pacific and atlantic labels
   /// done /// add G20 countries to db, quizcat, server
   /// done /// move countryCodes to mongodb, set up req routes
-  
-  *** TODO *** fix buggy layerCodes, consolidate mlab collection
+  /// done /// fix buggy layerCodes, consolidate mlab collection
+
   *** TODO *** move quizcategories to mongodb, set up req routes
   *** TODO *** remove keys from repo
-  *** TODO *** special exceptions for leaders, 
-                allow user to enter last name or full name
-                on "show unnamed places" figure out way to show leaders names,
-                  either on the map or in a list?
-
+  *** TODO *** special exceptions for leaders, last name OR full name
+  *** TODO *** on "show unnamed places" show leaders names
   *** TODO *** custom mapbox style
-  *** TODO *** city (remember: need to hide movement from user)
+  *** TODO *** city category (remember: need to hide movement from user)
   *** TODO *** add progress widget for loading
   *** TODO *** linting
+  *** TODO *** Buttons to be condensed into 1 or 2 components
+  *** TODO *** add lonlatzoom for country close ups
 
 */
 
@@ -79,6 +68,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      codes: [],
       finalTime: 0,
       timing: false,
       gaveUp: false,
@@ -95,20 +85,16 @@ export default class App extends React.Component {
       lonlatzoom: [0.2, 20.6, 2],
     }
 
-    this.resetState = this.resetState.bind(this)
-    this.getQuizData = this.getQuizData.bind(this)
-    this.handleStart = this.handleStart.bind(this)
     this.handleTimer = this.handleTimer.bind(this)
     this.handleInput = this.handleInput.bind(this)
-    this.getFinalTime = this.getFinalTime.bind(this)
+    this.handleStart = this.handleStart.bind(this)
     this.handleGiveUp = this.handleGiveUp.bind(this)
+    this.getFinalTime = this.getFinalTime.bind(this)
     this.resetClearMap = this.resetClearMap.bind(this)
     this.handleClearMap = this.handleClearMap.bind(this)
     this.handleSelection = this.handleSelection.bind(this)
     this.handleNextButton= this.handleNextButton.bind(this)
-    this.handleNamedPlace = this.handleNamedPlace.bind(this)
     this.handleBackButton = this.handleBackButton.bind(this)
-    this.quickLookLonLatZoom = this.quickLookLonLatZoom.bind(this)
     this.handleShowUnnamedPlaces = this.handleShowUnnamedPlaces.bind(this)
   }
 
@@ -177,11 +163,17 @@ export default class App extends React.Component {
     this.setState({ finalTime: time })
   }
 
-  getLayerCodes(path, layer, callback) {
+  getLayerCodes(layer, callback) {
+    let path = ''
+    if (layer === '') {
+      path = '/get-all-layer-codes'
+    } else {
+      path = `${layer}:/get-layer-codes`
+    }
+
     axios.get(path)
       .then((d) => {
-        console.log('d.codes: ', d.codes)
-        callback(d)
+        callback(d.data.codes)
       })
       .catch((error) => {
         /* eslint-disable */
@@ -198,16 +190,15 @@ export default class App extends React.Component {
       })
     // if map is not clear, get layercodes, clear map, start quiz
     } else if (this.state.mapIsClear === false) {
-      let path = '/get-all-layer-codes'
       let layer = ''
-      this.getLayerCodes(path, layer, (layercodes) => {
+      this.getLayerCodes(layer, function(layercodes) {
         this.setState({
-          CODES: layercodes,
-          clearLabels: true,
+          codes: layercodes,
           showUnnamedPlaces: false,
           timing: true,
+          clearLabels: true,
         })
-      })
+      }.bind(this))
     }
 
     if (this.state.quizType === 'NTP') {
@@ -235,6 +226,7 @@ export default class App extends React.Component {
   resetState(loc) {
     loc ? loc : [0.2, 20.6, 2]
     this.setState({
+      codes: [],
       quizType: '',
       quizTitle: '',
       finalTime: '',
@@ -267,7 +259,6 @@ export default class App extends React.Component {
   }
 
   handleShowUnnamedPlaces() {
-    console.log('handling show unnamed places')
     // zoom to original quiz llz OR world view
     this.setState({
       mapIsClear: false,
@@ -277,23 +268,21 @@ export default class App extends React.Component {
   }
 
   handleClearMap() {
-    console.log('clearing map')
     // call for all layer codes
-    let path = '/get-all-layer-codes'
     let layer = ''
-    this.getLayerCodes(path, layer, (layercodes) => {
+    this.getLayerCodes(layer, function(layercodes) {
       this.setState({
-        CODES: layercodes,
+        codes: layercodes,
         clearLabels: true,
         showUnnamedPlaces: false,
       })
-    })
+    }.bind(this))
   }
 
   resetClearMap() {
-    console.log('resetting clear Labels')
     // start ? let startTimer = true : let startTimer = false
     this.setState({
+      codes: [],
       mapIsClear: true,
       clearLabels: false,
     })
@@ -356,7 +345,7 @@ export default class App extends React.Component {
         </div>
       )
     }
-    
+
     if (!this.state.timing && this.state.showquizModal) {
       quizmodal = (<QuizModal
         gaveUp={this.state.gaveUp}
@@ -384,7 +373,7 @@ export default class App extends React.Component {
           {header}
           <Maps
             layer={this.state.layer}
-            CODES={this.state.CODES}
+            codes={this.state.codes}
             quizType={this.state.quizType}
             lonlatzoom={this.state.lonlatzoom}
             resetClearMap={this.resetClearMap}
@@ -400,4 +389,4 @@ export default class App extends React.Component {
       </MuiThemeProvider>
     )
   }
-}
+} 
