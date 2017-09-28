@@ -31,11 +31,6 @@ export default class Maps extends React.Component {
       minZoom: 2,
     })
     history.pushState(null, null, '/?')
-
-    this.flyToLocation = this.flyToLocation.bind(this)
-    this.shadeInCountry = this.shadeInCountry.bind(this)
-    this.toggleLabels = this.toggleLabels.bind(this)
-    this.showLabel = this.showLabel.bind(this)
   }
   
   flyToLocation(lonlatzoom) {
@@ -56,16 +51,28 @@ export default class Maps extends React.Component {
     map.setPaintProperty(abbrv, 'fill-outline-color', 'rgba(255, 255, 255, 0)')
   }
 
-  removeShading(abbrvs) {
-    for (let i = 0; i < abbrvs.length; i+=1) {
-      map.setPaintProperty(abbrvs[i], 'fill-opacity', 0)
+  removeShading(codes) {
+    for (let i = 0; i < codes.length; i+=1) {
+      map.setPaintProperty(codes[i], 'fill-opacity', 0)
     }
   }
 
-  toggleLabels(prefix, abbrvs, visibility) {
-    for (let i = 0; i < abbrvs.length; i+=1) {
-      let label = prefix + abbrvs[i]
-      map.setLayoutProperty(label, 'visibility', visibility)
+  // toggleLabels(prefix, abbrvs, visibility) {
+  //   for (let i = 0; i < abbrvs.length; i+=1) {
+  //     let label = prefix + abbrvs[i]
+  //     map.setLayoutProperty(label, 'visibility', visibility)
+  //   }
+  // }
+
+  toggleAllLabels(codeArray, visibility) {
+    let layer = ''
+    let label = ''
+    for (let i = 0; i < codeArray.length; i+=1) {
+      layer = codeArray[i]['layer']
+      for (let j = 0; j < codeArray[i]['codes'].length; j+=1) {
+        label = layer + '_' + codeArray[i]['codes'][j]
+        map.setLayoutProperty(label, 'visibility', visibility)
+      }
     }
   }
 
@@ -76,9 +83,8 @@ export default class Maps extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.lonlatzoom !== this.props.lonlatzoom) {
-      // need to set different timeout intervals depending on props
       let wait = 250
-      if (this.props.quizType === 'NTP') { wait = 750 }
+      this.props.quizType === 'NTP' ? wait = 750 : wait = 250
       setTimeout(() => { this.flyToLocation(nextProps.lonlatzoom)}, wait)
     }
 
@@ -97,7 +103,6 @@ export default class Maps extends React.Component {
     }
 
     if (nextProps.showUnnamedPlaces && nextProps.placesArray.length !== 0) {
-      console.log('Showing unnamed places')
       for (var i = 0; i < nextProps.placesArray.length; i++) {
         let abbrv = nextProps.placesArray[i].abbrv
         this.showLabel(abbrv)
@@ -113,25 +118,12 @@ export default class Maps extends React.Component {
     }
 
     if (nextProps.clearLabels === true) {
-      console.log('in map, clearing map')
-      // should really make this so toggleLabels can take the whole CODES array
-
-      let C = this.props.CODES.C
-      let ST = this.props.CODES.ST
-      let TE = this.props.CODES.TE
-      let BW = this.props.CODES.BW
-      let LM = this.props.CODES.LM
-      let STCAP = this.props.CODES.STCAP
-
-      this.toggleLabels('C_', C, 'none')
-      this.toggleLabels('ST_', ST, 'none')
-      this.toggleLabels('TE_', TE, 'none')
-      this.toggleLabels('BW_', BW, 'none')
-      this.toggleLabels('LM_', LM, 'none')
-      this.toggleLabels('CCAP_', C, 'none')
-      this.toggleLabels('STCAP_', STCAP, 'none')
-      // this.toggleLabels('TECAP_', CODES.TECAP, 'none')
-      this.removeShading(C)
+      this.toggleAllLabels(nextProps.codes, 'none')
+      for (var i=0; i < nextProps.codes.length; i+=1) {
+        if (nextProps.codes[i]['layer'] === 'C') {
+          this.removeShading(nextProps.codes[i]['codes']) 
+        }
+      }
       this.props.resetClearMap()
     }
   }
@@ -145,6 +137,7 @@ export default class Maps extends React.Component {
 
 Maps.propTypes = {
   layer: PropTypes.string,
+  codes: PropTypes.arrayOf(PropTypes.object),
   quizType: PropTypes.string,
   clearLabels: PropTypes.bool,
   showUnnamedPlaces: PropTypes.bool,
