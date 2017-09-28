@@ -14,7 +14,7 @@ const categories = {
         categories: {
           NACO: {
             title: 'Countries',
-            desc: 'Can you name all 23 countries of North America? Hint: there are a lot of tiny Caribbean islands',
+            desc: 'Can you name all 23 countries of North America? Hint: zoom in on the Caribbean Sea',
             quiz: true,
             path: '/NA/get-countries',
             layer: 'C_',
@@ -99,6 +99,13 @@ const categories = {
             cap: true,
             layer: 'CCAP_',
           },
+          BRST: {
+            title: 'Brazil',
+            desc: 'Can you name each state of Brazil?',
+            quiz: true,
+            path: '/BR/get-states',
+            layer: 'ST_BR_',
+          },
         },
       },
       AF: {
@@ -107,7 +114,7 @@ const categories = {
         categories: {
           AFCO: {
             title: 'Countries',
-            desc: 'Can you name all 55 countries of Africa? Hint: spelling counts',
+            desc: 'Can you name all 55 countries of Africa?',
             quiz: true,
             path: '/AF/get-countries',
             layer: 'C_',
@@ -122,7 +129,7 @@ const categories = {
           },
           ZAST: {
             title: 'South Africa',
-            desc: 'Can you name each state of South Africa?',
+            desc: 'Can you name each province of South Africa?',
             quiz: true,
             path: '/ZA/get-states',
             layer: 'ST_ZA_',
@@ -149,7 +156,7 @@ const categories = {
             layer: 'CCAP_',
           },
           GBST: {
-            title: 'States of the UK',
+            title: 'Countries of the UK',
             desc: 'Can you name all 4 countries of the United Kingdom?',
             quiz: true,
             path: '/GB/get-countries',
@@ -176,6 +183,13 @@ const categories = {
             cap: true,
             layer: 'CCAP_',
           },
+          JPST: {
+            title: 'Japan',
+            desc: 'Can you name each of the 4 main Japanese islands?',
+            quiz: true,
+            path: '/JP/get-states',
+            layer: 'ST_JP_',
+          },
         },
       },
       OC: {
@@ -184,7 +198,7 @@ const categories = {
         categories: {
           OCCO: {
             title: 'Countries',
-            desc: 'Can you name all countries of Oceania? Hint: lots of tiny islands',
+            desc: 'Can you name all countries of Oceania?',
             quiz: true,
             path: '/OC/get-countries',
             layer: 'C_',
