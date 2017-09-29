@@ -52,10 +52,11 @@ export default class WelcomeModal extends React.Component {
           onRequestClose={this.close}
         >
           <div style={style.modalInner}>
-            <h3> 🌏 🌍 🌎 </h3>
+            <h3><span role="img" aria-label="Globe">🌏 🌍 🌎</span></h3>
             <p>
               <br />
-              <b>Test your knowledge of geographic, administrative, and cultural features around the world!</b>
+              <b>Test your knowledge of geographic, administrative,&nbsp;
+              and cultural features around the world!</b>
               <br /><br />
               Feel free to explore the map or
               get started with the quiz categories above.
@@ -73,13 +74,13 @@ export default class WelcomeModal extends React.Component {
           </div>
           <div>
             <p style={style.byLine}>
-              This project was created by Caroline. 
+              This project was created by Caroline.
               <br />
               <a href="mailto:shea.caroline92@gmail.com?subject=Geography%20Quiz">
-                Send me an email </a> with comments or suggestions; I'd love to hear from you.
-              <br />
+                Send me an email </a> with comments or suggestions;&nbsp;
+                I&apos;d love to hear from you.&nbsp;
               <a href="https://github.com/shea12/geography-quiz" target="_blank" rel="noopener noreferrer">
-                &nbsp;Check out the repo</a> if you're into that kind of thing.
+                &nbsp;Check out the repo</a> if you&apos;re into that kind of thing.
             </p>
           </div>
         </Dialog>

@@ -38,7 +38,9 @@ export default class QuizModal extends React.Component {
     if (this.props.gaveUp) {
       title = 'Keep Studying'
       dialogue = `Nice try, you identified ${(this.props.placesNumber - this.props.placesRemaining)} out of ${this.props.placesNumber} places in ${time}`
-      showunnamedplacesbutton = <ShowUnnamedPlacesButton handleShowUnnamedPlaces={this.props.handleShowUnnamedPlaces} />
+      showunnamedplacesbutton = (<ShowUnnamedPlacesButton
+        handleShowUnnamedPlaces={this.props.handleShowUnnamedPlaces}
+      />)
     }
     return (
       <div>
@@ -59,7 +61,7 @@ export default class QuizModal extends React.Component {
 
 QuizModal.propTypes = {
   handleBackButton: PropTypes.func.isRequired,
-  // time: PropTypes.string.isRequired,
+  time: PropTypes.number.isRequired,
   quizTitle: PropTypes.string.isRequired,
   gaveUp: PropTypes.bool.isRequired,
   placesNumber: PropTypes.number.isRequired,
