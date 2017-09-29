@@ -13,11 +13,9 @@ import categories from './assets/quizcategories'
 import quicklookup from './assets/quicklookup'
 
 import {
-  NTPgetRandomPlace,
   NTPhandleInput,
-  NTPcheckUserInput,
+  NTPskipCurrentPlace,
   FFAhandleInput,
-  FFAcheckUserInput
 } from './components/helpers'
 
 /*
@@ -35,18 +33,26 @@ Notes:
   /// done /// globe emoji for tab icon (not working but is there?)
   /// done /// update welcome modal, add call to email 
   /// done /// special exceptions for leaders, last name OR full name
-  *** TODO *** rewrite get random place function
+  /// done /// on "show unnamed places" show leaders names
+
+  9/29:
+  /// done /// close mongoose connection
+  /// done /// create express app after db successfully connected
+  /// done /// rewrite get random place function
+  *** TODO *** linting!
   *** TODO *** fix input regex to allow '-' for south korea leader Moon Jae-in
   *** TODO *** remove keys from repo
-  *** TODO *** make upper right menu prettier
-  *** TODO *** on "show unnamed places" show leaders names
   *** TODO *** add lonlatzoom for country close ups (esp small countries)
-  *** TODO *** linting
+  *** TODO *** change button colors
+
+  backlog:
+  *** TODO *** make upper right menu prettier
   *** TODO *** city category (remember: need to hide movement from user)
+  *** TODO *** set up back end testing
   *** TODO *** custom mapbox style
   *** TODO *** add progress widget for loading?
   *** TODO *** Buttons to be condensed into 1 or 2 components
-  *** TODO *** move quizcategories to mongodb, set up req routes
+  *** TODO *** move quizcategories to mongodb, set up schema, routes, etc
 
 */
 
@@ -61,12 +67,13 @@ export default class App extends React.Component {
       timing: false,
       gaveUp: false,
       quizTitle: '',
-      namedPlace: '',
       placesArray: [],
       placesNumber: 0,
       modifier: 'name',
       mapIsClear: true,
       placesRemaining: 0,
+      namedPlaceTitle: '',
+      namedPlaceAbbrv: '',
       selectedQuiz: false,
       options: categories,
       showquizModal: false,
@@ -147,7 +154,7 @@ export default class App extends React.Component {
       })
     }
   }
-  
+
   getFinalTime(time) {
     this.setState({ finalTime: time })
   }
@@ -179,8 +186,8 @@ export default class App extends React.Component {
       })
     // if map is not clear, get layercodes, clear map, start quiz
     } else if (this.state.mapIsClear === false) {
-      let layer = ''
-      this.getLayerCodes(layer, function(layercodes) {
+      const layer = ''
+      this.getLayerCodes(layer, function (layercodes) {
         this.setState({
           codes: layercodes,
           showUnnamedPlaces: false,
@@ -191,25 +198,48 @@ export default class App extends React.Component {
     }
 
     if (this.state.quizType === 'NTP') {
-      NTPgetRandomPlace.call(this)
+      // this is the Fisher-Yates shuffle algorithm!
+      function shuffle(array, callback) {
+        let currentIndex = array.length
+        let temporaryValue = 0
+        let randomIndex = 0
+        while (currentIndex !== 0) {
+          randomIndex = Math.floor(Math.random() * currentIndex)
+          currentIndex -= 1
+          temporaryValue = array[currentIndex]
+          array[currentIndex] = array[randomIndex]
+          array[randomIndex] = temporaryValue
+        }
+        callback(array)
+      }
+
+      shuffle(this.state.placesArray, function (shuffledArray) {
+        this.setState({
+          placesArray: shuffledArray,
+          lonlatzoom: this.state.placesArray[0].lonlatzoom,
+        })
+      }.bind(this))
     }
   }
 
-  handleNamedPlace(place) {
+  handleNamedPlace(place, title) {
     const remaining = this.state.placesRemaining - 1
-    this.setState({ namedPlace: place, placesRemaining: remaining })
+    this.setState({
+      namedPlaceAbbrv: place,
+      namedPlaceTitle: title,
+      placesRemaining: remaining,
+    })
   }
 
   handleInput(value) {
     if (this.state.quizType === 'FFA') {
       return FFAhandleInput.call(this, value)
-    } else if (this.state.quizType === 'NTP') {
-      return NTPhandleInput.call(this, value)
     }
+    return NTPhandleInput.call(this, value)
   }
 
   handleNextButton() {
-    NTPgetRandomPlace.call(this)
+    NTPskipCurrentPlace.call(this)
   }
 
   resetState(loc) {
@@ -228,6 +258,8 @@ export default class App extends React.Component {
       clearLabels: false,
       placesRemaining: 0,
       quizDescription: '',
+      // namedPlaceTitle: '',
+      // namedPlaceAbbrv: '',
       options: categories,
       selectedQuiz: false,
       showquizModal: false,
@@ -259,8 +291,8 @@ export default class App extends React.Component {
 
   handleClearMap() {
     // call for all layer codes
-    let layer = ''
-    this.getLayerCodes(layer, function(layercodes) {
+    const layer = ''
+    this.getLayerCodes(layer, function (layercodes) {
       this.setState({
         codes: layercodes,
         clearLabels: true,
@@ -305,31 +337,31 @@ export default class App extends React.Component {
     }
 
     if (!this.state.selectedQuiz) {
-      header = <Header
+      header = (<Header
         options={this.state.options}
         handler={this.handleSelection}
         handleClearMap={this.handleClearMap}
         handleBackButton={this.handleBackButton}
-      />
+      />)
     } else if (this.state.selectedQuiz && !this.state.timing) {
-      header = <QuizDescription
+      header = (<QuizDescription
         handleStart={this.handleStart}
         quizTitle={this.state.quizTitle}
         handleClearMap={this.handleClearMap}
         handleBackButton={this.handleBackButton}
         quizDescription={this.state.quizDescription}
-      />
+      />)
     } else if (this.state.selectedQuiz && this.state.timing) {
       header = (
         <div>
-          <InputScoreTime 
-          timing={this.state.timing}
-          handleTimer={this.handleTimer}
-          handleInput={this.handleInput}
-          getFinalTime={this.getFinalTime}
-          handleGiveUp={this.handleGiveUp}
-          remaining={this.state.placesRemaining}
-          handleBackButton={this.handleBackButton}
+          <InputScoreTime
+            timing={this.state.timing}
+            handleTimer={this.handleTimer}
+            handleInput={this.handleInput}
+            getFinalTime={this.getFinalTime}
+            handleGiveUp={this.handleGiveUp}
+            remaining={this.state.placesRemaining}
+            handleBackButton={this.handleBackButton}
           />
           {nextbutton}
         </div>
@@ -349,17 +381,15 @@ export default class App extends React.Component {
     } else {
       quizmodal = <div />
     }
-
     return (
       <MuiThemeProvider>
         <div style={{ margin: 0, padding: 0 }}>
-          <Menu 
+          <Menu
             handleClearMap={this.handleClearMap}
             handleBackButton={this.handleBackButton}
           />
           <HeaderCard />
           <WelcomeModal />
-          
           {header}
           <Maps
             layer={this.state.layer}
@@ -368,17 +398,15 @@ export default class App extends React.Component {
             selection={this.state.selection}
             lonlatzoom={this.state.lonlatzoom}
             resetClearMap={this.resetClearMap}
-            namedPlace={this.state.namedPlace}
             clearLabels={this.state.clearLabels}
             placesArray={this.state.placesArray}
-            currentLocation={this.state.currentLocation}
+            namedPlaceAbbrv={this.state.namedPlaceAbbrv}
+            namedPlaceTitle={this.state.namedPlaceTitle}
             showUnnamedPlaces={this.state.showUnnamedPlaces}
           />
-
           {quizmodal}
-          
         </div>
       </MuiThemeProvider>
     )
   }
-} 
+}
