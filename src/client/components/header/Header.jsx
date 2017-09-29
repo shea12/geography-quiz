@@ -13,8 +13,8 @@ const style = {
 }
 
 function sizeButton(title) {
-  let len = title.length
-  let size = len * 9
+  const len = title.length
+  const size = len * 9
   return size > 110 ? size : 110
 }
 
@@ -22,10 +22,10 @@ function CreateOptionsButtons(props) {
   const categories = props.options
   const items = []
   let i = 0
-  Object.keys(categories).forEach(function(item) {
-    let width = sizeButton(categories[item].title)
+  Object.keys(categories).forEach(function (item) {
+    const width = sizeButton(categories[item].title)
     items.push(
-      <CategoryButton 
+      <CategoryButton
         key={i}
         title={categories[item].title}
         code={item}
@@ -56,7 +56,7 @@ export default class Header extends React.Component {
       <div>
         {backbutton}
         <div style={{ textAlign: 'center' }}>
-          <CreateOptionsButtons 
+          <CreateOptionsButtons
             options={this.props.options}
             handler={this.props.handler}
           />

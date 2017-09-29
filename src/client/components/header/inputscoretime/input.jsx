@@ -41,7 +41,7 @@ export default class InputForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: ''
+      value: '',
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -49,21 +49,19 @@ export default class InputForm extends React.Component {
     this.validateInput = this.validateInput.bind(this)
   }
 
-  validateInput(value) {
+  validateInput() {
     const regex = /^[\w ]+$/
     // const regex = (?:\s*[a-zA-Z0-9]{2,}\s*)*
-    if(!regex.test(value)) {
-      console.log('invalid input 1')
+    if (!regex.test(this.state.value)) {
       return false
-    } else {
-      return true
     }
+    return true
   }
 
   handleKeyPress(target) {
     if (target.charCode === 13) {
       this.setState({ boxStyle: 'neutral' })
-      let valid = this.validateInput(this.state.value)
+      const valid = this.validateInput()
       if (valid) {
         // send current value of input box to App
         if (this.props.handleInput(this.state.value)) {
@@ -75,15 +73,14 @@ export default class InputForm extends React.Component {
         }
       } else if (!valid) {
         // invalid input, make box red, remind user of rules
-        console.log('invalid input 2')
         this.setState({ invalid: true, boxStyle: 'invalid' })
       }
     }
   }
 
   handleChange(e) {
-    this.setState({ 
-      value: e.target.value
+    this.setState({
+      value: e.target.value,
     })
   }
 

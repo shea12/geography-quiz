@@ -17,7 +17,7 @@ const style = {
     zIndex: 2,
     display: 'inline-block',
     marginLeft: '20%',
-  }
+  },
 }
 
 export default class QuizDescription extends React.Component {
@@ -35,7 +35,7 @@ export default class QuizDescription extends React.Component {
 }
 
 QuizDescription.propTypes = {
-  quizTitle: PropTypes.string.isRequired,
+  // quizTitle: PropTypes.string.isRequired,
   quizDescription: PropTypes.string.isRequired,
   handleStart: PropTypes.func.isRequired,
   handleBackButton: PropTypes.func.isRequired,

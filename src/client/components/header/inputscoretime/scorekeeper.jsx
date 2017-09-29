@@ -43,5 +43,5 @@ export default class ScoreKeeper extends React.Component {
 }
 
 ScoreKeeper.propTypes = {
-  remaining: PropTypes.number.isRequired
+  remaining: PropTypes.number.isRequired,
 }
