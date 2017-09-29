@@ -25,6 +25,16 @@ export function FFAhandleInput(value) {
 }
 
 export function NTPcheckUserInput(value) {
+  if (this.state.selection === 'LR') {
+    let fullName = this.state.currentLocation.toLowerCase()
+    let lastName = fullName.split(' ')[fullName.split(' ').length-1]
+    if (value.toLowerCase() === fullName || value.toLowerCase() === lastName) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   if (value.toLowerCase() === this.state.currentLocation.toLowerCase()) {
     return true
   } else {
