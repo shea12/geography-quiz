@@ -34,9 +34,11 @@ Notes:
   /// done /// add BR & JP layers, db
   /// done /// globe emoji for tab icon (not working but is there?)
   /// done /// update welcome modal, add call to email 
+  /// done /// special exceptions for leaders, last name OR full name
+  *** TODO *** rewrite get random place function
+  *** TODO *** fix input regex to allow '-' for south korea leader Moon Jae-in
   *** TODO *** remove keys from repo
   *** TODO *** make upper right menu prettier
-  *** TODO *** special exceptions for leaders, last name OR full name
   *** TODO *** on "show unnamed places" show leaders names
   *** TODO *** add lonlatzoom for country close ups (esp small countries)
   *** TODO *** linting
@@ -105,6 +107,7 @@ export default class App extends React.Component {
       .then((d) => {
         this.setState({
           quizType: quiztype,
+          selection: selection,
           lonlatzoom: lonlatzoo,
           placesArray: d.data.places,
           placesNumber: d.data.places.length,
@@ -216,6 +219,7 @@ export default class App extends React.Component {
       quizType: '',
       quizTitle: '',
       finalTime: '',
+      selection: '',
       timing: false,
       gaveUp: false,
       lonlatzoom: loc,
@@ -361,11 +365,13 @@ export default class App extends React.Component {
             layer={this.state.layer}
             codes={this.state.codes}
             quizType={this.state.quizType}
+            selection={this.state.selection}
             lonlatzoom={this.state.lonlatzoom}
             resetClearMap={this.resetClearMap}
             namedPlace={this.state.namedPlace}
             clearLabels={this.state.clearLabels}
             placesArray={this.state.placesArray}
+            currentLocation={this.state.currentLocation}
             showUnnamedPlaces={this.state.showUnnamedPlaces}
           />
 
