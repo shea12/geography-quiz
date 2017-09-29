@@ -77,6 +77,7 @@ export default class Maps extends React.Component {
 
   showLabel(abbrv) {
     let label = this.props.layer + abbrv
+    map.setLayoutProperty(label, 'text-field', '{name_en}')
     map.setLayoutProperty(label, 'visibility', 'visible')
   }
 
@@ -89,15 +90,24 @@ export default class Maps extends React.Component {
 
     if (this.props.namedPlace !== nextProps.namedPlace) {
       let abbrv = nextProps.namedPlace
-      this.showLabel(abbrv)
-      // if country or country capital quiz, shade country green
       if (this.props.layer === 'C_' || this.props.layer === 'CCAP_') {
+        // if country or country capital quiz, shade country green
         this.shadeInCountry(abbrv, 'rgba(34, 176, 27, 0.26)')
       }
-
-      if (this.props.layer === 'BW_') {
+      if (this.props.selection === 'BW') {
+        // darkening water labels for visibility
         let waterLabel = this.props.layer + abbrv
         map.setPaintProperty(waterLabel, 'text-color', 'hsla(212, 3%, 39%, 0.85)')
+      }
+      if (this.props.selection === 'LR') {
+        // leaders quiz, need to show leader name on country
+        let leaderLabel = this.props.layer + abbrv
+        console.log('leader label: ', leaderLabel)
+        map.setLayoutProperty(leaderLabel, 'text-field', this.props.currentLocation)
+        map.setLayoutProperty(leaderLabel, 'visibility', 'visible')
+      } else {
+        // show label of namedPlace
+        this.showLabel(abbrv)
       }
     }
 
@@ -109,9 +119,15 @@ export default class Maps extends React.Component {
         if (this.props.layer === 'C_' || this.props.layer === 'CCAP_') {
           this.shadeInCountry(abbrv, 'rgba(220, 57, 24, 0.26)')
         }
-        if (this.props.layer === 'BW_') {
+        if (this.props.selection === 'BW') {
+          // display unnamed water labels in red
           let waterLabel = this.props.layer + abbrv
           map.setPaintProperty(waterLabel, 'text-color', 'hsla(12, 82%, 49%, 0.8)')
+        }
+        if (this.props.selection === 'LR') {
+          // leaders quiz, need to show leader name on each unnamed country
+          let leaderLabel = this.props.layer + abbrv
+          map.setLayoutProperty(leaderLabel, 'text-field', nextProps.placesArray[i].name)
         }
       }
     }
@@ -136,14 +152,15 @@ export default class Maps extends React.Component {
 
 Maps.propTypes = {
   layer: PropTypes.string,
-  codes: PropTypes.arrayOf(PropTypes.object),
   quizType: PropTypes.string,
   clearLabels: PropTypes.bool,
   showUnnamedPlaces: PropTypes.bool,
+  currentLocation: PropTypes.String,
   namedPlace: PropTypes.string.isRequired,
   resetClearMap: PropTypes.func.isRequired,
-  placesArray: PropTypes.arrayOf(PropTypes.object),
+  codes: PropTypes.arrayOf(PropTypes.object),
   lonlatzoom: PropTypes.arrayOf(PropTypes.number),
+  placesArray: PropTypes.arrayOf(PropTypes.object),
 }
 
 // map.on('click', (e) => {
