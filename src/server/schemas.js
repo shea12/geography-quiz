@@ -59,7 +59,7 @@ const leadersSchema = new Schema({
 const layerCodesSchema = new Schema({
   layer: String,
   codes: Array,
-}, { collection: 'layerCodes'})
+}, { collection: 'layerCodes' })
 
 // haven't created this functionality yet
 const userSchema = new Schema({

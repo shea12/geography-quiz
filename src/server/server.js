@@ -1,15 +1,17 @@
 const express = require('express')
 const mongoose = require('mongoose')
+
 const mongoURI = require(`${__dirname}/dbkey.js`)
-var dbServer  = process.env.DB_ENV || 'primary'
+const dbServer = process.env.DB_ENV || 'primary'
 
 mongoose.connect(mongoURI, {
   useMongoClient: true,
 })
 
-mongoose.connection.on('connected', function(ref) {
-  console.log('Connected to DB: ' + dbServer);
-  
+mongoose.connection.on('connected', function () {
+  /* eslint-disable */
+  console.log('Connected to DB: ' + dbServer)
+  /* eslint-enable */
   const app = express()
   const port = process.env.PORT || 8081
   require('./middleware.js')(app, express)
@@ -22,17 +24,23 @@ mongoose.connection.on('connected', function(ref) {
   })
 })
 
-mongoose.connection.on('error', function(error) {
+mongoose.connection.on('error', function (error) {
+  /* eslint-disable */
   console.error('Error connecting to DB: ' + dbServer + '. Error: ', error)
+  /* eslint-enable */
 })
 
 mongoose.connection.on('disconnected', function () {
+  /* eslint-disable */
   console.log('Disconnected DB: ' + dbServer)
+  /* eslint-enable */
 })
 
-const gracefulExit = function() { 
+const gracefulExit = function () {
   mongoose.connection.close(function () {
+    /* eslint-disable */
     console.log('Node process ended, closed DB: ' + dbServer)
+    /* eslint-enable */
     process.exit(0)
   })
 }

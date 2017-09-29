@@ -14,5 +14,5 @@ module.exports = {
         /* eslint-enable */
         res.status(200).send()
       })
-  }
+  },
 }
