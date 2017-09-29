@@ -102,7 +102,6 @@ export default class Maps extends React.Component {
       if (this.props.selection === 'LR') {
         // leaders quiz, need to show leader name on country
         let leaderLabel = this.props.layer + abbrv
-        console.log('leader label: ', leaderLabel)
         map.setLayoutProperty(leaderLabel, 'text-field', this.props.currentLocation)
         map.setLayoutProperty(leaderLabel, 'visibility', 'visible')
       } else {
