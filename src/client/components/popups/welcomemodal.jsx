@@ -73,7 +73,7 @@ export default class WelcomeModal extends React.Component {
           </div>
           <div>
             <p style={style.byLine}>
-              This project was created with pleasure by me, Caroline. 
+              This project was created by Caroline. 
               <br />
               <a href="mailto:shea.caroline92@gmail.com?subject=Geography%20Quiz">
                 Send me an email </a> with comments or suggestions; I'd love to hear from you.
