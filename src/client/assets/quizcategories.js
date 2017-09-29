@@ -21,7 +21,7 @@ const categories = {
           },
           NACA: {
             title: 'Capitals',
-            desc: 'Can you name all the capitals?',
+            desc: 'Can you name all the North American capitals?',
             quiz: true,
             path: '/NA/get-countries',
             cap: true,
@@ -32,17 +32,10 @@ const categories = {
             categories: {
               USST: {
                 title: 'US States',
-                desc: 'Can you name all 50 states?',
+                desc: 'Can you name all 50 US states?',
                 quiz: true,
                 path: '/US/get-states',
                 layer: 'ST_US_',
-              },
-              USTE: {
-                title: 'US Territories',
-                desc: 'Can you name the 5 populated US territories?',
-                quiz: true,
-                path: '/US/get-territories',
-                layer: 'USTE_',
               },
               USCP: {
                 title: 'US Capitals',
@@ -51,6 +44,13 @@ const categories = {
                 path: '/US/get-states',
                 cap: true,
                 layer: 'STCAP_US',
+              },
+              USTE: {
+                title: 'US Territories',
+                desc: 'Can you name the 5 populated US territories?',
+                quiz: true,
+                path: '/US/get-territories',
+                layer: 'USTE_',
               },
             },
           },
