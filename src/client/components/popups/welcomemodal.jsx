@@ -60,13 +60,15 @@ export default class WelcomeModal extends React.Component {
               <br /><br />
               Feel free to explore the map or
               get started with the quiz categories above.
+              <br />
+              Use the menu in the top right corner to center and clear the map.
               <br /><br />
               Current categories include countries, capitals, states, territories,
               bodies of water, landmarks, and world leaders.
               Guess the City, a really neat quiz category inspired by&nbsp;
               <a href="https://twitter.com/search?q=%40mapbox%20%23spotted&src=typd" target="_blank" rel="noopener noreferrer">
               @Mapbox #spotted series
-              </a>, will be up soon so be sure to check back for it!
+              </a>, will be up soon so be sure to check back for it.
               <br /><br />
               Shout out to <a href="https://www.mapbox.com/" target="_blank" rel="noopener noreferrer"> Mapbox </a>
               for providing a tremendous mapping platform!
@@ -77,10 +79,10 @@ export default class WelcomeModal extends React.Component {
               This project was created by Caroline.
               <br />
               <a href="mailto:shea.caroline92@gmail.com?subject=Geography%20Quiz">
-                Send me an email </a> with comments or suggestions;&nbsp;
+                Send me an email </a> with comments or suggestions;
                 I&apos;d love to hear from you.&nbsp;
               <a href="https://github.com/shea12/geography-quiz" target="_blank" rel="noopener noreferrer">
-                &nbsp;Check out the repo</a> if you&apos;re into that kind of thing.
+                Check out the repo</a> if you&apos;re into that kind of thing.
             </p>
           </div>
         </Dialog>

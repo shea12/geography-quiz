@@ -36,10 +36,9 @@ export default class Menu extends React.Component {
           />
           <MenuItem
             style={style.menuItem}
-            primaryText="Home"
+            primaryText="Center Map"
             onClick={() => this.props.handleBackButton([0.2, 20.6, 2])}
           />
-
         </IconMenu>
       </div>
     )
