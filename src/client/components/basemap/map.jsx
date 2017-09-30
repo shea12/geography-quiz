@@ -150,8 +150,8 @@ Maps.propTypes = {
   showUnnamedPlaces: PropTypes.bool,
   resetClearMap: PropTypes.func.isRequired,
   codes: PropTypes.arrayOf(PropTypes.object),
-  namedPlaceAbbrv: PropTypes.string.isRequired,
-  namedPlaceTitle: PropTypes.string.isRequired,
+  namedPlaceAbbrv: PropTypes.string,
+  namedPlaceTitle: PropTypes.string,
   lonlatzoom: PropTypes.arrayOf(PropTypes.number),
   placesArray: PropTypes.arrayOf(PropTypes.object),
 }
