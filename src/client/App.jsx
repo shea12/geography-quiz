@@ -39,11 +39,12 @@ Notes:
   /// done /// close mongoose connection
   /// done /// create express app after db successfully connected
   /// done /// rewrite get random place function
-  *** TODO *** linting!
+  /// done /// linting!
+  /// done /// change button colors
   *** TODO *** fix input regex to allow '-' for south korea leader Moon Jae-in
-  *** TODO *** remove keys from repo
+  *** TODO *** put question marks where label would be on NTP quizzes
   *** TODO *** add lonlatzoom for country close ups (esp small countries)
-  *** TODO *** change button colors
+  *** TODO *** remove keys from repo
 
   backlog:
   *** TODO *** make upper right menu prettier
@@ -98,16 +99,14 @@ export default class App extends React.Component {
   }
 
   getQuizData(path, selection) {
-    let lonlatzoo = ''
+    let lonlatzoom = ''
     let quiztype = ''
     if (selection !== 'BW' && selection !== 'LF' && selection !== 'LR') {
       const abbrv = selection.charAt(0) + selection.charAt(1)
-      this.quickLookLonLatZoom(abbrv, function (llz) {
-        lonlatzoo = llz
-      })
+      this.quickLookLonLatZoom(abbrv, function (llz) { lonlatzoom = llz })
       quiztype = 'FFA'
     } else {
-      lonlatzoo = [0.2, 20.6, 2]
+      lonlatzoom = [0.2, 20.6, 2]
       quiztype = 'NTP'
     }
     axios.get(path)
@@ -115,7 +114,7 @@ export default class App extends React.Component {
         this.setState({
           quizType: quiztype,
           selection: selection,
-          lonlatzoom: lonlatzoo,
+          lonlatzoom: lonlatzoom,
           placesArray: d.data.places,
           placesNumber: d.data.places.length,
           placesRemaining: d.data.places.length,
@@ -127,7 +126,6 @@ export default class App extends React.Component {
         /* eslint-enable */
       })
   }
-
 
   handleSelection(selection) {
     if (this.state.options[selection].quiz === true) {
