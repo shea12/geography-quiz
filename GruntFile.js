@@ -36,7 +36,7 @@ module.exports = grunt => {
     uglify: {
       my_target: {
         files: {
-          'src/deploy/bundle.min.js': 'src/deploy/bundle.js'
+          'src/deploy/bbundle.min.js': 'src/deploy/bbundle.js'
         }
       }
     },
