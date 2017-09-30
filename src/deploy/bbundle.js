@@ -78385,51 +78385,40 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /*
 Notes:
-  9/22:
-  *** TODO *** PO_LABEL AO_LABEL -> PO1, PO2, AO1, AO2
-
-  9/23:
-  /// done /// HUGE refactor
-  *** TODO *** Buttons to be condensed into 1 or 2 components
-
-  9/24:
-  /// done /// fix water quiz, import helper functions
-  /// done /// spruce up styling (fix hover, add colors, buttons)
-  /// done /// need to make a next button for NTP style quizzes
-  *** TODO *** add lonlatzoom for country close ups
-  *** TODO *** incorporate custom mapbox style
-
-  9/25:
-  /// done /// add landmark layers to map, add 5 US territories layers, buttons
-  /// done /// add landmark schema, route, controller to server, landmarks to db
-  /// done /// NTP need to pause for a moment after correct answer is entered
-
-  /// done /// add clear map button
-  /// done /// add show unnamed places button
-
-  9/26:
-  /// done /// security basics, validation on input box XSS
-  /// done /// smooth out show/hide/giveup
-  *** TODO *** make clearMap button only appear if map is not clear
-  /// done /// make water labels darker / more easily visible
-  /// done /// shade in coutries of capitals
-
   9/27: 
-  *** done *** make hamburger menu top right corner
-  *** done *** clearmap function bug fixes
-  *** done *** fix pacific and atlantic labels
-  *** done *** add G20 countries to db, quizcat, server
-  *** TODO *** special exceptions for leaders, 
-                allow user to enter last name or full name
-                on "show unnamed places" figure out way to show leaders names,
-                  either on the map or in a list?
-  *** TODO *** move quizcategories to mongodb, set up req routes
-  *** TODO *** move countryCodes to mongodb, set up req routes
+  /// done /// make hamburger menu top right corner
+  /// done /// clearmap function bug fixes
+  /// done /// fix pacific and atlantic labels
+  /// done /// add G20 countries to db, quizcat, server
+  /// done /// move countryCodes to mongodb, set up req routes
+  /// done /// fix buggy layerCodes, consolidate mlab collection
+
+  9/28:
+  /// done /// add BR & JP layers, db
+  /// done /// globe emoji for tab icon (not working but is there?)
+  /// done /// update welcome modal, add call to email 
+  /// done /// special exceptions for leaders, last name OR full name
+  /// done /// on "show unnamed places" show leaders names
+
+  9/29:
+  /// done /// close mongoose connection
+  /// done /// create express app after db successfully connected
+  /// done /// rewrite get random place function
+  /// done /// linting!
+  /// done /// change button colors
+  *** TODO *** fix input regex to allow '-' for south korea leader Moon Jae-in
+  *** TODO *** put question marks where label would be on NTP quizzes
+  *** TODO *** add lonlatzoom for country close ups (esp small countries)
   *** TODO *** remove keys from repo
+
+  backlog:
+  *** TODO *** make upper right menu prettier
+  *** TODO *** city category (remember: need to hide movement from user)
+  *** TODO *** set up back end testing
   *** TODO *** custom mapbox style
-  *** TODO *** city (remember: need to hide movement from user)
-  *** TODO *** add progress widget for loading
-  *** TODO *** linting
+  *** TODO *** add progress widget for loading?
+  *** TODO *** Buttons to be condensed into 1 or 2 components
+  *** TODO *** move quizcategories to mongodb, set up schema, routes, etc
 
 */
 
@@ -78444,37 +78433,34 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      lonlatzoom: [0.2, 20.6, 2],
-      options: _quizcategories2.default,
-      selectedQuiz: false,
+      codes: [],
+      finalTime: 0,
       timing: false,
-      // layer: '',
+      gaveUp: false,
+      quizTitle: '',
       placesArray: [],
       placesNumber: 0,
       modifier: 'name',
-      namedPlace: '',
+      mapIsClear: true,
       placesRemaining: 0,
-
-      quizTitle: '',
+      namedPlaceTitle: '',
+      namedPlaceAbbrv: '',
+      selectedQuiz: false,
+      options: _quizcategories2.default,
       showquizModal: false,
-      gaveUp: false,
-      finalTime: 0
+      lonlatzoom: [0.2, 20.6, 2]
     };
 
-    _this.resetState = _this.resetState.bind(_this);
-    _this.getQuizData = _this.getQuizData.bind(_this);
-    _this.handleStart = _this.handleStart.bind(_this);
     _this.handleTimer = _this.handleTimer.bind(_this);
     _this.handleInput = _this.handleInput.bind(_this);
-    _this.getFinalTime = _this.getFinalTime.bind(_this);
+    _this.handleStart = _this.handleStart.bind(_this);
     _this.handleGiveUp = _this.handleGiveUp.bind(_this);
+    _this.getFinalTime = _this.getFinalTime.bind(_this);
     _this.resetClearMap = _this.resetClearMap.bind(_this);
     _this.handleClearMap = _this.handleClearMap.bind(_this);
     _this.handleSelection = _this.handleSelection.bind(_this);
     _this.handleNextButton = _this.handleNextButton.bind(_this);
-    _this.handleNamedPlace = _this.handleNamedPlace.bind(_this);
     _this.handleBackButton = _this.handleBackButton.bind(_this);
-    _this.quickLookLonLatZoom = _this.quickLookLonLatZoom.bind(_this);
     _this.handleShowUnnamedPlaces = _this.handleShowUnnamedPlaces.bind(_this);
     return _this;
   }
@@ -78489,25 +78475,26 @@ var App = function (_React$Component) {
     value: function getQuizData(path, selection) {
       var _this2 = this;
 
-      var lonlatzoo = '';
+      var lonlatzoom = '';
       var quiztype = '';
       if (selection !== 'BW' && selection !== 'LF' && selection !== 'LR') {
         var abbrv = selection.charAt(0) + selection.charAt(1);
         this.quickLookLonLatZoom(abbrv, function (llz) {
-          lonlatzoo = llz;
+          lonlatzoom = llz;
         });
         quiztype = 'FFA';
       } else {
-        lonlatzoo = [0.2, 20.6, 2];
+        lonlatzoom = [0.2, 20.6, 2];
         quiztype = 'NTP';
       }
       axios.get(path).then(function (d) {
         _this2.setState({
+          quizType: quiztype,
+          selection: selection,
+          lonlatzoom: lonlatzoom,
           placesArray: d.data.places,
           placesNumber: d.data.places.length,
-          placesRemaining: d.data.places.length,
-          lonlatzoom: lonlatzoo,
-          quizType: quiztype
+          placesRemaining: d.data.places.length
         });
       }).catch(function (error) {
         /* eslint-disable */
@@ -78548,54 +78535,113 @@ var App = function (_React$Component) {
       this.setState({ finalTime: time });
     }
   }, {
+    key: 'getLayerCodes',
+    value: function getLayerCodes(layer, callback) {
+      var path = '';
+      if (layer === '') {
+        path = '/get-all-layer-codes';
+      } else {
+        path = layer + ':/get-layer-codes';
+      }
+
+      axios.get(path).then(function (d) {
+        callback(d.data.codes);
+      }).catch(function (error) {
+        /* eslint-disable */
+        console.log('axios error', error);
+        /* eslint-enable */
+      });
+    }
+  }, {
     key: 'handleStart',
     value: function handleStart() {
-      this.setState({
-        timing: true,
-        clearLabels: true
-      });
+      // if map is clear, start quiz
+      if (this.state.mapIsClear === true) {
+        this.setState({
+          timing: true
+        });
+        // if map is not clear, get layercodes, clear map, start quiz
+      } else if (this.state.mapIsClear === false) {
+        var layer = '';
+        this.getLayerCodes(layer, function (layercodes) {
+          this.setState({
+            codes: layercodes,
+            showUnnamedPlaces: false,
+            timing: true,
+            clearLabels: true
+          });
+        }.bind(this));
+      }
+
       if (this.state.quizType === 'NTP') {
-        _helpers.NTPgetRandomPlace.call(this);
+        // this is the Fisher-Yates shuffle algorithm!
+        var shuffle = function shuffle(array, callback) {
+          var currentIndex = array.length;
+          var temporaryValue = 0;
+          var randomIndex = 0;
+          while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+          }
+          callback(array);
+        };
+
+        shuffle(this.state.placesArray, function (shuffledArray) {
+          this.setState({
+            placesArray: shuffledArray,
+            lonlatzoom: this.state.placesArray[0].lonlatzoom
+          });
+        }.bind(this));
       }
     }
   }, {
     key: 'handleNamedPlace',
-    value: function handleNamedPlace(place) {
+    value: function handleNamedPlace(place, title) {
       var remaining = this.state.placesRemaining - 1;
-      this.setState({ namedPlace: place, placesRemaining: remaining });
+      this.setState({
+        namedPlaceAbbrv: place,
+        namedPlaceTitle: title,
+        placesRemaining: remaining
+      });
     }
   }, {
     key: 'handleInput',
     value: function handleInput(value) {
       if (this.state.quizType === 'FFA') {
         return _helpers.FFAhandleInput.call(this, value);
-      } else if (this.state.quizType === 'NTP') {
-        return _helpers.NTPhandleInput.call(this, value);
       }
+      return _helpers.NTPhandleInput.call(this, value);
     }
   }, {
     key: 'handleNextButton',
     value: function handleNextButton() {
-      _helpers.NTPgetRandomPlace.call(this);
+      _helpers.NTPskipCurrentPlace.call(this);
     }
   }, {
     key: 'resetState',
     value: function resetState(loc) {
       loc ? loc : [0.2, 20.6, 2];
       this.setState({
-        selectedQuiz: false,
-        timing: false,
-        finalTime: '',
-        lonlatzoom: loc,
-        options: _quizcategories2.default,
-        clearLabels: false,
-        gaveUp: false,
-        placesArray: [],
-        placesNumber: 0,
-        placesRemaining: 0,
-        quizDescription: '',
+        codes: [],
         quizType: '',
         quizTitle: '',
+        finalTime: '',
+        selection: '',
+        timing: false,
+        gaveUp: false,
+        lonlatzoom: loc,
+        placesArray: [],
+        placesNumber: 0,
+        clearLabels: false,
+        placesRemaining: 0,
+        quizDescription: '',
+        // namedPlaceTitle: '',
+        // namedPlaceAbbrv: '',
+        options: _quizcategories2.default,
+        selectedQuiz: false,
         showquizModal: false,
         showUnnamedPlaces: false
       });
@@ -78609,35 +78655,42 @@ var App = function (_React$Component) {
     key: 'handleGiveUp',
     value: function handleGiveUp() {
       this.setState({
+        gaveUp: true,
         timing: false,
-        showquizModal: true,
-        gaveUp: true
+        mapIsClear: false,
+        showquizModal: true
       });
     }
   }, {
     key: 'handleShowUnnamedPlaces',
     value: function handleShowUnnamedPlaces() {
-      console.log('handling show unnamed places');
       // zoom to original quiz llz OR world view
       this.setState({
-        lonlatzoom: this.state.lonlatzoom,
-        showUnnamedPlaces: true
+        mapIsClear: false,
+        showUnnamedPlaces: true,
+        lonlatzoom: this.state.lonlatzoom
       });
     }
   }, {
     key: 'handleClearMap',
     value: function handleClearMap() {
-      console.log('clearing map');
-      this.setState({
-        showUnnamedPlaces: false,
-        clearLabels: true
-      });
+      // call for all layer codes
+      var layer = '';
+      this.getLayerCodes(layer, function (layercodes) {
+        this.setState({
+          codes: layercodes,
+          clearLabels: true,
+          showUnnamedPlaces: false
+        });
+      }.bind(this));
     }
   }, {
     key: 'resetClearMap',
     value: function resetClearMap() {
-      console.log('resetting clearLabels');
+      // start ? let startTimer = true : let startTimer = false
       this.setState({
+        codes: [],
+        mapIsClear: true,
         clearLabels: false
       });
     }
@@ -78651,8 +78704,9 @@ var App = function (_React$Component) {
         // user completed quiz 100%
         this.setState({
           timing: false,
-          showquizModal: true,
-          gaveUp: false
+          gaveUp: false,
+          mapIsClear: false,
+          showquizModal: true
         });
         // when user clicks outside modal, resetState is called
       }
@@ -78673,16 +78727,16 @@ var App = function (_React$Component) {
         header = _react2.default.createElement(_Header2.default, {
           options: this.state.options,
           handler: this.handleSelection,
-          handleBackButton: this.handleBackButton,
-          handleClearMap: this.handleClearMap
+          handleClearMap: this.handleClearMap,
+          handleBackButton: this.handleBackButton
         });
       } else if (this.state.selectedQuiz && !this.state.timing) {
         header = _react2.default.createElement(_QuizDescription2.default, {
-          quizTitle: this.state.quizTitle,
-          quizDescription: this.state.quizDescription,
-          handleBackButton: this.handleBackButton,
           handleStart: this.handleStart,
-          handleClearMap: this.handleClearMap
+          quizTitle: this.state.quizTitle,
+          handleClearMap: this.handleClearMap,
+          handleBackButton: this.handleBackButton,
+          quizDescription: this.state.quizDescription
         });
       } else if (this.state.selectedQuiz && this.state.timing) {
         header = _react2.default.createElement(
@@ -78690,12 +78744,12 @@ var App = function (_React$Component) {
           null,
           _react2.default.createElement(_InputScoreTime2.default, {
             timing: this.state.timing,
-            remaining: this.state.placesRemaining,
             handleTimer: this.handleTimer,
             handleInput: this.handleInput,
-            handleBackButton: this.handleBackButton,
             getFinalTime: this.getFinalTime,
-            handleGiveUp: this.handleGiveUp
+            handleGiveUp: this.handleGiveUp,
+            remaining: this.state.placesRemaining,
+            handleBackButton: this.handleBackButton
           }),
           nextbutton
         );
@@ -78703,18 +78757,17 @@ var App = function (_React$Component) {
 
       if (!this.state.timing && this.state.showquizModal) {
         quizmodal = _react2.default.createElement(_quizmodal2.default, {
-          handleBackButton: this.handleBackButton,
+          gaveUp: this.state.gaveUp,
           time: this.state.finalTime,
           quizTitle: this.state.quizTitle,
-          gaveUp: this.state.gaveUp,
           placesNumber: this.state.placesNumber,
+          handleBackButton: this.handleBackButton,
           placesRemaining: this.state.placesRemaining,
           handleShowUnnamedPlaces: this.handleShowUnnamedPlaces
         });
       } else {
         quizmodal = _react2.default.createElement('div', null);
       }
-
       return _react2.default.createElement(
         _MuiThemeProvider2.default,
         null,
@@ -78729,13 +78782,16 @@ var App = function (_React$Component) {
           _react2.default.createElement(_welcomemodal2.default, null),
           header,
           _react2.default.createElement(_map2.default, {
-            lonlatzoom: this.state.lonlatzoom,
-            namedPlace: this.state.namedPlace,
             layer: this.state.layer,
-            clearLabels: this.state.clearLabels,
-            resetClearMap: this.resetClearMap,
+            codes: this.state.codes,
             quizType: this.state.quizType,
+            selection: this.state.selection,
+            lonlatzoom: this.state.lonlatzoom,
+            resetClearMap: this.resetClearMap,
+            clearLabels: this.state.clearLabels,
             placesArray: this.state.placesArray,
+            namedPlaceAbbrv: this.state.namedPlaceAbbrv,
+            namedPlaceTitle: this.state.namedPlaceTitle,
             showUnnamedPlaces: this.state.showUnnamedPlaces
           }),
           quizmodal
@@ -78750,135 +78806,23 @@ var App = function (_React$Component) {
 exports.default = App;
 
 
-},{"./assets/quicklookup":606,"./assets/quizcategories":607,"./components/basemap/map":608,"./components/header/Header":609,"./components/header/InputScoreTime":610,"./components/header/QuizDescription":611,"./components/header/buttons/nextbutton":616,"./components/header/headtitle/headercard":619,"./components/header/headtitle/menu":620,"./components/helpers":624,"./components/popups/quizmodal":625,"./components/popups/welcomemodal":626,"axios":1,"material-ui/styles/MuiThemeProvider":274,"react":585}],604:[function(require,module,exports){
-'use strict';
-
-/* eslint-disable */
-var CODES = {
-  C: ['AF',
-  //'AX',
-  'AL', 'DZ',
-  //'AS',
-  'AD', 'AO',
-  //'AI',
-  //'AQ',
-  'AG', 'AR', 'AM',
-  //'AW',
-  'AU', 'AT', 'AZ', 'BH', 'BS', 'BD', 'BB', 'BY', 'BE', 'BZ', 'BJ',
-  //'BM',
-  'BT', 'BO',
-  //'BQ',
-  'BA', 'BW',
-  //'BV',
-  'BR',
-  //'IO',
-  'BN', 'BG', 'BF', 'BI', 'KH', 'CM', 'CA', 'CV',
-  //'KY',
-  'CF', 'TD', 'CL', 'CN',
-  //'CX',
-  //'CC',
-  'CO', 'KM', 'CG', 'CD', 'CK', 'CR', 'CI', 'HR', 'CU',
-  //'CW',
-  'CY', 'CZ', 'DK', 'DJ', 'DM', 'DO', 'EC', 'EG', 'SV', 'GQ', 'ER', 'EE', 'ET',
-  //'FK',
-  //'FO',
-  'FJ', 'FI', 'FR',
-  //'GF',
-  //'PF',
-  //'TF',
-  'GA', 'GM', 'GE', 'DE', 'GH',
-  //'GI',
-  'GR',
-  //'GL',
-  'GD',
-  //'GP',
-  //'GU',
-  'GT',
-  //'GG',
-  'GN', 'GW', 'GY', 'HT',
-  //'HM',
-  //'VA',
-  'HN',
-  //'HK',
-  'HU', 'IS', 'IN', 'ID', 'IR', 'IQ', 'IE',
-  //'IM',
-  'IL', 'IT', 'JM', 'JP',
-  //'JE',
-  'JO', 'KZ', 'KE', 'KI', 'KP', 'KR', 'KW', 'KG', 'LA', 'LV', 'LB', 'LS', 'LR', 'LY', 'LI', 'LT', 'LU',
-  //'MO',
-  'MK', 'MG', 'MW', 'MY', 'MV', 'ML', 'MT', 'MH',
-  //'MQ',
-  'MR', 'MU',
-  //'YT',
-  'MX', 'FM', 'MD', 'MC', 'MN', 'ME',
-  //'MS',
-  'MA', 'MZ', 'MM', 'NA', 'NR', 'NP', 'NL', 'NC', 'NZ', 'NI', 'NE', 'NG',
-  //'NU',
-  //'NF',
-  //'MP',
-  'NO', 'OM', 'PK', 'PW', 'PS', 'PA', 'PG', 'PY', 'PE', 'PH',
-  //'PN',
-  'PL', 'PT',
-  //'PR',
-  'QA',
-  //'RE',
-  'RO', 'RU', 'RW',
-  //'BL',
-  //'SH',
-  'KN', 'LC',
-  //'MF',
-  //'PM',
-  'VC', 'WS', 'SM', 'ST', 'SA', 'SN', 'RS', 'SC', 'SL', 'SG',
-  //'SX',
-  'SK', 'SI', 'SB', 'SO', 'ZA',
-  //'GS',
-  'SS', 'ES', 'LK', 'SD', 'SR',
-  //'SJ',
-  'SZ', 'SE', 'CH', 'SY', 'TW', 'TJ', 'TZ', 'TH', 'TL', 'TG',
-  //'TK',
-  'TO', 'TT', 'TN', 'TR', 'TM',
-  //'TC',
-  'TV', 'UG', 'UA', 'AE', 'GB', 'US',
-  //'UM',
-  'UY', 'UZ', 'VU', 'VE', 'VN',
-  //'VG',
-  //'VI',
-  //'WF',
-  'EH', 'XK', 'YE', 'ZM', 'ZW'],
-  STCAP: ['US_AK', 'US_AL', 'US_AR', 'US_AZ', 'US_CA', 'US_CO', 'US_CT', 'US_DE', 'US_FL', 'US_GA', 'US_HI', 'US_IA', 'US_ID', 'US_IL', 'US_IN', 'US_KS', 'US_KY', 'US_LA', 'US_MA', 'US_MD', 'US_ME', 'US_MI', 'US_MN', 'US_MO', 'US_MS', 'US_MT', 'US_NC', 'US_ND', 'US_NE', 'US_NH', 'US_NJ', 'US_NM', 'US_NV', 'US_NY', 'US_OH', 'US_OK', 'US_OR', 'US_PA', 'US_RI', 'US_SC', 'US_SD', 'US_TN', 'US_TX', 'US_UT', 'US_VA', 'US_VT', 'US_WA', 'US_WI', 'US_WV', 'US_WY'],
-  ST: ['US_AK', 'US_AL', 'US_AR', 'US_AZ', 'US_CA', 'US_CO', 'US_CT', 'US_DE', 'US_FL', 'US_GA', 'US_HI', 'US_IA', 'US_ID', 'US_IL', 'US_IN', 'US_KS', 'US_KY', 'US_LA', 'US_MA', 'US_MD', 'US_ME', 'US_MI', 'US_MN', 'US_MO', 'US_MS', 'US_MT', 'US_NC', 'US_ND', 'US_NE', 'US_NH', 'US_NJ', 'US_NM', 'US_NV', 'US_NY', 'US_OH', 'US_OK', 'US_OR', 'US_PA', 'US_RI', 'US_SC', 'US_SD', 'US_TN', 'US_TX', 'US_UT', 'US_VA', 'US_VT', 'US_WA', 'US_WI', 'US_WV', 'US_WY', 'GB_ENG', 'GB_SCO', 'GB_WAL', 'GB_NIR', 'CA_AB', 'CA_BC', 'CA_MB', 'CA_NB', 'CA_NL', 'CA_NT', 'CA_NS', 'CA_NU', 'CA_ON', 'CA_PE', 'CA_QC', 'CA_SK', 'CA_YT', 'MX_AGS', 'MX_BC', 'MX_BCS', 'MX_CAM', 'MX_CHP', 'MX_CHH', 'MX_COA', 'MX_COL', 'MX_DUR', 'MX_GTO', 'MX_GRO', 'MX_HDG', 'MX_JAL', 'MX_MIC', 'MX_MOR', 'MX_NAY', 'MX_NL', 'MX_OAX', 'MX_PUE', 'MX_QUE', 'MX_QR', 'MX_SLP', 'MX_SIN', 'MX_TAB', 'MX_TAM', 'MX_TLA', 'MX_VER', 'MX_YUC', 'MX_ZAC'],
-  BW: ['MED', 'CAS', 'ADR', 'RED', 'BLA', 'CAR', 'GOM', 'HUD', 'BEA', 'TAS', 'COR', 'BOB', 'ARA', 'NOR', 'PER', 'SOJ', 'SCS', 'YEL', 'SRG', 'SCT', 'SCY', 'NRG', 'BRC', 'IRS', 'ECH', 'BLT', 'AO1', 'AO2', 'PO1', 'PO2', 'IO', 'ARO'],
-  TE: ['US_AS', 'US_GU', 'US_ML', 'US_PR', 'US_VI']
-};
-
-module.exports = CODES;
-
-
-},{}],605:[function(require,module,exports){
+},{"./assets/quicklookup":605,"./assets/quizcategories":606,"./components/basemap/map":607,"./components/header/Header":608,"./components/header/InputScoreTime":609,"./components/header/QuizDescription":610,"./components/header/buttons/nextbutton":615,"./components/header/headtitle/headercard":618,"./components/header/headtitle/menu":619,"./components/helpers":623,"./components/popups/quizmodal":624,"./components/popups/welcomemodal":625,"axios":1,"material-ui/styles/MuiThemeProvider":274,"react":585}],604:[function(require,module,exports){
 'use strict';
 
 /* eslint-disable */
 var KEYS = {
   access_token: 'pk.eyJ1IjoiY2FzaGVhIiwiYSI6ImNqNnd3dm9uZTE5Y2wzM3RiaXJxYng1NHAifQ.nEu0dapbPoEPUe4bEYaq7Q',
-  style_key: 'mapbox://styles/cashea/cj837bbq2a9412rlm9itk6cdm'
+  style_key: 'mapbox://styles/cashea/cj84m96as0thv2rn50njdh8ui'
 };
 
 module.exports = KEYS;
 
 /*
-standard :  'mapbox://styles/cashea/cj6y6xtdyao4p2rrqaj5qymad'
-north star : 'mapbox://styles/cashea/cj70mjdsz7cz92rmg4gekqhsb'
-bright: 'mapbox://styles/cashea/cj70no5pp1kkn2qn21138391p'
-tabula_rasa: 'mapbox://styles/cashea/cj70toxjo03cp2spm6d5oal1q'
-tabula_rasa2: 'mapbox://styles/cashea/cj755orba44m42smfr9o1ze2i'
 outdoors: 'mapbox://styles/cashea/cj76hgeil5cz72sqfmglle126'
-// as of 9/22
-currentoutdoors: 'mapbox://styles/cashea/cj837bbq2a9412rlm9itk6cdm'
-trialoutdoors: 'mapbox://styles/cashea/cj7wt95zd4azr2rpc41t3oici'
 */
 
 
-},{}],606:[function(require,module,exports){
+},{}],605:[function(require,module,exports){
 'use strict';
 
 /* eslint-disable */
@@ -78889,10 +78833,11 @@ var quicklookup = {
   EU: { name: 'Europe', lonlatzoom: [23.57, 53.38, 3.36] },
   AS: { name: 'Asia', lonlatzoom: [90.93, 28.19, 2.87] },
   OC: { name: 'Oceania', lonlatzoom: [169.21, -19.58, 3.07] },
-  US: { name: 'the United States', lonlatzoom: [-95.784, 39.01, 4] },
+  US: { name: 'United States', lonlatzoom: [-95.784, 39.01, 4] },
   MX: { name: 'Mexico', lonlatzoom: [-100.13, 25.061, 4.68] },
+  JP: { name: 'Japan', lonlatzoom: [138.786, 38.647, 4.89] },
   CA: { name: 'Canada', lonlatzoom: [-93.84, 56.75, 3.61] },
-  UK: { name: 'United Kingdom', lonlatzoom: [-2.698, 55.115, 5.05] },
+  GB: { name: 'United Kingdom', lonlatzoom: [-2.698, 55.115, 5.05] },
   BR: { name: 'Brazil', lonlatzoom: [-51.46, -12.9, 3.74] },
   ZA: { name: 'South Africa', lonlatzoom: [25.612, -27.794, 5.05] },
   IN: { name: 'India', lonlatzoom: [81.29, 24.074, 4.04] },
@@ -78902,7 +78847,7 @@ var quicklookup = {
 module.exports = quicklookup;
 
 
-},{}],607:[function(require,module,exports){
+},{}],606:[function(require,module,exports){
 'use strict';
 
 /* eslint-disable */
@@ -78911,60 +78856,68 @@ var categories = {
   // second level: subcategory
   // thrird level: quiz array
   CTN: {
-    buttoncolor: '#f2baba', // light red
+    buttoncolor: '#F6EB8D',
     disabled: false,
-    title: 'Countries & Capitals',
+    title: 'Continents',
     categories: {
       NA: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'North America',
         categories: {
           NACO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
-            desc: 'Can you name all 23 countries of North America? Hint: there are a lot of tiny Caribbean islands',
+            desc: 'Can you name all 23 countries of North America?',
             quiz: true,
             path: '/NA/get-countries',
             layer: 'C_'
           },
           NACA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name all the capitals?',
+            desc: 'Can you name all the North American capitals?',
             quiz: true,
             path: '/NA/get-countries',
             cap: true,
             layer: 'CCAP_'
           },
           US: {
+            buttoncolor: '#EFDB2E',
             title: 'United States',
             categories: {
               USST: {
+                buttoncolor: '#CFBB0C',
                 title: 'US States',
-                desc: 'Can you name all 50 states?',
+                desc: 'Can you name all 50 US states?',
                 quiz: true,
                 path: '/US/get-states',
                 layer: 'ST_US_'
               },
-              USTE: {
-                title: 'US Territories',
-                desc: 'Can you name the 5 populated US territories?',
-                quiz: true,
-                path: '/US/get-territories',
-                layer: 'USTE_'
-              },
               USCP: {
+                buttoncolor: '#CFBB0C',
                 title: 'US Capitals',
                 desc: 'Do you know all the US state capitals?',
                 quiz: true,
                 path: '/US/get-states',
                 cap: true,
                 layer: 'STCAP_US'
+              },
+              USTE: {
+                buttoncolor: '#CFBB0C',
+                title: 'US Territories',
+                desc: 'Can you name the 5 populated US territories?',
+                quiz: true,
+                path: '/US/get-territories',
+                layer: 'USTE_'
               }
             }
           },
           MX: {
+            buttoncolor: '#EFDB2E',
             title: 'Mexico',
             categories: {
               MXST: {
+                buttoncolor: '#CFBB0C',
                 title: 'States of Mexico',
                 desc: 'Can you name all the states of Mexico?',
                 quiz: true,
@@ -78974,9 +78927,11 @@ var categories = {
             }
           },
           CA: {
+            buttoncolor: '#EFDB2E',
             title: 'Canada',
             categories: {
               CAST: {
+                buttoncolor: '#CFBB0C',
                 title: 'Provinces of Canada',
                 desc: 'Can you name all provinces of Canada?',
                 quiz: true,
@@ -78988,10 +78943,11 @@ var categories = {
         }
       },
       SA: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'South America',
         categories: {
           SACO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
             desc: 'Can you name 12 countries of South America?',
             quiz: true,
@@ -78999,37 +78955,49 @@ var categories = {
             layer: 'C_'
           },
           SACA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name all the capitals of the 12 South American countries?',
+            desc: 'Can you name all the South American capitals?',
             quiz: true,
             path: '/SA/get-countries',
             cap: true,
             layer: 'CCAP_'
+          },
+          BRST: {
+            buttoncolor: '#EFDB2E',
+            title: 'Brazil',
+            desc: 'Can you name each state of Brazil?',
+            quiz: true,
+            path: '/BR/get-states',
+            layer: 'ST_BR_'
           }
         }
       },
       AF: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'Africa',
         categories: {
           AFCO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
-            desc: 'Can you name all 55 countries of Africa? Hint: spelling counts',
+            desc: 'Can you name all 55 countries of Africa?',
             quiz: true,
             path: '/AF/get-countries',
             layer: 'C_'
           },
           AFCA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name each country capital?',
+            desc: 'Can you name each capital of Africa?',
             quiz: true,
             path: '/AF/get-countries',
             cap: true,
             layer: 'CCAP_'
           },
           ZAST: {
+            buttoncolor: '#EFDB2E',
             title: 'South Africa',
-            desc: 'Can you name each state of South Africa?',
+            desc: 'Can you name each province of South Africa?',
             quiz: true,
             path: '/ZA/get-states',
             layer: 'ST_ZA_'
@@ -79037,10 +79005,11 @@ var categories = {
         }
       },
       EU: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'Europe',
         categories: {
           EUCO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
             desc: 'Can you name all 46 countries of Europe? Hint: there are 5 micro-states',
             quiz: true,
@@ -79048,27 +79017,30 @@ var categories = {
             layer: 'C_'
           },
           EUCA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name every european capital?',
+            desc: 'Can you name all the capitals of Europe?',
             quiz: true,
             path: '/EU/get-countries',
             cap: true,
             layer: 'CCAP_'
           },
           GBST: {
-            title: 'States of the UK',
-            desc: 'Can you name all 4 countries of the United Kingdom?',
+            buttoncolor: '#EFDB2E',
+            title: 'United Kingdom',
+            desc: 'Can you name the 4 countries that comprise the United Kingdom?',
             quiz: true,
-            path: '/GB/get-countries',
+            path: '/GB/get-states',
             layer: 'ST_GB_'
           }
         }
       },
       AS: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'Asia',
         categories: {
           ASCO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
             desc: 'Can you name all countries of Asia?',
             quiz: true,
@@ -79076,36 +79048,48 @@ var categories = {
             layer: 'C_'
           },
           ASCA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name all the capitals?',
+            desc: 'Can you name all the capitals of Asia?',
             quiz: true,
             path: '/AS/get-countries',
             cap: true,
             layer: 'CCAP_'
+          },
+          JPST: {
+            buttoncolor: '#EFDB2E',
+            title: 'Japan',
+            desc: 'Can you name each of the 4 main Japanese islands?',
+            quiz: true,
+            path: '/JP/get-states',
+            layer: 'ST_JP_'
           }
         }
       },
       OC: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'Oceania',
         categories: {
           OCCO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
-            desc: 'Can you name all countries of Oceania? Hint: lots of tiny islands',
+            desc: 'Can you name all countries of Oceania?',
             quiz: true,
             path: '/OC/get-countries',
             layer: 'C_'
           },
           OCCA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name all the capitals?',
+            desc: 'Can you name all the capitals of Oceania?',
             quiz: true,
             path: '/OC/get-countries',
             cap: true,
             layer: 'CCAP_'
           },
           AUST: {
-            title: 'States of Australia',
+            buttoncolor: '#EFDB2E',
+            title: 'Australia',
             desc: 'Can you name all 6 states of Australia?',
             quiz: true,
             path: '/AU/get-states',
@@ -79131,7 +79115,7 @@ var categories = {
     // },
   },
   LF: {
-    buttoncolor: '#e5d55b', // yellow
+    buttoncolor: '#A1B0FB', // purple
     title: 'Landmarks',
     disabled: false,
     desc: 'Can you name each of these world landmarks?',
@@ -79148,10 +79132,10 @@ var categories = {
     // },
   },
   LR: {
-    buttoncolor: '#eda553', // orange
+    buttoncolor: '#F5B95F', // orange
     title: 'World Leaders',
     disabled: false,
-    desc: 'Can you identify the leader of each G20 country? Note: there are 19 countries in this quiz, the EU is the 20th of the G20',
+    desc: 'Can you identify the leader of each G20 country? Note: there are 19 countries in this quiz, the collective EU is the 20th of the G20',
     quiz: true,
     path: '/get-g20-leaders',
     layer: 'C_'
@@ -79167,7 +79151,7 @@ var categories = {
   GTC: {
     buttoncolor: '#c7b6ed', // light purple
     title: 'Guess the City',
-    disabled: false,
+    disabled: true,
     desc: 'Can you identify the city?',
     quiz: true,
     path: '/not-available'
@@ -79185,7 +79169,7 @@ var categories = {
 module.exports = categories;
 
 
-},{}],608:[function(require,module,exports){
+},{}],607:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -79209,10 +79193,6 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _keys = require('../../assets/keys');
 
 var _keys2 = _interopRequireDefault(_keys);
-
-var _countryCodes = require('../../assets/countryCodes');
-
-var _countryCodes2 = _interopRequireDefault(_countryCodes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -79259,11 +79239,6 @@ var Maps = function (_React$Component) {
         minZoom: 2
       });
       history.pushState(null, null, '/?');
-
-      this.flyToLocation = this.flyToLocation.bind(this);
-      this.shadeInCountry = this.shadeInCountry.bind(this);
-      this.toggleLabels = this.toggleLabels.bind(this);
-      this.showLabel = this.showLabel.bind(this);
     }
   }, {
     key: 'flyToLocation',
@@ -79272,7 +79247,7 @@ var Maps = function (_React$Component) {
         map.flyTo({
           center: [lonlatzoom[0], lonlatzoom[1]],
           zoom: lonlatzoom[2],
-          speed: .5
+          speed: 0.75
         });
       }
     }
@@ -79287,23 +79262,29 @@ var Maps = function (_React$Component) {
     }
   }, {
     key: 'removeShading',
-    value: function removeShading(abbrvs) {
-      for (var i = 0; i < abbrvs.length; i += 1) {
-        map.setPaintProperty(abbrvs[i], 'fill-opacity', 0);
+    value: function removeShading(codes) {
+      for (var i = 0; i < codes.length; i += 1) {
+        map.setPaintProperty(codes[i], 'fill-opacity', 0);
       }
     }
   }, {
-    key: 'toggleLabels',
-    value: function toggleLabels(prefix, abbrvs, visibility) {
-      for (var i = 0; i < abbrvs.length; i += 1) {
-        var label = prefix + abbrvs[i];
-        map.setLayoutProperty(label, 'visibility', visibility);
+    key: 'toggleAllLabels',
+    value: function toggleAllLabels(codeArray, visibility) {
+      var layer = '';
+      var label = '';
+      for (var i = 0; i < codeArray.length; i += 1) {
+        layer = codeArray[i].layer;
+        for (var j = 0; j < codeArray[i].codes.length; j += 1) {
+          label = layer + '_' + codeArray[i].codes[j];
+          map.setLayoutProperty(label, 'visibility', visibility);
+        }
       }
     }
   }, {
     key: 'showLabel',
     value: function showLabel(abbrv) {
       var label = this.props.layer + abbrv;
+      map.setLayoutProperty(label, 'text-field', '{name_en}');
       map.setLayoutProperty(label, 'visibility', 'visible');
     }
   }, {
@@ -79312,57 +79293,63 @@ var Maps = function (_React$Component) {
       var _this2 = this;
 
       if (nextProps.lonlatzoom !== this.props.lonlatzoom) {
-        // need to set different timeout intervals depending on props
         var wait = 250;
-        if (this.props.quizType === 'NTP') {
-          wait = 750;
-        }
+        this.props.quizType === 'NTP' ? wait = 750 : wait = 250;
         setTimeout(function () {
           _this2.flyToLocation(nextProps.lonlatzoom);
         }, wait);
       }
 
-      if (this.props.namedPlace !== nextProps.namedPlace) {
-        var abbrv = nextProps.namedPlace;
-        this.showLabel(abbrv);
-        // if country or country capital quiz, shade country green
+      if (this.props.namedPlaceAbbrv !== nextProps.namedPlaceAbbrv) {
+        var abbrv = nextProps.namedPlaceAbbrv;
         if (this.props.layer === 'C_' || this.props.layer === 'CCAP_') {
+          // if country or country capital quiz, shade country green
           this.shadeInCountry(abbrv, 'rgba(34, 176, 27, 0.26)');
         }
-
-        if (this.props.layer === 'BW_') {
+        if (this.props.selection === 'BW') {
+          // darkening water labels for visibility
           var waterLabel = this.props.layer + abbrv;
           map.setPaintProperty(waterLabel, 'text-color', 'hsla(212, 3%, 39%, 0.85)');
+        }
+        if (this.props.selection === 'LR') {
+          // leaders quiz, need to show leader name on country
+          var leaderLabel = this.props.layer + abbrv;
+          map.setLayoutProperty(leaderLabel, 'text-field', nextProps.namedPlaceTitle);
+          map.setLayoutProperty(leaderLabel, 'visibility', 'visible');
+        } else {
+          // show label of namedPlace
+          this.showLabel(abbrv);
         }
       }
 
       if (nextProps.showUnnamedPlaces && nextProps.placesArray.length !== 0) {
-        console.log('Showing unnamed places');
-        for (var i = 0; i < nextProps.placesArray.length; i++) {
+        for (var i = 0; i < nextProps.placesArray.length; i += 1) {
           var _abbrv = nextProps.placesArray[i].abbrv;
           this.showLabel(_abbrv);
           // if country or country capital quiz, shade unnamed countries red
           if (this.props.layer === 'C_' || this.props.layer === 'CCAP_') {
             this.shadeInCountry(_abbrv, 'rgba(220, 57, 24, 0.26)');
           }
-          if (this.props.layer === 'BW_') {
+          if (this.props.selection === 'BW') {
+            // display unnamed water labels in red
             var _waterLabel = this.props.layer + _abbrv;
             map.setPaintProperty(_waterLabel, 'text-color', 'hsla(12, 82%, 49%, 0.8)');
+          }
+          if (this.props.selection === 'LR') {
+            // leaders quiz, need to show leader name on each unnamed country
+            var _leaderLabel = this.props.layer + _abbrv;
+            map.setLayoutProperty(_leaderLabel, 'text-field', nextProps.placesArray[i].name);
           }
         }
       }
 
       if (nextProps.clearLabels === true) {
-        console.log('in map, clearing map');
-        this.toggleLabels('C_', _countryCodes2.default.C, 'none');
-        this.toggleLabels('BW_', _countryCodes2.default.BW, 'none');
-        this.toggleLabels('TE_', _countryCodes2.default.TE, 'none');
-        this.toggleLabels('ST_', _countryCodes2.default.ST, 'none');
-        this.toggleLabels('CCAP_', _countryCodes2.default.C, 'none');
-        this.toggleLabels('STCAP_', _countryCodes2.default.STCAP, 'none');
-        // this.toggleLabels('LM_', CODES.LM, 'none')
-        // this.toggleLabels('TECAP_', CODES.TECAP, 'none')
-        this.removeShading(_countryCodes2.default.C);
+        this.toggleAllLabels(nextProps.codes, 'none');
+        for (var _i = 0; _i < nextProps.codes.length; _i += 1) {
+          if (nextProps.codes[_i].layer === 'C') {
+            this.removeShading(nextProps.codes[_i].codes);
+          }
+        }
         this.props.resetClearMap();
       }
     }
@@ -79382,12 +79369,15 @@ exports.default = Maps;
 Maps.propTypes = {
   layer: _propTypes2.default.string,
   quizType: _propTypes2.default.string,
+  selection: _propTypes2.default.string,
   clearLabels: _propTypes2.default.bool,
   showUnnamedPlaces: _propTypes2.default.bool,
-  namedPlace: _propTypes2.default.string.isRequired,
   resetClearMap: _propTypes2.default.func.isRequired,
-  placesArray: _propTypes2.default.arrayOf(_propTypes2.default.object),
-  lonlatzoom: _propTypes2.default.arrayOf(_propTypes2.default.number)
+  codes: _propTypes2.default.arrayOf(_propTypes2.default.object),
+  namedPlaceAbbrv: _propTypes2.default.string,
+  namedPlaceTitle: _propTypes2.default.string,
+  lonlatzoom: _propTypes2.default.arrayOf(_propTypes2.default.number),
+  placesArray: _propTypes2.default.arrayOf(_propTypes2.default.object)
 
   // map.on('click', (e) => {
   //   return e
@@ -79395,10 +79385,17 @@ Maps.propTypes = {
   //   // console.log('features: ', features)
   // })
 
+  // toggleLabels(prefix, abbrvs, visibility) {
+  //   for (let i = 0; i < abbrvs.length; i+=1) {
+  //     let label = prefix + abbrvs[i]
+  //     map.setLayoutProperty(label, 'visibility', visibility)
+  //   }
+  // }
+
 };
 
 
-},{"../../assets/countryCodes":604,"../../assets/keys":605,"mapbox-gl":227,"prop-types":309,"react":585}],609:[function(require,module,exports){
+},{"../../assets/keys":604,"mapbox-gl":227,"prop-types":309,"react":585}],608:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -79516,7 +79513,7 @@ Header.propTypes = {
 };
 
 
-},{"./buttons/backbutton":612,"./buttons/categorybutton":613,"prop-types":309,"react":585}],610:[function(require,module,exports){
+},{"./buttons/backbutton":611,"./buttons/categorybutton":612,"prop-types":309,"react":585}],609:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -79607,7 +79604,7 @@ InputScoreTime.propTypes = {
 };
 
 
-},{"./buttons/backbutton":612,"./buttons/giveupbutton":615,"./inputscoretime/input":621,"./inputscoretime/scorekeeper":622,"./inputscoretime/timer":623,"prop-types":309,"react":585}],611:[function(require,module,exports){
+},{"./buttons/backbutton":611,"./buttons/giveupbutton":614,"./inputscoretime/input":620,"./inputscoretime/scorekeeper":621,"./inputscoretime/timer":622,"prop-types":309,"react":585}],610:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -79646,13 +79643,16 @@ var style = {
     zIndex: 2,
     display: 'inline-block',
     marginLeft: '2%',
-    marginTop: 8
+    marginTop: 6
   },
   desc: {
     position: 'absolute',
     zIndex: 2,
     display: 'inline-block',
     marginLeft: '20%'
+  },
+  descFont: {
+    fontSize: 16
   }
 };
 
@@ -79678,7 +79678,7 @@ var QuizDescription = function (_React$Component) {
           { style: style.desc },
           _react2.default.createElement(
             'p',
-            null,
+            { style: style.descFont },
             this.props.quizDescription
           )
         )
@@ -79693,14 +79693,14 @@ exports.default = QuizDescription;
 
 
 QuizDescription.propTypes = {
-  quizTitle: _propTypes2.default.string.isRequired,
+  // quizTitle: PropTypes.string.isRequired,
   quizDescription: _propTypes2.default.string.isRequired,
   handleStart: _propTypes2.default.func.isRequired,
   handleBackButton: _propTypes2.default.func.isRequired
 };
 
 
-},{"./buttons/backbutton":612,"./buttons/startbutton":618,"prop-types":309,"react":585}],612:[function(require,module,exports){
+},{"./buttons/backbutton":611,"./buttons/startbutton":617,"prop-types":309,"react":585}],611:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -79773,7 +79773,7 @@ BackButton.propTypes = {
 };
 
 
-},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],613:[function(require,module,exports){
+},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],612:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -79815,17 +79815,16 @@ var CategoryButton = function (_React$Component) {
     key: 'checkDisabled',
     value: function checkDisabled() {
       if (this.props.disabled === true) {
-        return "#848484";
-      } else {
-        return "#000000";
+        return '#848484';
       }
+      return '#000000';
     }
   }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      var color = this.checkDisabled();
+      var stylecolor = this.checkDisabled();
       return _react2.default.createElement(
         _RaisedButton2.default,
         {
@@ -79836,7 +79835,7 @@ var CategoryButton = function (_React$Component) {
             marginRight: 20,
             marginTop: 8,
             width: this.props.width,
-            color: color
+            color: stylecolor
           },
           onClick: function onClick() {
             return _this2.props.handler(_this2.props.code);
@@ -79863,7 +79862,7 @@ CategoryButton.propTypes = {
 };
 
 
-},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],614:[function(require,module,exports){
+},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],613:[function(require,module,exports){
 // not in use
 
 // import React from 'react'
@@ -79897,7 +79896,7 @@ CategoryButton.propTypes = {
 "use strict";
 
 
-},{}],615:[function(require,module,exports){
+},{}],614:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -79970,7 +79969,7 @@ GiveUpButton.propTypes = {
 };
 
 
-},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],616:[function(require,module,exports){
+},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],615:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -80043,7 +80042,7 @@ NextButton.propTypes = {
 };
 
 
-},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],617:[function(require,module,exports){
+},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],616:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -80117,7 +80116,7 @@ ShowUnnamedPlacesButton.propTypes = {
 };
 
 
-},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],618:[function(require,module,exports){
+},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],617:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -80191,7 +80190,7 @@ StartButton.propTypes = {
 };
 
 
-},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],619:[function(require,module,exports){
+},{"material-ui/RaisedButton":258,"prop-types":309,"react":585}],618:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -80225,7 +80224,7 @@ function HeaderCard() {
 module.exports = HeaderCard;
 
 
-},{"material-ui/Card":237,"react":585}],620:[function(require,module,exports){
+},{"material-ui/Card":237,"react":585}],619:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -80237,6 +80236,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _IconMenu = require('material-ui/IconMenu');
 
@@ -80261,8 +80264,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// import ClearMapButton from '../buttons/clearmapbutton'
 
 var style = {
   menuDiv: {
@@ -80315,7 +80316,7 @@ var Menu = function (_React$Component) {
           }),
           _react2.default.createElement(_MenuItem2.default, {
             style: style.menuItem,
-            primaryText: 'Home',
+            primaryText: 'Center Map',
             onClick: function onClick() {
               return _this2.props.handleBackButton([0.2, 20.6, 2]);
             }
@@ -80331,7 +80332,13 @@ var Menu = function (_React$Component) {
 exports.default = Menu;
 
 
-},{"material-ui/IconButton":243,"material-ui/IconMenu":245,"material-ui/MenuItem":252,"material-ui/svg-icons/navigation/more-vert":287,"react":585}],621:[function(require,module,exports){
+Menu.propTypes = {
+  handleClearMap: _propTypes2.default.func.isRequired,
+  handleBackButton: _propTypes2.default.func.isRequired
+};
+
+
+},{"material-ui/IconButton":243,"material-ui/IconMenu":245,"material-ui/MenuItem":252,"material-ui/svg-icons/navigation/more-vert":287,"prop-types":309,"react":585}],620:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -80413,22 +80420,20 @@ var InputForm = function (_React$Component) {
 
   _createClass(InputForm, [{
     key: 'validateInput',
-    value: function validateInput(value) {
+    value: function validateInput() {
       var regex = /^[\w ]+$/;
       // const regex = (?:\s*[a-zA-Z0-9]{2,}\s*)*
-      if (!regex.test(value)) {
-        console.log('invalid input 1');
+      if (!regex.test(this.state.value)) {
         return false;
-      } else {
-        return true;
       }
+      return true;
     }
   }, {
     key: 'handleKeyPress',
     value: function handleKeyPress(target) {
       if (target.charCode === 13) {
         this.setState({ boxStyle: 'neutral' });
-        var valid = this.validateInput(this.state.value);
+        var valid = this.validateInput();
         if (valid) {
           // send current value of input box to App
           if (this.props.handleInput(this.state.value)) {
@@ -80440,7 +80445,6 @@ var InputForm = function (_React$Component) {
           }
         } else if (!valid) {
           // invalid input, make box red, remind user of rules
-          console.log('invalid input 2');
           this.setState({ invalid: true, boxStyle: 'invalid' });
         }
       }
@@ -80498,7 +80502,7 @@ InputForm.propTypes = {
 };
 
 
-},{"prop-types":309,"react":585,"react-bootstrap":400}],622:[function(require,module,exports){
+},{"prop-types":309,"react":585,"react-bootstrap":400}],621:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -80590,7 +80594,7 @@ ScoreKeeper.propTypes = {
 };
 
 
-},{"prop-types":309,"react":585}],623:[function(require,module,exports){
+},{"prop-types":309,"react":585}],622:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -80714,8 +80718,8 @@ Timer.propTypes = {
 module.exports = Timer;
 
 
-},{"prop-types":309,"react":585}],624:[function(require,module,exports){
-"use strict";
+},{"prop-types":309,"react":585}],623:[function(require,module,exports){
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -80723,7 +80727,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.FFAcheckUserInput = FFAcheckUserInput;
 exports.FFAhandleInput = FFAhandleInput;
 exports.NTPcheckUserInput = NTPcheckUserInput;
-exports.NTPgetRandomPlace = NTPgetRandomPlace;
+exports.NTPskipCurrentPlace = NTPskipCurrentPlace;
 exports.NTPhandleInput = NTPhandleInput;
 function FFAcheckUserInput(value, modifier) {
   for (var p = 0; p < this.state.placesArray.length; p += 1) {
@@ -80745,53 +80749,55 @@ function FFAhandleInput(value) {
       return true;
     }
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 function NTPcheckUserInput(value) {
-  if (value.toLowerCase() === this.state.currentLocation.toLowerCase()) {
-    return true;
-  } else {
+  if (this.state.selection === 'LR') {
+    var fullName = this.state.placesArray[0].name.toLowerCase();
+    var lastName = fullName.split(' ')[fullName.split(' ').length - 1];
+    if (value.toLowerCase() === fullName || value.toLowerCase() === lastName) {
+      return true;
+    }
     return false;
   }
+  if (value.toLowerCase() === this.state.placesArray[0].name.toLowerCase()) {
+    return true;
+  }
+  return false;
 }
 
-function NTPgetRandomPlace() {
-  var randomIndex = function randomIndex(max) {
-    var min = Math.ceil(0);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
-  var index = randomIndex(this.state.placesArray.length);
+function NTPskipCurrentPlace() {
+  var current = this.state.placesArray.splice(0, 1);
+  this.state.placesArray.push(current[0]);
   this.setState({
-    currentLocation: this.state.placesArray[index].name,
-    currentIndex: index,
-    lonlatzoom: this.state.placesArray[index].lonlatzoom
+    placesArray: this.state.placesArray,
+    lonlatzoom: this.state.placesArray[0].lonlatzoom
   });
 }
 
 function NTPhandleInput(value) {
   var identified = NTPcheckUserInput.call(this, value);
   if (identified) {
-    // remove currentLocation from placesArray, get next location
-    this.handleNamedPlace(this.state.placesArray[this.state.currentIndex].abbrv);
-    this.state.placesArray.splice(this.state.currentIndex, 1);
-    this.setState({ placesArray: this.state.placesArray });
+    // remove first place from placesArray, get next location
+    this.handleNamedPlace(this.state.placesArray[0].abbrv, this.state.placesArray[0].name);
+    this.state.placesArray.splice(0, 1);
     if (this.state.placesArray.length === 0) {
       this.handleTimer(false, true);
       return true;
     }
-    NTPgetRandomPlace.call(this);
+    this.setState({
+      placesArray: this.state.placesArray,
+      lonlatzoom: this.state.placesArray[0].lonlatzoom
+    });
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 
-},{}],625:[function(require,module,exports){
+},{}],624:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -80873,7 +80879,9 @@ var QuizModal = function (_React$Component) {
       if (this.props.gaveUp) {
         title = 'Keep Studying';
         dialogue = 'Nice try, you identified ' + (this.props.placesNumber - this.props.placesRemaining) + ' out of ' + this.props.placesNumber + ' places in ' + time;
-        showunnamedplacesbutton = _react2.default.createElement(_showunnamedplacesbutton2.default, { handleShowUnnamedPlaces: this.props.handleShowUnnamedPlaces });
+        showunnamedplacesbutton = _react2.default.createElement(_showunnamedplacesbutton2.default, {
+          handleShowUnnamedPlaces: this.props.handleShowUnnamedPlaces
+        });
       }
       return _react2.default.createElement(
         'div',
@@ -80902,8 +80910,7 @@ exports.default = QuizModal;
 
 QuizModal.propTypes = {
   handleBackButton: _propTypes2.default.func.isRequired,
-  // time: PropTypes.string.isRequired,
-  quizTitle: _propTypes2.default.string.isRequired,
+  quizTitle: _propTypes2.default.string,
   gaveUp: _propTypes2.default.bool.isRequired,
   placesNumber: _propTypes2.default.number.isRequired,
   placesRemaining: _propTypes2.default.number.isRequired,
@@ -80911,7 +80918,7 @@ QuizModal.propTypes = {
 };
 
 
-},{"../header/buttons/showunnamedplacesbutton":617,"material-ui/Dialog":239,"prop-types":309,"react":585}],626:[function(require,module,exports){
+},{"../header/buttons/showunnamedplacesbutton":616,"material-ui/Dialog":239,"prop-types":309,"react":585}],625:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -80943,10 +80950,15 @@ var style = {
     textAlign: 'center'
   },
   modalInner: {
-    height: '400px'
+    height: 360,
+    paddingRight: 20,
+    paddingLeft: 20
+  },
+  emailLine: {
+    fontSize: 14
   },
   byLine: {
-    fontSize: '12px'
+    fontSize: 12
   }
 };
 
@@ -80993,7 +81005,6 @@ var WelcomeModal = function (_React$Component) {
           _Dialog2.default,
           {
             style: style.modalTitle,
-            title: 'Welcome to the Geography Quiz',
             actions: actions,
             modal: false,
             open: this.state.open,
@@ -81003,31 +81014,46 @@ var WelcomeModal = function (_React$Component) {
             'div',
             { style: style.modalInner },
             _react2.default.createElement(
+              'h3',
+              null,
+              _react2.default.createElement(
+                'span',
+                { role: 'img', 'aria-label': 'Globe' },
+                '\uD83C\uDF0F \uD83C\uDF0D \uD83C\uDF0E'
+              )
+            ),
+            _react2.default.createElement(
               'p',
               null,
               _react2.default.createElement('br', null),
-              'Test your knowledge on a wide array of geographic and administrative features around the world.',
-              _react2.default.createElement('br', null),
-              _react2.default.createElement('br', null),
-              'All quizzes are timed so you can keep track of your progress. Current quizzes include countries, capitals, states, territories, bodies of water and landmarks.',
-              _react2.default.createElement('br', null),
-              _react2.default.createElement('br', null),
-              'Quizzes coming soon: cities and world leaders',
-              _react2.default.createElement('br', null),
-              _react2.default.createElement('br', null),
-              'Feel free to explore the map and when you are ready, get started with the quiz categories above.',
-              _react2.default.createElement('br', null),
-              _react2.default.createElement('br', null),
-              'Some categories are not live yet but check back soon, I am always creating more quizzes.',
-              _react2.default.createElement('br', null),
-              _react2.default.createElement('br', null),
-              'Please ',
               _react2.default.createElement(
-                'u',
+                'b',
                 null,
-                'leave a comment'
+                'Test your knowledge of geographic, administrative,\xA0 and cultural features around the world!'
               ),
-              ' if you have any suggestions; feedback is welcome.'
+              _react2.default.createElement('br', null),
+              _react2.default.createElement('br', null),
+              'Feel free to explore the map or get started with the quiz categories above.',
+              _react2.default.createElement('br', null),
+              'Use the menu in the top right corner to center and clear the map.',
+              _react2.default.createElement('br', null),
+              _react2.default.createElement('br', null),
+              'Current categories include countries, capitals, states, territories, bodies of water, landmarks, and world leaders. Guess the City, a really neat quiz category inspired by\xA0',
+              _react2.default.createElement(
+                'a',
+                { href: 'https://twitter.com/search?q=%40mapbox%20%23spotted&src=typd', target: '_blank', rel: 'noopener noreferrer' },
+                '@Mapbox #spotted series'
+              ),
+              ', will be up soon so be sure to check back for it.',
+              _react2.default.createElement('br', null),
+              _react2.default.createElement('br', null),
+              'Shout out to ',
+              _react2.default.createElement(
+                'a',
+                { href: 'https://www.mapbox.com/', target: '_blank', rel: 'noopener noreferrer' },
+                ' Mapbox '
+              ),
+              'for providing a tremendous mapping platform!'
             )
           ),
           _react2.default.createElement(
@@ -81036,13 +81062,20 @@ var WelcomeModal = function (_React$Component) {
             _react2.default.createElement(
               'p',
               { style: style.byLine },
-              'This project was created by Caroline. Learn more',
+              'This project was created by Caroline.',
+              _react2.default.createElement('br', null),
+              _react2.default.createElement(
+                'a',
+                { href: 'mailto:shea.caroline92@gmail.com?subject=Geography%20Quiz' },
+                'Send me an email '
+              ),
+              ' with comments or suggestions; I\'d love to hear from you.\xA0',
               _react2.default.createElement(
                 'a',
                 { href: 'https://github.com/shea12/geography-quiz', target: '_blank', rel: 'noopener noreferrer' },
-                ' here'
+                'Check out the repo'
               ),
-              '.'
+              ' if you\'re into that kind of thing.'
             )
           )
         )
@@ -81053,10 +81086,13 @@ var WelcomeModal = function (_React$Component) {
   return WelcomeModal;
 }(_react2.default.Component);
 
+// 🌏🌍🌎✏️📄
+
+
 exports.default = WelcomeModal;
 
 
-},{"material-ui/Dialog":239,"react":585}],627:[function(require,module,exports){
+},{"material-ui/Dialog":239,"react":585}],626:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -81086,4 +81122,4 @@ _reactDom2.default.render(_react2.default.createElement(_App2.default, null), do
 // ), document.getElementById('app'));
 
 
-},{"./App":603,"react":585,"react-dom":411}]},{},[603,604,605,606,607,608,612,613,614,615,616,617,618,609,619,620,610,621,622,623,611,624,625,626,627]);
+},{"./App":603,"react":585,"react-dom":411}]},{},[603,604,605,606,607,611,612,613,614,615,616,617,608,618,619,609,620,621,622,610,623,624,625,626]);
