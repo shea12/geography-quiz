@@ -25,7 +25,8 @@ module.exports = grunt => {
     htmlmin: {
       dist: {
         options: {
-          collapseWhitespace: true
+          collapseWhitespace: true,
+          removeComments: true
         },
         files: {
           'src/deploy/index.html': 'src/client/index.html',

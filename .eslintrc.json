@@ -15,6 +15,12 @@
     "semi": [2, "never"],
     "no-unexpected-multiline": 2,
     "compat/compat": 2,
-    "no-new": 1
+    "no-new": 1,
+    "arrow-body-style": [0, "never"],
+    "func-names": [0, "never"],
+    "prefer-arrow-callback": [0, "never"],
+    "global-require": [0, "never"],
+    "react/prefer-stateless-function": [0, "never"],
+    "react/require-default-props": [0, "never"]
   }
 }

@@ -4,34 +4,34 @@ mongoose.Promise = require('bluebird')
 const Schema = mongoose.Schema
 
 const continentSchema = new Schema({
-  abbrv: String, // two letter continent abbreviation
   name: String, // continent name
+  abbrv: String, // two letter continent abbreviation
   lonlatzoom: Array, // longitude latitude zoom level
   numCountries: Number, // number of countries in continent
 }, { collection: 'continents' })
 
 const countrySchema = new Schema({
-  abbrv: String, // two letter country abbreviation
+  cap: String, // capital of country
   name: String, // country name
+  abbrv: String, // two letter country abbreviation
+  leader: String, // leader of country
+  numStates: Number, // number of states in country
   continent: String, // continent name
   lonlatzoom: Array, // longitude latitude zoom level
-  numStates: Number, // number of states in country
-  cap: String, // capital of country
-  leader: String, // leader of country
 }, { collection: 'countries' })
 
 const stateSchema = new Schema({
-  country: String, // country name
-  abbrv: String, // two/three letter state abbreviation
-  name: String, // state name
   cap: String, // capital of state
+  name: String, // state name
+  abbrv: String, // two/three letter state abbreviation
+  country: String, // country name
 }, { collection: 'states' })
 
 const territorySchema = new Schema({
-  country: String, // country name
-  abbrv: String, // two/three letter state abbreviation
-  name: String, // state name
   cap: String, // capital of state
+  name: String, // state name
+  abbrv: String, // two/three letter state abbreviation
+  country: String, // country name
 }, { collection: 'territories' })
 
 const waterSchema = new Schema({
@@ -50,13 +50,18 @@ const landmarksSchema = new Schema({
 const leadersSchema = new Schema({
   name: String,
   abbrv: String,
-  country: String,
   title: String,
+  country: String,
   continent: String,
   lonlatzoom: Array,
 }, { collection: 'leaders' })
 
-// haven't created this functionality yet, looking forward to it though
+const layerCodesSchema = new Schema({
+  layer: String,
+  codes: Array,
+}, { collection: 'layerCodes' })
+
+// haven't created this functionality yet
 const userSchema = new Schema({
   username: String,
   email: String,
@@ -70,12 +75,13 @@ const userSchema = new Schema({
 
 
 module.exports = {
-  continents: mongoose.model('continents', continentSchema),
-  countries: mongoose.model('country', countrySchema),
-  states: mongoose.model('state', stateSchema),
-  territories: mongoose.model('territories', territorySchema),
-  water: mongoose.model('water', waterSchema),
-  landmarks: mongoose.model('landmarks', landmarksSchema),
-  leaders: mongoose.model('leaders', leadersSchema),
   users: mongoose.model('users', userSchema),
+  water: mongoose.model('water', waterSchema),
+  states: mongoose.model('state', stateSchema),
+  leaders: mongoose.model('leaders', leadersSchema),
+  countries: mongoose.model('country', countrySchema),
+  landmarks: mongoose.model('landmarks', landmarksSchema),
+  continents: mongoose.model('continents', continentSchema),
+  layerCodes: mongoose.model('layerCodes', layerCodesSchema),
+  territories: mongoose.model('territories', territorySchema),
 }

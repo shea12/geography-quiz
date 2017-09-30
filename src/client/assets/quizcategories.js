@@ -4,47 +4,45 @@ const categories = {
   // second level: subcategory
   // thrird level: quiz array
   CTN: {
-    buttoncolor: '#f2baba', // light red
+    buttoncolor: '#F6EB8D',
     disabled: false,
-    title: 'Countries & Capitals',
+    title: 'Continents',
     categories: {
       NA: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'North America',
         categories: {
           NACO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
-            desc: 'Can you name all 23 countries of North America? Hint: there are a lot of tiny Caribbean islands',
+            desc: 'Can you name all 23 countries of North America?',
             quiz: true,
             path: '/NA/get-countries',
             layer: 'C_',
           },
           NACA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name all the capitals?',
+            desc: 'Can you name all the North American capitals?',
             quiz: true,
             path: '/NA/get-countries',
             cap: true,
             layer: 'CCAP_',
           },
           US: {
+            buttoncolor: '#EFDB2E',
             title: 'United States',
             categories: {
               USST: {
+                buttoncolor: '#CFBB0C',
                 title: 'US States',
-                desc: 'Can you name all 50 states?',
+                desc: 'Can you name all 50 US states?',
                 quiz: true,
                 path: '/US/get-states',
                 layer: 'ST_US_',
               },
-              USTE: {
-                title: 'US Territories',
-                desc: 'Can you name the 5 populated US territories?',
-                quiz: true,
-                path: '/US/get-territories',
-                layer: 'USTE_',
-              },
               USCP: {
+                buttoncolor: '#CFBB0C',
                 title: 'US Capitals',
                 desc: 'Do you know all the US state capitals?',
                 quiz: true,
@@ -52,12 +50,22 @@ const categories = {
                 cap: true,
                 layer: 'STCAP_US',
               },
+              USTE: {
+                buttoncolor: '#CFBB0C',
+                title: 'US Territories',
+                desc: 'Can you name the 5 populated US territories?',
+                quiz: true,
+                path: '/US/get-territories',
+                layer: 'USTE_',
+              },
             },
           },
           MX: {
+            buttoncolor: '#EFDB2E',
             title: 'Mexico',
             categories: {
               MXST: {
+                buttoncolor: '#CFBB0C',
                 title: 'States of Mexico',
                 desc: 'Can you name all the states of Mexico?',
                 quiz: true,
@@ -67,9 +75,11 @@ const categories = {
             },
           },
           CA: {
+            buttoncolor: '#EFDB2E',
             title: 'Canada',
             categories: {
               CAST: {
+                buttoncolor: '#CFBB0C',
                 title: 'Provinces of Canada',
                 desc: 'Can you name all provinces of Canada?',
                 quiz: true,
@@ -81,10 +91,11 @@ const categories = {
         },
       },
       SA: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'South America',
         categories: {
           SACO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
             desc: 'Can you name 12 countries of South America?',
             quiz: true,
@@ -92,37 +103,49 @@ const categories = {
             layer: 'C_',
           },
           SACA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name all the capitals of the 12 South American countries?',
+            desc: 'Can you name all the South American capitals?',
             quiz: true,
             path: '/SA/get-countries',
             cap: true,
             layer: 'CCAP_',
           },
+          BRST: {
+            buttoncolor: '#EFDB2E',
+            title: 'Brazil',
+            desc: 'Can you name each state of Brazil?',
+            quiz: true,
+            path: '/BR/get-states',
+            layer: 'ST_BR_',
+          },
         },
       },
       AF: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'Africa',
         categories: {
           AFCO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
-            desc: 'Can you name all 55 countries of Africa? Hint: spelling counts',
+            desc: 'Can you name all 55 countries of Africa?',
             quiz: true,
             path: '/AF/get-countries',
             layer: 'C_',
           },
           AFCA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name each country capital?',
+            desc: 'Can you name each capital of Africa?',
             quiz: true,
             path: '/AF/get-countries',
             cap: true,
             layer: 'CCAP_',
           },
           ZAST: {
+            buttoncolor: '#EFDB2E',
             title: 'South Africa',
-            desc: 'Can you name each state of South Africa?',
+            desc: 'Can you name each province of South Africa?',
             quiz: true,
             path: '/ZA/get-states',
             layer: 'ST_ZA_',
@@ -130,10 +153,11 @@ const categories = {
         },
       },
       EU: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'Europe',
         categories: {
           EUCO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
             desc: 'Can you name all 46 countries of Europe? Hint: there are 5 micro-states',
             quiz: true,
@@ -141,27 +165,30 @@ const categories = {
             layer: 'C_',
           },
           EUCA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name every european capital?',
+            desc: 'Can you name all the capitals of Europe?',
             quiz: true,
             path: '/EU/get-countries',
             cap: true,
             layer: 'CCAP_',
           },
           GBST: {
-            title: 'States of the UK',
-            desc: 'Can you name all 4 countries of the United Kingdom?',
+            buttoncolor: '#EFDB2E',
+            title: 'United Kingdom',
+            desc: 'Can you name the 4 countries that comprise the United Kingdom?',
             quiz: true,
-            path: '/GB/get-countries',
+            path: '/GB/get-states',
             layer: 'ST_GB_',
           },
         },
       },
       AS: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'Asia',
         categories: {
           ASCO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
             desc: 'Can you name all countries of Asia?',
             quiz: true,
@@ -169,36 +196,48 @@ const categories = {
             layer: 'C_',
           },
           ASCA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name all the capitals?',
+            desc: 'Can you name all the capitals of Asia?',
             quiz: true,
             path: '/AS/get-countries',
             cap: true,
             layer: 'CCAP_',
           },
+          JPST: {
+            buttoncolor: '#EFDB2E',
+            title: 'Japan',
+            desc: 'Can you name each of the 4 main Japanese islands?',
+            quiz: true,
+            path: '/JP/get-states',
+            layer: 'ST_JP_',
+          },
         },
       },
       OC: {
-        buttoncolor: '#f78680',
+        buttoncolor: '#F2E35D',
         title: 'Oceania',
         categories: {
           OCCO: {
+            buttoncolor: '#EFDB2E',
             title: 'Countries',
-            desc: 'Can you name all countries of Oceania? Hint: lots of tiny islands',
+            desc: 'Can you name all countries of Oceania?',
             quiz: true,
             path: '/OC/get-countries',
             layer: 'C_',
           },
           OCCA: {
+            buttoncolor: '#EFDB2E',
             title: 'Capitals',
-            desc: 'Can you name all the capitals?',
+            desc: 'Can you name all the capitals of Oceania?',
             quiz: true,
             path: '/OC/get-countries',
             cap: true,
             layer: 'CCAP_',
           },
           AUST: {
-            title: 'States of Australia',
+            buttoncolor: '#EFDB2E',
+            title: 'Australia',
             desc: 'Can you name all 6 states of Australia?',
             quiz: true,
             path: '/AU/get-states',
@@ -224,7 +263,7 @@ const categories = {
     // },
   },
   LF: {
-    buttoncolor: '#e5d55b', // yellow
+    buttoncolor: '#A1B0FB', // purple
     title: 'Landmarks',
     disabled: false,
     desc: 'Can you name each of these world landmarks?',
@@ -241,10 +280,10 @@ const categories = {
     // },
   },
   LR: {
-    buttoncolor: '#eda553', // orange
+    buttoncolor: '#F5B95F', // orange
     title: 'World Leaders',
     disabled: false,
-    desc: 'Can you identify the leader of each G20 country? Note: there are 19 countries in this quiz, the EU is the 20th of the G20',
+    desc: 'Can you identify the leader of each G20 country? Note: there are 19 countries in this quiz, the collective EU is the 20th of the G20',
     quiz: true,
     path:'/get-g20-leaders',
     layer: 'C_',
@@ -260,7 +299,7 @@ const categories = {
   GTC: {
     buttoncolor: '#c7b6ed', // light purple
     title: 'Guess the City',
-    disabled: false,
+    disabled: true,
     desc: 'Can you identify the city?',
     quiz: true,
     path:'/not-available',

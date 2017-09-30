@@ -19,47 +19,49 @@ export function FFAhandleInput(value) {
       return true
     }
     return true
-  } else {
-    return false
   }
+  return false
 }
 
 export function NTPcheckUserInput(value) {
-  if (value.toLowerCase() === this.state.currentLocation.toLowerCase()) {
-    return true
-  } else {
+  if (this.state.selection === 'LR') {
+    const fullName = this.state.placesArray[0].name.toLowerCase()
+    const lastName = fullName.split(' ')[fullName.split(' ').length-1]
+    if (value.toLowerCase() === fullName || value.toLowerCase() === lastName) {
+      return true
+    }
     return false
   }
+  if (value.toLowerCase() === this.state.placesArray[0].name.toLowerCase()) {
+    return true
+  }
+  return false
 }
 
-export function NTPgetRandomPlace() {
-  const randomIndex = function(max) {
-    let min = Math.ceil(0)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min)) + min 
-  }
-  const index = randomIndex(this.state.placesArray.length)
+export function NTPskipCurrentPlace() {
+  const current = this.state.placesArray.splice(0, 1)
+  this.state.placesArray.push(current[0])
   this.setState({
-    currentLocation: this.state.placesArray[index].name,
-    currentIndex: index,
-    lonlatzoom: this.state.placesArray[index].lonlatzoom,
+    placesArray: this.state.placesArray,
+    lonlatzoom: this.state.placesArray[0].lonlatzoom,
   })
 }
 
 export function NTPhandleInput(value) {
   const identified = NTPcheckUserInput.call(this, value)
   if (identified) {
-    // remove currentLocation from placesArray, get next location
-    this.handleNamedPlace(this.state.placesArray[this.state.currentIndex].abbrv)
-    this.state.placesArray.splice(this.state.currentIndex, 1)
-    this.setState({ placesArray: this.state.placesArray })
+    // remove first place from placesArray, get next location
+    this.handleNamedPlace(this.state.placesArray[0].abbrv, this.state.placesArray[0].name)
+    this.state.placesArray.splice(0, 1)
     if (this.state.placesArray.length === 0) {
       this.handleTimer(false, true)
       return true
     }
-    NTPgetRandomPlace.call(this)
+    this.setState({
+      placesArray: this.state.placesArray,
+      lonlatzoom: this.state.placesArray[0].lonlatzoom,
+    })
     return true
-  } else {
-    return false
   }
+  return false
 }

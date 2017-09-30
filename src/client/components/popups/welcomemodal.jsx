@@ -7,10 +7,15 @@ const style = {
     textAlign: 'center',
   },
   modalInner: {
-    height: '400px',
+    height: 360,
+    paddingRight: 20,
+    paddingLeft: 20,
+  },
+  emailLine: {
+    fontSize: 14,
   },
   byLine: {
-    fontSize: '12px',
+    fontSize: 12,
   },
 }
 
@@ -41,37 +46,43 @@ export default class WelcomeModal extends React.Component {
       <div>
         <Dialog
           style={style.modalTitle}
-          title="Welcome to the Geography Quiz"
           actions={actions}
           modal={false}
           open={this.state.open}
           onRequestClose={this.close}
         >
           <div style={style.modalInner}>
+            <h3><span role="img" aria-label="Globe">🌏 🌍 🌎</span></h3>
             <p>
               <br />
-              Test your knowledge on a wide
-              array of geographic and administrative features around the world.
+              <b>Test your knowledge of geographic, administrative,&nbsp;
+              and cultural features around the world!</b>
               <br /><br />
-              All quizzes are timed so you can keep track of your progress.
-              Current quizzes include countries, capitals, states, territories, bodies of water and landmarks.
-              <br /><br />
-              Quizzes coming soon: cities and world leaders
-              <br /><br />
-              Feel free to explore the map and when you are ready,
+              Feel free to explore the map or
               get started with the quiz categories above.
+              <br />
+              Use the menu in the top right corner to center and clear the map.
               <br /><br />
-              Some categories are not live yet but check back soon,
-              I am always creating more quizzes.
+              Current categories include countries, capitals, states, territories,
+              bodies of water, landmarks, and world leaders.
+              Guess the City, a really neat quiz category inspired by&nbsp;
+              <a href="https://twitter.com/search?q=%40mapbox%20%23spotted&src=typd" target="_blank" rel="noopener noreferrer">
+              @Mapbox #spotted series
+              </a>, will be up soon so be sure to check back for it.
               <br /><br />
-              Please <u>leave a comment</u> if you have any suggestions; feedback is welcome.
+              Shout out to <a href="https://www.mapbox.com/" target="_blank" rel="noopener noreferrer"> Mapbox </a>
+              for providing a tremendous mapping platform!
             </p>
           </div>
           <div>
             <p style={style.byLine}>
-              This project was created by Caroline. Learn more
-              <a href="https://github.com/shea12/geography-quiz" target="_blank" rel="noopener noreferrer"> here
-              </a>.
+              This project was created by Caroline.
+              <br />
+              <a href="mailto:shea.caroline92@gmail.com?subject=Geography%20Quiz">
+                Send me an email </a> with comments or suggestions;
+                I&apos;d love to hear from you.&nbsp;
+              <a href="https://github.com/shea12/geography-quiz" target="_blank" rel="noopener noreferrer">
+                Check out the repo</a> if you&apos;re into that kind of thing.
             </p>
           </div>
         </Dialog>
@@ -79,3 +90,6 @@ export default class WelcomeModal extends React.Component {
     )
   }
 }
+
+// 🌏🌍🌎✏️📄
+

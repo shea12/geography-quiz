@@ -10,14 +10,17 @@ const style = {
     zIndex: 2,
     display: 'inline-block',
     marginLeft: '2%',
-    marginTop: 8,
+    marginTop: 6,
   },
   desc: {
     position: 'absolute',
     zIndex: 2,
     display: 'inline-block',
     marginLeft: '20%',
-  }
+  },
+  descFont: {
+    fontSize: 16,
+  },
 }
 
 export default class QuizDescription extends React.Component {
@@ -27,7 +30,7 @@ export default class QuizDescription extends React.Component {
         <StartButton style={style.buttons} handleStart={this.props.handleStart} />
         <BackButton style={style.buttons} handleBackButton={this.props.handleBackButton} />
         <div style={style.desc}>
-          <p>{this.props.quizDescription}</p>
+          <p style={style.descFont}>{this.props.quizDescription}</p>
         </div>
       </div>
     )
@@ -35,7 +38,7 @@ export default class QuizDescription extends React.Component {
 }
 
 QuizDescription.propTypes = {
-  quizTitle: PropTypes.string.isRequired,
+  // quizTitle: PropTypes.string.isRequired,
   quizDescription: PropTypes.string.isRequired,
   handleStart: PropTypes.func.isRequired,
   handleBackButton: PropTypes.func.isRequired,

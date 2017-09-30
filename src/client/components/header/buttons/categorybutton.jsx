@@ -5,14 +5,13 @@ import PropTypes from 'prop-types'
 export default class CategoryButton extends React.Component {
   checkDisabled() {
     if (this.props.disabled === true) {
-      return "#848484"
-    } else {
-      return "#000000"
+      return '#848484'
     }
+    return '#000000'
   }
 
   render() {
-    let color = this.checkDisabled()
+    const stylecolor = this.checkDisabled()
     return (
       <RaisedButton
         disabled={this.props.disabled}
@@ -22,7 +21,7 @@ export default class CategoryButton extends React.Component {
           marginRight: 20,
           marginTop: 8,
           width: this.props.width,
-          color: color,
+          color: stylecolor,
         }}
         onClick={() => this.props.handler(this.props.code)}
       >

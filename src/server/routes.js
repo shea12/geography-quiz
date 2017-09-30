@@ -1,11 +1,12 @@
-const continents = require('./controllers/continentsController.js')
-const countries = require('./controllers/countriesController.js')
-const states = require('./controllers/statesController.js')
-const territories = require('./controllers/territoriesController.js')
 const users = require('./controllers/usersController.js')
 const water = require('./controllers/waterController.js')
-const landmarks = require('./controllers/landmarksController.js')
+const states = require('./controllers/statesController.js')
 const leaders = require('./controllers/leadersController.js')
+const countries = require('./controllers/countriesController.js')
+const landmarks = require('./controllers/landmarksController.js')
+const continents = require('./controllers/continentsController.js')
+const layerCodes = require('./controllers/layerCodesController.js')
+const territories = require('./controllers/territoriesController.js')
 
 module.exports = function (app) {
   // Continents
@@ -18,8 +19,8 @@ module.exports = function (app) {
   // app.get('/:country/get-number-states', countries.getNumberOfStates)
 
   // States
-  // app.get('/:continent/:country/:state/get-capital', states.getStateCapitals)
   app.get('/:country/get-states', states.getStates)
+  // app.get('/:continent/:country/:state/get-capital', states.getStateCapitals)
 
   // Territories
   app.get('/:country/get-territories', territories.getTerritories)
@@ -32,6 +33,10 @@ module.exports = function (app) {
 
   // Leaders
   app.get('/get-g20-leaders', leaders.getLeaders)
+
+  // layerCodes
+  app.get('/get-all-layer-codes', layerCodes.getAllLayerCodes)
+  app.get('/:layer/get-layer-codes', layerCodes.getLayerCodes)
 
   // Users
   app.get('/get-number-users', users.getNumberOfUsers)
