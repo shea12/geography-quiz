@@ -20,21 +20,6 @@ import {
 
 /*
 Notes:
-  9/27: 
-  /// done /// make hamburger menu top right corner
-  /// done /// clearmap function bug fixes
-  /// done /// fix pacific and atlantic labels
-  /// done /// add G20 countries to db, quizcat, server
-  /// done /// move countryCodes to mongodb, set up req routes
-  /// done /// fix buggy layerCodes, consolidate mlab collection
-
-  9/28:
-  /// done /// add BR & JP layers, db
-  /// done /// globe emoji for tab icon (not working but is there?)
-  /// done /// update welcome modal, add call to email 
-  /// done /// special exceptions for leaders, last name OR full name
-  /// done /// on "show unnamed places" show leaders names
-
   9/29:
   /// done /// close mongoose connection
   /// done /// create express app after db successfully connected
@@ -47,6 +32,7 @@ Notes:
   *** TODO *** remove keys from repo
 
   backlog:
+  *** TODO *** clear out unused libraries from package.json
   *** TODO *** make upper right menu prettier
   *** TODO *** city category (remember: need to hide movement from user)
   *** TODO *** set up back end testing
@@ -139,6 +125,7 @@ export default class App extends React.Component {
         })
       } else {
         this.setState({
+          modifier: 'name',
           selectedQuiz: true,
           layer: this.state.options[selection].layer,
           quizTitle: this.state.options[selection].title,
@@ -187,10 +174,10 @@ export default class App extends React.Component {
       const layer = ''
       this.getLayerCodes(layer, function (layercodes) {
         this.setState({
-          codes: layercodes,
-          showUnnamedPlaces: false,
           timing: true,
           clearLabels: true,
+          codes: layercodes,
+          showUnnamedPlaces: false,
         })
       }.bind(this))
     }
@@ -231,6 +218,7 @@ export default class App extends React.Component {
 
   handleInput(value) {
     if (this.state.quizType === 'FFA') {
+      console.log('calling ffa input: ', value)
       return FFAhandleInput.call(this, value)
     }
     return NTPhandleInput.call(this, value)
@@ -253,6 +241,7 @@ export default class App extends React.Component {
       lonlatzoom: loc,
       placesArray: [],
       placesNumber: 0,
+      modifier: 'name',
       clearLabels: false,
       placesRemaining: 0,
       quizDescription: '',

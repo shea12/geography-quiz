@@ -48,7 +48,7 @@ const categories = {
                 quiz: true,
                 path: '/US/get-states',
                 cap: true,
-                layer: 'STCAP_US',
+                layer: 'STCAP_US_',
               },
               USTE: {
                 buttoncolor: '#CFBB0C',
