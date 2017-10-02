@@ -78385,21 +78385,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /*
 Notes:
-  9/27: 
-  /// done /// make hamburger menu top right corner
-  /// done /// clearmap function bug fixes
-  /// done /// fix pacific and atlantic labels
-  /// done /// add G20 countries to db, quizcat, server
-  /// done /// move countryCodes to mongodb, set up req routes
-  /// done /// fix buggy layerCodes, consolidate mlab collection
-
-  9/28:
-  /// done /// add BR & JP layers, db
-  /// done /// globe emoji for tab icon (not working but is there?)
-  /// done /// update welcome modal, add call to email 
-  /// done /// special exceptions for leaders, last name OR full name
-  /// done /// on "show unnamed places" show leaders names
-
   9/29:
   /// done /// close mongoose connection
   /// done /// create express app after db successfully connected
@@ -78412,6 +78397,7 @@ Notes:
   *** TODO *** remove keys from repo
 
   backlog:
+  *** TODO *** clear out unused libraries from package.json
   *** TODO *** make upper right menu prettier
   *** TODO *** city category (remember: need to hide movement from user)
   *** TODO *** set up back end testing
@@ -78516,6 +78502,7 @@ var App = function (_React$Component) {
           });
         } else {
           this.setState({
+            modifier: 'name',
             selectedQuiz: true,
             layer: this.state.options[selection].layer,
             quizTitle: this.state.options[selection].title,
@@ -78565,10 +78552,10 @@ var App = function (_React$Component) {
         var layer = '';
         this.getLayerCodes(layer, function (layercodes) {
           this.setState({
-            codes: layercodes,
-            showUnnamedPlaces: false,
             timing: true,
-            clearLabels: true
+            clearLabels: true,
+            codes: layercodes,
+            showUnnamedPlaces: false
           });
         }.bind(this));
       }
@@ -78611,6 +78598,7 @@ var App = function (_React$Component) {
     key: 'handleInput',
     value: function handleInput(value) {
       if (this.state.quizType === 'FFA') {
+        console.log('calling ffa input: ', value);
         return _helpers.FFAhandleInput.call(this, value);
       }
       return _helpers.NTPhandleInput.call(this, value);
@@ -78635,6 +78623,7 @@ var App = function (_React$Component) {
         lonlatzoom: loc,
         placesArray: [],
         placesNumber: 0,
+        modifier: 'name',
         clearLabels: false,
         placesRemaining: 0,
         quizDescription: '',
@@ -78900,7 +78889,7 @@ var categories = {
                 quiz: true,
                 path: '/US/get-states',
                 cap: true,
-                layer: 'STCAP_US'
+                layer: 'STCAP_US_'
               },
               USTE: {
                 buttoncolor: '#CFBB0C',
