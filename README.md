@@ -32,8 +32,6 @@ Issues, pull requests are welcome
 There are many features I want to add to this project, here are a few:
   * more quizzes, always more and more quizzes
   * creating an account to keep track of progress, quiz counts, favorites, etc
-  * more feedback for user, shading in places as they're identified
-  * give user option to see the places they failed to identify
   * zooming in on smaller countries, generally fiddling with labeling for better visibility
   * testing, so much testing
 
