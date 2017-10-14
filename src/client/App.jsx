@@ -29,7 +29,9 @@ Notes:
   *** TODO *** fix input regex to allow '-' for south korea leader Moon Jae-in
   *** TODO *** put question marks where label would be on NTP quizzes
   *** TODO *** add lonlatzoom for country close ups (esp small countries)
-  *** TODO *** remove keys from repo
+
+  10/13:
+  /// done /// remove keys from repo (used BFG, very neat!)
 
   backlog:
   *** TODO *** clear out unused libraries from package.json
